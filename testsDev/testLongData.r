@@ -166,6 +166,10 @@ cat("\n###################################################################
 ld1
 ld4
 
+selectSupTrajMinSize(ld2,3)
+selectSupTrajMinSize(ld3n,3)
+selectSupTrajMinSize(ld3n,20)
+selectSupTrajMinSize(ld4n,6)
 
 
 cat("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

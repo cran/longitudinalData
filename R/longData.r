@@ -61,7 +61,7 @@ cat("\n###################################################################
 ###################################################################\n")
 
 setMethod("longData",signature=c("missing","missing","missing","missing","missing"),
-    function(traj,id,time,varName){new("LongData")}
+    function(traj,id,time,varName,other){new("LongData")}
 )
 setMethod("longData",signature=c("ANY","ANY","ANY","ANY","ANY"),
     function(traj,id,time,varName,other){

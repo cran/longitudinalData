@@ -11,7 +11,7 @@ cat("###################################################################
 
 .LongData.partition.plot <- function(x,y,subGroups=LETTERSletters[1:y@nbClusters],
                                          type="l",type.mean="b",col="clusters",col.mean="clusters",
-                                         lty=1,lty.mean=1,pch=1,pch.mean="letters",pch.time=NA,
+                                         lty=1,lty.mean=1,pch=1,pch.mean="letters",pch.time=NA,size=1,
                                          xlab="Time",ylab="",ylim=NA,cex.mean=1,legends=TRUE,sizeMin=2,...){
     # Gestion des valeurs "particulières" des parametres
     if(missing(y)){y <- partition(clusters=rep("A",length(x["id"])),nbClusters=1)}else{}

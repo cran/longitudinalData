@@ -103,55 +103,54 @@ imputation(object, method, partition)
 ### Preparation of the data
 timeV <- 1:19
 trajMissing <- longData(
-   matrix(c(NA,NA,2,3,NA,5,5.5,5.8,6,NA,NA,6.5,7.5,NA,NA,NA,4,NA,NA),1),
-   id=1,time=timeV,varName="Example"
+   matrix(c(NA,NA ,2 ,3   ,NA,5 ,5.5,5.8,6 ,NA ,NA,6.5 ,7.5 ,NA ,NA ,NA ,4 ,NA,NA,
+            2 ,0.5,-2,-2.6,2 ,1 ,1.5,0  ,-2,1.2,1 ,-3.5,-4.9,0.7,1.2,2.5,-1,-1, 1),2,byrow=TRUE),
+   id=1:2,time=timeV,varName="V"
 )
-plot(timeV,trajMissing["traj"],col=2,type="o",lwd=3,ylim=c(-2,10),
+
+plot(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3,ylim=c(-2,10),
   xlab="Trajectorie to impute",ylab="")
 par(ask=TRUE)
 
 ##################
 ### LOCF
 trajImp <- imputation(trajMissing,method="LOCF")
-plot(timeV,trajImp["traj"],type="o",ylim=c(-2,10),ylab="",xlab="LOCF")
-lines(timeV,trajMissing["traj"],col=2,type="o",lwd=3)
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LOCF")
+lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### LOCB
 trajImp <- imputation(trajMissing,method="LOCB")
-plot(timeV,trajImp["traj"],type="o",ylim=c(-2,10),ylab="",xlab="LOCB")
-lines(timeV,trajMissing["traj"],col=2,type="o",lwd=3)
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LOCB")
+lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### linearInterpolation
 trajImp <- imputation(trajMissing,method="linearInterpolation")
-plot(timeV,trajImp["traj"],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation")
-lines(timeV,trajMissing["traj"],col=2,type="o",lwd=3)
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation")
+lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### linearInterpolation2
 trajImp <- imputation(trajMissing,method="linearInterpolation2")
-plot(timeV,trajImp["traj"],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation2")
-lines(timeV,trajMissing["traj"],col=2,type="o",lwd=3)
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation2")
+lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### linearInterpolation3
 trajImp <- imputation(trajMissing,method="linearInterpolation3")
-plot(timeV,trajImp["traj"],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation3")
-lines(timeV,trajMissing["traj"],col=2,type="o",lwd=3)
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation3")
+lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
-
-##################
-### copyMean (using the fonction "trajImput.copyMean" for the graphical representation)
-meanTraj <- c(2,0.5,0,0.2,2,3,3.5,2.9,2,1.2,1,1.5,1.3,0.7,1.2,2.5,1.5,-1,1)
-trajImp <- trajImput.copyMean(trajMissing["traj"],meanTraj)
-
-plot(timeV,trajMissing["traj"],type="o",ylim=c(-2,10),col=2,lwd=3,ylab="",
+### copyMean
+meanTraj <- apply(trajMissing["traj"],2,meanNA)
+plot(timeV,trajMissing["traj"][1,],type="o",ylim=c(-2,10),col=2,lwd=3,ylab="",
   xlab="LongData to impute and its model (in green)")
 lines(timeV,meanTraj,col=3,type="b",lwd=3)
 
-plot(timeV,trajImp,type="o",ylim=c(-2,10),ylab="",xlab="copyMean")
-lines(timeV,trajMissing["traj"],col=2,type="b",lwd=3)
-lines(timeV,meanTraj,col=3,type="b",lwd=3)
+trajImp <- imputation(trajMissing,method="copyMean",partition=partition(nbCluster=1,clusters=c(1,1)))
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="copyMean")
+lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
+lines(timeV,meanTraj,col=3,type="o",lwd=3)
 
 
-### copyMean (using the fonction "imputation")
+### copyMean with several clusters
 trajMiss <- longData(
    matrix(c(2,3,NA,0, NA,4,0,NA, 4,NA,-1,0),4),
    id=1:4,time=1:3
