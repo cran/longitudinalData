@@ -1,0 +1,18 @@
+export(
+    "meanNA","medianNA","sdNA","which.minNA",
+    "is.tna","catShort","NAtrunc",
+    "longData","as.longData",
+    "gald","generateArtificialLongData",
+    "LETTERSletters","METHODS"
+)
+exportMethods(
+    "selectSupTrajMinSize",
+    "plot","plotSubGroups",
+    "partition","ordered","criterion","imputation"
+)
+exportClasses(
+    "LongData",
+    "Partition"
+)
+
+import(methods,graphics,clv)

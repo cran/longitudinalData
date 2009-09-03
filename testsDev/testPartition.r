@@ -12,6 +12,8 @@ new("Partition",clusters=as.factor(c("A","M","c")),nbClusters=40)
 new("Partition",clusters=as.factor(c("A","B",NA,"A")),nbClusters=3)
 new("Partition",clusters=as.factor(c(NA,NA)),nbClusters=3)
 new("Partition",clusters=as.factor(c("A","B","A")),nbClusters=52)
+new("Partition",clusters=as.factor(c("A","B","B")),nbClusters=52)
+ordered(new("Partition",clusters=as.factor(c("A","B","B")),nbClusters=52))
 
 #try(new("Partition",clusters=as.factor(c("A","B")),id=as.character(c(101,108))))
 #try(new("Partition",clusters=factor(c("A","C","A"),levels=LETTERS[1:3]),id=as.character(c(101,108,2)),nbClusters=3))
@@ -36,7 +38,8 @@ cat("### Jeux de données ###")
 
 p0a <- p0b <- partition()
 
-p1a <- partition(clusters=c("A","A","B"))
+p1a <- partition(clusters=c("A","B","B"))
+p1a <- ordered(p1a)
 p1b <- partition(clusters=c("A","B","A"))
 p1c <- partition(nbClusters=2,clusters=c("A","B","B")) # Réarrangement pour avoir le plus gros cluster en A
 
@@ -50,8 +53,9 @@ p2cn <- partition(nbClusters=3,clusters=c(NA,NA,NA))
 
 p3a <- partition(nbClusters=9,clusters=rep(LETTERS[1:9],27))
 p3b <- partition(nbClusters=3,clusters=rep(LETTERS[1:3],81))
-p3b["clusters"][1:6]<-"A"
-p3b["clusters"][7:9]<-"B"
+p3b["clusters"][1:6]<-"B"
+p3b["clusters"][7:9]<-"C"
+p3b <- ordered(p3b)
 p3c <- partition(nbClusters=5,clusters=rep(LETTERS[1:3],81))
 p3d <- partition(nbClusters=25,clusters=rep(LETTERS[1:3],81))
 p3d <- partition(nbClusters=25,clusters=rep(LETTERS[1:3],81))

@@ -39,7 +39,7 @@
       the longitudianl data. Each line corresponds to the trajectory of an
       individual. The columns refer to the time during which measures
       were made.}
-    \item{other}{\code{[list]}: list of additionnal information (see
+    \item{\code{other}}{\code{[list]}: list of additionnal information (see
       section \code{Value} in
       \code{\link{generateArtificialLongData}} for an example).}
   }

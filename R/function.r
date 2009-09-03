@@ -1,5 +1,6 @@
 ### Functions accepting NA
 meanNA <- function(x){mean(x,na.rm=TRUE)}
+medianNA <- function(x){median(x,na.rm=TRUE)}
 
 sdNA   <- function(x){sd(x,na.rm=TRUE)}
 
@@ -23,6 +24,9 @@ catShort <- function(x){
 }
 
 LETTERSletters <- c(LETTERS,letters)
+METHODS <- c("manhattan", "euclidean", "minkowski", "maximum", "canberra", "binary")
+
+NAtrunc <- function(a) a[1:max(which(!is.na(a)))]
 
 cleanProg <- function(realResult,theoResult="",result=TRUE,tolerance=0){
   functionNames <- strsplit(deparse(substitute(realResult)),"\\(")[[1]][1]

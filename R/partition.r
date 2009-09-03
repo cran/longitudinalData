@@ -98,7 +98,21 @@ setMethod("partition",signature=c("ANY","ANY"),
         }
         new("Partition",
             nbClusters=nbClusters,
-            clusters=factor(clusters,levels=LETTERSletters[order(table(clusters),decreasing=TRUE)],labels=LETTERSletters[1:nbClusters])
+            clusters=clusters
+        )
+    }
+)
+
+
+setMethod("ordered",signature="Partition",
+    function(x,...){
+        clust <- factor(x@clusters,levels=LETTERSletters[1:x@nbClusters])
+        new("Partition",
+            nbClusters=x@nbClusters,
+            clusters=factor(clust,
+                levels=LETTERSletters[order(table(clust),decreasing=TRUE)],
+                labels=LETTERSletters[1:x@nbClusters]
+            )
         )
     }
 )
