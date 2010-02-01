@@ -32,7 +32,6 @@ cat("### Definition ###\n")
             stop("[LongData:validity]: dimnames of traj is not correct")}else{}
     }
 }
-cleanProg(.LongData.validity,,,0)
 
 setClass(
     Class="LongData",
@@ -52,7 +51,7 @@ setClass(
     ),
     validity=.LongData.validity
 )
-rm(.LongData.validity)
+
 
 
 cat("\n###################################################################
@@ -193,18 +192,13 @@ cat("### Method: 'show' pour LongData ###\n")
 #    cat("*** End of  show(longData) ***\n")
     return(invisible(object))
 }
-cleanProg(.LongData.show)
 setMethod("show","LongData",.LongData.show)
-rm(.LongData.show)
 
 
 .LongData.selectSupTrajMinSize <- function(object,minSize){
     return(apply(object@traj,1,function(x)sum(!is.na(x))>=minSize))
 }
-cleanProg(.LongData.selectSupTrajMinSize)
 setMethod("selectSupTrajMinSize",c("LongData","ANY"),.LongData.selectSupTrajMinSize)
-rm(.LongData.selectSupTrajMinSize)
-
 
 
 
@@ -256,6 +250,5 @@ gald <- generateArtificialLongData <- function(
         )
     )
 }
-cleanProg(generateArtificialLongData,,,1)
 
 

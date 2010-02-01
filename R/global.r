@@ -1,5 +1,6 @@
-#setGenericVerif <- function(x,y){if(!isGeneric(x)){setGeneric(x,y)}else{}}
+.onLoad <- function(lib,pkg){library.dynam("longitudinalData",pkg,lib)}
 
+#setGenericVerif <- function(x,y){if(!isGeneric(x)){setGeneric(x,y)}else{}}
 setGeneric("longData",function(traj,id,time,varName="V",other=list()){standardGeneric("longData")})
 setGeneric("as.longData",function(data,id="I1",timeCol=0,timeReal=0,varName="V",other=list()){standardGeneric("as.longData")})
 setGeneric("selectSupTrajMinSize",function(object,minSize){standardGeneric("selectSupTrajMinSize")})

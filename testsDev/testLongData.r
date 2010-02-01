@@ -1,3 +1,4 @@
+source("./testFunction.r")
 source("../R/longData.r")
 ### LongData contient des trajectoires (que l'on doit analyser) et leur identifiant
 ### Une trajectoire est une suite de numeric.
@@ -18,6 +19,8 @@ cat("\n####################################################################
 ####################################################################\n")
 
 ### Constructeurs
+cleanProg(.LongData.validity,,,0)
+
 new("LongData")
 #new("LongData",traj=array(c(1,2,3,1,4,6,1,8,10),dim=c(3,3)))
 #new("LongData",traj=array(c(1,2,3,1,4,6,1,8,10),dim=c(3,3)),time=c(2,4,8),varName="T")
@@ -75,16 +78,16 @@ data5 <- rbind(c(1,2 ,NA,4 ),
 dim(data5) <- c(8,4)
 ld5n <- as.longData(as.data.frame(cbind(1:8,data5)))
 data5Imp <- rbind(c(1,2,3,4),
-                  c(1,1,1,1),
+                  c(1,3,1,1),
                   c(2,3,4,5),
-                  c(2,2,2,2),
-                  c(3,4,5,6),
+                  c(2,2,2,12),
+                  c(3,4,4,6),
                   c(3,3,3,3),
-                  c(2,4,4,5),
-                  c(2,3,2,2))
+                  c(2,4,8,5),
+                  c(2,3,4,1))
 dim(data5Imp) <- c(8,4)
 ld5 <- as.longData(as.data.frame(cbind(1:8,data5Imp)))
-
+#p5a <- partition(c(1,2,1,2,1,2,1,2),2)
 
 
 cat("\n####################################################################
@@ -163,13 +166,18 @@ cat("\n###################################################################
 ############################# Affichage ###########################
 ###################################################################\n")
 
+cleanProg(.LongData.show)
 ld1
 ld4
 
+cleanProg(.LongData.selectSupTrajMinSize)
 selectSupTrajMinSize(ld2,3)
 selectSupTrajMinSize(ld3n,3)
 selectSupTrajMinSize(ld3n,20)
 selectSupTrajMinSize(ld4n,6)
+
+
+cleanProg(generateArtificialLongData,,,1)
 
 
 cat("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

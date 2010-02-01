@@ -1,9 +1,12 @@
 export(
-    "meanNA","medianNA","sdNA","which.minNA",
-    "is.tna","catShort","NAtrunc",
-    "longData","as.longData",
-    "gald","generateArtificialLongData",
-    "LETTERSletters","METHODS"
+       "meanNA","medianNA","sdNA","which.minNA",
+       "is.tna","catShort","NAtrunc",
+       "longData","as.longData","plotTraj",
+       "gald","generateArtificialLongData",
+       "LETTERSletters","METHODS",
+       "distTraj",
+       "distFrechet","distFrechetR","distFrechetRec",
+       "pathFrechet","pathFrechetR"
 )
 exportMethods(
     "selectSupTrajMinSize",

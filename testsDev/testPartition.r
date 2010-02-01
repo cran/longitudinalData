@@ -1,3 +1,5 @@
+source("./testFunction.r")
+source("../R/longData.r")
 source("../R/partition.r")
 
 cat("####################################################################
@@ -5,6 +7,7 @@ cat("####################################################################
 ############################# Creation #############################
 ####################################################################\n")
 
+cleanProg(.Partition.validity,,,1)  # LETTERSletters
 new("Partition") # Doit marcher meme apres recompilation
 new("Partition",clusters=as.factor(c("A","B","A")),nbClusters=2)
 new("Partition",clusters=as.factor(c("A","B","A")),nbClusters=4)
@@ -23,6 +26,7 @@ try(new("Partition",clusters=as.factor(c("A","C",NA,"A")),nbClusters=3))
 try(new("Partition",clusters=as.factor(c("A","C",NA,"A")),nbClusters=20))
 try(new("Partition",clusters=as.factor(c("A","C",NA,"M")),nbClusters=3))
 try(new("Partition",clusters=factor(c("A","C",NA,"aa")),nbClusters=3))
+
 
 partition()
 partition(clusters=c("A","B"))
@@ -163,6 +167,7 @@ cat("\n####################################################################
 ############################# Affichage ############################
 ####################################################################\n")
 
+cleanProg(.Partition.show,,,1) #LETTERSletters
 p0a
 p1a
 p4dn

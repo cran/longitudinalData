@@ -94,12 +94,9 @@ cat("###################################################################
     }else{}
     return(invisible())
 }
-cleanProg(.LongData.partition.plot,,,2) # LETTERSletters meanNA
 setMethod("plotTraj",signature=c(x="LongData"),def=.LongData.partition.plot)
 setMethod("plot",signature=c(x="LongData",y="ANY"),def=.LongData.partition.plot)
 setMethod("plot",signature=c(x="LongData",y="missing"),def=.LongData.partition.plot)
-
-rm(.LongData.partition.plot)
 
 
 .LongData.plotSubGroups <- function(x,y,subGroups=LETTERSletters[1:y@nbClusters],
@@ -140,9 +137,7 @@ rm(.LongData.partition.plot)
     close.screen(scr)
     return(invisible())
 }
-cleanProg(.LongData.plotSubGroups,,,2) # LETTERSletters meanNA
 setMethod("plotSubGroups",signature=c(x="LongData"),def=.LongData.plotSubGroups)
-rm(.LongData.plotSubGroups)
 
 
 

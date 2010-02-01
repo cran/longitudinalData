@@ -11,8 +11,8 @@
   \tabular{ll}{
     Package: \tab longitudinalData\cr
     Type: \tab Package\cr
-    Version: \tab 0.5\cr
-    Date: \tab 2009-01-01\cr
+    Version: \tab 0.6.1\cr
+    Date: \tab 2010-02-01\cr
     License: \tab GPL (>= 2)\cr
     Lazyload: \tab yes\cr
     Depends: \tab methods,clv\cr
@@ -46,7 +46,7 @@
 
 \seealso{
   Classes: \code{\linkS4class{LongData}}, \code{\linkS4class{Partition}} \cr
-  Methods: \code{\link{longData}}, \code{\link{as.longData}}, \code{\link{selectSupTrajMinSize}}, \code{\link{partition}}\cr
+  Methods: \code{\link{longData}}, \code{\link{as.longData}}, \code{\link{selectSupTrajMinSize}}, \code{\link{partition}}, \code{\link{ordered}}\cr
   Plot: \code{\link[=plotTraj]{plot(LongData)}},\code{\link[=plotSubGroups]{plotSubGroups(LongData)}}\cr
   Imputation: \code{\link{imputation}}\cr
   Criterion: \code{\link{criterion}}\cr
