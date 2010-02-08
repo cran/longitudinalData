@@ -11,13 +11,34 @@
     traceWithin <- sum(diag(varWithin))
     calinski <- traceBetween/traceWithin*(length(clusters)-partition@nbClusters)/(partition@nbClusters-1)
     if(is.na(calinski)){calinski<-NaN}
-    return(list(varBetween=varBetween,varWithin=varWithin,calinski=calinski))
+
+    if(nrow(cls.attr[[2]])==partition@nbClusters){
+        rayInter <- +Inf
+        for(i in 1:partition@nbClusters){
+            distTrajI <- function(x){dist(rbind(x,cls.attr[[2]][i,]))}
+            rayInter <- min(apply(cls.attr[[2]][-i,,drop=FALSE],1,distTrajI),rayInter)
+        }
+    }else{
+        rayInter <- NaN
+    }
+
+    rayIntra <- 0
+    for (i in 1:nrow(values)){
+      rayIntra <- rayIntra+dist(rbind(values[i,],cls.attr[[2]][as.integer(clusters[i]),]))^2
+    }
+    rayIntra <- rayIntra/nrow(values)
+    ray <- as.numeric(rayInter/rayIntra)
+
+    clsScat <- cls.scatt.data(values,as.integer(clusters))
+    davies <- clv.Davies.Bouldin(clsScat,"average","average")
+
+    return(list(varBetween=varBetween,varWithin=varWithin,calinski=calinski,ray=ray,davies=davies))
 }
-cleanProg(.LongData.quality.criterion,,,1) # LETTERS
 setMethod("criterion",
           signature=c(object="LongData",partition="Partition",method="ANY"),
           .LongData.quality.criterion
 )
+
 
 
 .matrix.quality.criterion <- function(object,partition,method){
@@ -33,9 +54,30 @@ setMethod("criterion",
     traceWithin <- sum(diag(varWithin))
     calinski <- traceBetween/traceWithin*(length(clusters)-partition@nbClusters)/(partition@nbClusters-1)
     if(is.na(calinski)){calinski<-NaN}
-    return(list(varBetween=varBetween,varWithin=varWithin,calinski=calinski))
+
+    if(nrow(cls.attr[[2]])==partition@nbClusters){
+        rayInter <- +Inf
+        for(i in 1:partition@nbClusters){
+            distTrajI <- function(x){dist(rbind(x,cls.attr[[2]][i,]))}
+            rayInter <- min(apply(cls.attr[[2]][-i,,drop=FALSE],1,distTrajI),rayInter)
+        }
+    }else{
+        rayInter <- NaN
+    }
+
+    rayIntra <- 0
+    for (i in 1:nrow(values)){
+      rayIntra <- rayIntra+dist(rbind(values[i,],cls.attr[[2]][as.integer(clusters[i]),]))^2
+    }
+    rayIntra <- rayIntra/nrow(values)
+    ray <- as.numeric(rayInter/rayIntra)
+
+    clsScat <- cls.scatt.data(values,as.integer(clusters))
+    davies <- clv.Davies.Bouldin(clsScat,"average","average")
+
+    return(list(varBetween=varBetween,varWithin=varWithin,calinski=calinski,ray=ray,davies=davies))
 }
-cleanProg(.matrix.quality.criterion,,,1) # LETTERS
+
 setMethod("criterion",
           signature=c(object="matrix",partition="Partition",method="ANY"),
           .matrix.quality.criterion

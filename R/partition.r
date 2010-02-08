@@ -30,7 +30,6 @@ cat("### Definition ###\n")
 
 
 
-cleanProg(.Partition.validity,,,1)  # LETTERSletters
 setClass(
    Class="Partition",
    representation=representation(
@@ -43,7 +42,7 @@ setClass(
    ),
    validity=.Partition.validity
 )
-rm(.Partition.validity)
+
 cat("\n####################################################################
 ########################## Class Partition #########################
 ############################ Constructeur ##########################
@@ -183,9 +182,7 @@ cat("### Method : 'show' for partition ###\n") # Si on ajouter un titre a traj, 
     }
     return(invisible(object))
 }
-cleanProg(.Partition.show,,,1) #LETTERSletters
 setMethod(f="show",signature="Partition",definition=.Partition.show)
-rm(.Partition.show)
 
 
 

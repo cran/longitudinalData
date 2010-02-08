@@ -1,9 +1,12 @@
+library("clv")
 source("../R/criterion.r")
 
 
 cat("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++ Test criterion ++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+cleanProg(.LongData.quality.criterion,,,1) # LETTERS
+cleanProg(.matrix.quality.criterion,,,1) # LETTERS
 
 criterion(ld2,p2a)
 criterion(ld3,p3a)

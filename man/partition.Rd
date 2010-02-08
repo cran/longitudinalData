@@ -27,7 +27,7 @@ partition(clusters, nbClusters)
   An object of class \code{\linkS4class{Partition}}.
 }
 
-\seealso{\linkS4class{Partition}}
+\seealso{\linkS4class{Partition},\code{\link{ordered}}}
 
 
 \examples{

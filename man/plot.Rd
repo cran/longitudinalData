@@ -17,7 +17,7 @@
 
 \usage{
 plot(x,y,...)
-plotTraj(x,y,...)
+%plotTraj(x,y,...)
 }
 
 \arguments{

@@ -60,12 +60,6 @@
     \item{Object["varName"]}{[character]: Gets the name of the variable (the value of the slot \code{varName})}
     \item{Object["traj"]}{[matrix(numeric)]: Gets all the longData'
       values (the value of the slot \code{traj})}
-    \item{Object["traj"][3,]}{[matrix(numeric)]: Gets the trajectorie of
-      the individual 3.}
-    \item{Object["traj"][,2]}{[matrix(numeric)]: Gets all values
-      corresponding to time 2.}
-    \item{Object["traj"][3,2]}{[matrix(numeric)]: Gets the second
-      value of the third trajectorie.}
   }
 }
 
