@@ -11,8 +11,8 @@
   \tabular{ll}{
     Package: \tab longitudinalData\cr
     Type: \tab Package\cr
-    Version: \tab 0.6.1\cr
-    Date: \tab 2010-02-01\cr
+    Version: \tab 0.6.3\cr
+    Date: \tab 2010-02-18\cr
     License: \tab GPL (>= 2)\cr
     Lazyload: \tab yes\cr
     Depends: \tab methods,clv\cr

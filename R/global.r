@@ -10,5 +10,6 @@ setGeneric("imputation",function(object,method,partition)standardGeneric("imputa
 setGeneric("plotTraj",function(x,y,...){standardGeneric("plotTraj")})
 setGeneric("plotSubGroups",function(x,y,...){standardGeneric("plotSubGroups")})
 #setGeneric("plotAll",function(x,y,...){standardGeneric("plotAll")})
-setGeneric("criterion",function(object,partition,method){standardGeneric("criterion")})
+setGeneric("criterion",function(object,partition,method="linearInterpolation"){standardGeneric("criterion")})
+setGeneric("criterion3",function(object,partition,method="linearInterpolation"){standardGeneric("criterion3")})
 

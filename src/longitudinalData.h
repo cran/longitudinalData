@@ -4,9 +4,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <float.h>
+//#include <R_ext/Rdynload.h>
 
-void printMatrix(double *mTraj,int *nbCol, int *nbLigne);
-void printMatrixInt(int *mTraj,int *nbCol, int *nbLigne);
+//void R_init_longitudinalData(DllInfo *info);
+
+//void printMatrix(double *mTraj,int *nbCol, int *nbLigne);
+//void printMatrixInt(int *mTraj,int *nbCol, int *nbLigne);
 
 // all distance 'Traj' are optimized to work with trajectories
 static double manhattanTraj(double *x,double *y,int *taille);

@@ -11,7 +11,7 @@ export(
 exportMethods(
     "selectSupTrajMinSize",
     "plot","plotSubGroups",
-    "partition","ordered","criterion","imputation"
+    "partition","ordered","criterion","criterion3","imputation"
 )
 exportClasses(
     "LongData",

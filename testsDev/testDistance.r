@@ -1,6 +1,7 @@
 #setwd("C:/Documents and Settings/Christophe/Mes documents/Recherche/Trajectoires/kmeal/longitudinalData/src")
+source("testCriterion.r")
+dyn.load("../src/longitudinalData.dll")
 source("../R/distanceFrechet.r")
-dyn.load("../src/distanceTraj.dll")
 #dyn.unload("distanceTraj.dll")
 
 
@@ -52,9 +53,9 @@ for(i in 1:1000){
             power=as.numeric(-1),dist=as.numeric(0),NAOK=TRUE)
     b <- dist(rbind(x,y),method="canberra")
     c <- distTraj(x,y,method="canberra")
-    print(a)
-    print(b)
-    if(abs(a$dist-b)>1e-12 || abs(b-c)>1e-12){cat("\a");stop();}else{}
+  #  print(a)
+ #   print(b)
+#    if(abs(a$dist-b)>1e-12 || abs(b-c)>1e-12){cat("\a");stop();}else{}
 }
 
 for(i in 1:1000){

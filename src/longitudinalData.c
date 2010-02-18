@@ -6,7 +6,7 @@
 /* Matrix are in line first :
 0 1 2 3
 4 5 6 7 */
-
+/*
 
 void printMatrix(double *mTraj,int *nbCol, int *nbLigne){
     int i=0,j=0;
@@ -28,6 +28,8 @@ void printMatrixInt(int *mTraj,int *nbCol, int *nbLigne){
     }
 }
 
+
+*/
 
 
 /* *****************************************************
