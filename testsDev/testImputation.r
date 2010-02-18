@@ -1,4 +1,3 @@
-source("./testLongData.r")
 source("./testPartition.r")
 source("../R/imputation.r")
 
@@ -230,7 +229,7 @@ a2 <- trajImput.interpoLin2(a)
 cat("###############
 ### Linear interpolation 3 : Local\n")
 
-cleanProg(trajImput.localSlope.begin,,,0)
+cleanProg(trajImput.localSlope.beginEnd,,,0)
 cleanProg(trajImput.interpoLin3,,,0)
 
 cat("### sous fonction ###\n")

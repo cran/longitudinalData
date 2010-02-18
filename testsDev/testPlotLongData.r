@@ -1,3 +1,4 @@
+source("testDistance.r")
 source("../R/plotLongData.R")
 
 

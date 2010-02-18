@@ -1,5 +1,4 @@
-source("./testFunction.r")
-source("../R/longData.r")
+source("./testLongData.r")
 source("../R/partition.r")
 
 cat("####################################################################
