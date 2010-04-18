@@ -200,41 +200,6 @@ trajImput.interpoLin4 <- function(traj){
 ###############
 ### Linear interpolation 1
 
-trajImput.localGlobalSlope.beginEnd <- function(traj){
-    if(all(is.na(traj))){
-        warning("There is only NA on this line, impossible to impute\n")
-        return(traj)
-    }else{}
-    if(sum(!is.na(traj))==1){
-        warning("There is only one non-missing value on this line, impossible to use localSlope\n")
-        return(traj)
-    }else{}
-    lengthTraj <- length(traj)
-    firstNoNA <- min(which(!is.na(traj)))
-    lastNoNA <- max(which(!is.na(traj)))
-    secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
-    penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
-
-    a <- ((traj[firstNoNA]-traj[secondNoNA])/(firstNoNA-secondNoNA) + (traj[firstNoNA]-traj[lastNoNA])/(firstNoNA-lastNoNA))/2
-    b <- traj[firstNoNA] - a*firstNoNA
-    indNA <- 1:firstNoNA
-    traj[indNA]<-a*indNA+b
-
-    a <- ((traj[penultimateNoNA]-traj[lastNoNA])/(penultimateNoNA-lastNoNA) + (traj[firstNoNA]-traj[lastNoNA])/(firstNoNA-lastNoNA))/2
-    b <- traj[lastNoNA] - a*lastNoNA
-    indNA <- lastNoNA:lengthTraj
-    traj[indNA]<-a*indNA+b
-    return(traj)
-}
-
-trajImput.interpoLin <- function(traj){
-    return(trajImput.interpoLin.middle(trajImput.localGlobalSlope.beginEnd(traj)))
-}
-
-
-
-
-
 ## trajImput.localGlobalSlope.beginEnd <- function(traj){
 ##     if(all(is.na(traj))){
 ##         warning("There is only NA on this line, impossible to impute\n")
@@ -244,48 +209,79 @@ trajImput.interpoLin <- function(traj){
 ##         warning("There is only one non-missing value on this line, impossible to use localSlope\n")
 ##         return(traj)
 ##     }else{}
-
 ##     lengthTraj <- length(traj)
 ##     firstNoNA <- min(which(!is.na(traj)))
 ##     lastNoNA <- max(which(!is.na(traj)))
 ##     secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
 ##     penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
 
-##     # formule on http://forums.futura-sciences.com/mathematiques-superieur/39936-equation-dune-bissectrice.html#post2823519
-##     xA <- firstNoNA ; yA <- traj[xA]
-##     xB <- lastNoNA ; yB <- traj[xB]
-##     xC <- secondNoNA ; yC <- traj[xC]
-##     xD <- penultimateNoNA ; yD <- traj[xD]
-##     if((xA-xB)*(yA-yC)-(yA-yB)*(xA-xC)<1e-15){
-##         a <- (yA-yC)/(xA-xC)
-##         b <- yA - a*xA
-##         indNA <- c(1:firstNoNA,lastNoNA:lengthTraj)
-##         traj[indNA]<-a*indNA+b
-##     }else{
-##         dAB <- as.numeric(dist(rbind(c(xA,yA),c(xB,yB))))
-##         dAC <- as.numeric(dist(rbind(c(xA,yA),c(xC,yC))))
-##         dBD <- as.numeric(dist(rbind(c(xB,yB),c(xD,yD))))
+##     a <- ((traj[firstNoNA]-traj[secondNoNA])/(firstNoNA-secondNoNA) + (traj[firstNoNA]-traj[lastNoNA])/(firstNoNA-lastNoNA))/2
+##     b <- traj[firstNoNA] - a*firstNoNA
+##     indNA <- 1:firstNoNA
+##     traj[indNA]<-a*indNA+b
 
-## #    alpha <- (xC-xA)*dAB-(xB-xA)*dAC
-## #    beta <-  (yC-yA)*dAB-(yB-yA)*dAC
-## #    a <- -alpha/beta
-## #    b <- yA-a*xA
-##         a <- -((xC-xA)*dAB-(xB-xA)*dAC)/((yC-yA)*dAB-(yB-yA)*dAC)
-##         b <- yA-a*xA
-##         indNA <- 1:firstNoNA
-##         traj[indNA]<-a*indNA+b
-
-##         a <- -((xD-xB)*dAB-(xA-xB)*dBD)/((yD-yB)*dAB-(yA-yB)*dBD)
-##         b <- yB-a*xB
-##         indNA <- lastNoNA:lengthTraj
-##         traj[indNA]<-a*indNA+b
-##     }
+##     a <- ((traj[penultimateNoNA]-traj[lastNoNA])/(penultimateNoNA-lastNoNA) + (traj[firstNoNA]-traj[lastNoNA])/(firstNoNA-lastNoNA))/2
+##     b <- traj[lastNoNA] - a*lastNoNA
+##     indNA <- lastNoNA:lengthTraj
+##     traj[indNA]<-a*indNA+b
 ##     return(traj)
 ## }
 
 ## trajImput.interpoLin <- function(traj){
 ##     return(trajImput.interpoLin.middle(trajImput.localGlobalSlope.beginEnd(traj)))
 ## }
+
+trajImput.localGlobalSlope.beginEnd <- function(traj){
+    if(all(is.na(traj))){
+        warning("There is only NA on this line, impossible to impute\n")
+        return(traj)
+    }else{}
+    if(sum(!is.na(traj))==1){
+        warning("There is only one non-missing value on this line, impossible to use localSlope\n")
+        return(traj)
+    }else{}
+
+    lengthTraj <- length(traj)
+    firstNoNA <- min(which(!is.na(traj)))
+    lastNoNA <- max(which(!is.na(traj)))
+    secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
+    penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
+
+    # formule on http://forums.futura-sciences.com/mathematiques-superieur/39936-equation-dune-bissectrice.html#post2823519
+    xA <- firstNoNA ; yA <- traj[xA]
+    xB <- lastNoNA ; yB <- traj[xB]
+    xC <- secondNoNA ; yC <- traj[xC]
+    xD <- penultimateNoNA ; yD <- traj[xD]
+    if((xA-xB)*(yA-yC)-(yA-yB)*(xA-xC)<1e-15){
+        a <- (yA-yC)/(xA-xC)
+        b <- yA - a*xA
+        indNA <- c(1:firstNoNA,lastNoNA:lengthTraj)
+        traj[indNA]<-a*indNA+b
+    }else{
+        dAB <- as.numeric(dist(rbind(c(xA,yA),c(xB,yB))))
+        dAC <- as.numeric(dist(rbind(c(xA,yA),c(xC,yC))))
+        dBD <- as.numeric(dist(rbind(c(xB,yB),c(xD,yD))))
+
+#    alpha <- (xC-xA)*dAB-(xB-xA)*dAC
+#    beta <-  (yC-yA)*dAB-(yB-yA)*dAC
+#    a <- -alpha/beta
+#    b <- yA-a*xA
+        a <- -((xC-xA)*dAB-(xB-xA)*dAC)/((yC-yA)*dAB-(yB-yA)*dAC)
+        b <- yA-a*xA
+        indNA <- 1:firstNoNA
+        traj[indNA]<-a*indNA+b
+
+        a <- -((xD-xB)*dAB-(xA-xB)*dBD)/((yD-yB)*dAB-(yA-yB)*dBD)
+        b <- yB-a*xB
+        indNA <- lastNoNA:lengthTraj
+        traj[indNA]<-a*indNA+b
+    }
+    return(traj)
+}
+
+trajImput.interpoLin <- function(traj){
+    return(trajImput.interpoLin.middle(trajImput.localGlobalSlope.beginEnd(traj)))
+}
 
 
 
@@ -406,11 +402,12 @@ matrixImput <- function(object,method,partition){
     ### Method without partition
     object <- switch(EXPR=method,
         "LOCF"={t(apply(object,1,trajImput.LOCF))},
-        "LOCB"={t(apply(object,1,trajImput.LOCB))},
+        "FOCB"={t(apply(object,1,trajImput.LOCB))},
         "linearInterpolation"={t(apply(object,1,trajImput.interpoLin))},
-        "linearInterpolation2"={t(apply(object,1,trajImput.interpoLin2))},
-        "linearInterpolation3"={t(apply(object,1,trajImput.interpoLin3))},
-        "linearInterpolation4"={t(apply(object,1,trajImput.interpoLin4))},
+        "LI-Bisector"={t(apply(object,1,trajImput.interpoLin))},
+        "LI-Global"={t(apply(object,1,trajImput.interpoLin2))},
+        "LI-Local"={t(apply(object,1,trajImput.interpoLin3))},
+        "LI-OCBF"={t(apply(object,1,trajImput.interpoLin4))},
         "copyMean"={
             traj <- object[!is.na(partition),]
             clusters <- partition[!is.na(partition)]
@@ -436,11 +433,12 @@ trajImput <- function(object,method,partition){
     ### Method without partition
     object@traj <- switch(EXPR=method,
         "LOCF"={t(apply(object@traj,1,trajImput.LOCF))},
-        "LOCB"={t(apply(object@traj,1,trajImput.LOCB))},
+        "FOCB"={t(apply(object@traj,1,trajImput.LOCB))},
         "linearInterpolation"={t(apply(object@traj,1,trajImput.interpoLin))},
-        "linearInterpolation2"={t(apply(object@traj,1,trajImput.interpoLin2))},
-        "linearInterpolation3"={t(apply(object@traj,1,trajImput.interpoLin3))},
-        "linearInterpolation4"={t(apply(object@traj,1,trajImput.interpoLin4))},
+        "LI-Bisector"={t(apply(object@traj,1,trajImput.interpoLin))},
+        "LI-Global"={t(apply(object@traj,1,trajImput.interpoLin2))},
+        "LI-Local"={t(apply(object@traj,1,trajImput.interpoLin3))},
+        "LI-OCBF"={t(apply(object@traj,1,trajImput.interpoLin4))},
         "copyMean"={
             clusters <- partition["clusters"]
             traj <- object@traj[!is.na(clusters),]
