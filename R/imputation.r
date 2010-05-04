@@ -235,57 +235,57 @@ trajImput.interpoLin <- function(traj){
 
 
 
-trajImput.localGlobalSlope.beginEnd <- function(traj){
-    if(all(is.na(traj))){
-        warning("There is only NA on this line, impossible to impute\n")
-        return(traj)
-    }else{}
-    if(sum(!is.na(traj))==1){
-        warning("There is only one non-missing value on this line, impossible to use localSlope\n")
-        return(traj)
-    }else{}
+## trajImput.localGlobalSlope.beginEnd <- function(traj){
+##     if(all(is.na(traj))){
+##         warning("There is only NA on this line, impossible to impute\n")
+##         return(traj)
+##     }else{}
+##     if(sum(!is.na(traj))==1){
+##         warning("There is only one non-missing value on this line, impossible to use localSlope\n")
+##         return(traj)
+##     }else{}
 
-    lengthTraj <- length(traj)
-    firstNoNA <- min(which(!is.na(traj)))
-    lastNoNA <- max(which(!is.na(traj)))
-    secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
-    penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
+##     lengthTraj <- length(traj)
+##     firstNoNA <- min(which(!is.na(traj)))
+##     lastNoNA <- max(which(!is.na(traj)))
+##     secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
+##     penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
 
-    # formule on http://forums.futura-sciences.com/mathematiques-superieur/39936-equation-dune-bissectrice.html#post2823519
-    xA <- firstNoNA ; yA <- traj[xA]
-    xB <- lastNoNA ; yB <- traj[xB]
-    xC <- secondNoNA ; yC <- traj[xC]
-    xD <- penultimateNoNA ; yD <- traj[xD]
-    if((xA-xB)*(yA-yC)-(yA-yB)*(xA-xC)<1e-15){
-        a <- (yA-yC)/(xA-xC)
-        b <- yA - a*xA
-        indNA <- c(1:firstNoNA,lastNoNA:lengthTraj)
-        traj[indNA]<-a*indNA+b
-    }else{
-        dAB <- as.numeric(dist(rbind(c(xA,yA),c(xB,yB))))
-        dAC <- as.numeric(dist(rbind(c(xA,yA),c(xC,yC))))
-        dBD <- as.numeric(dist(rbind(c(xB,yB),c(xD,yD))))
+##     # formule on http://forums.futura-sciences.com/mathematiques-superieur/39936-equation-dune-bissectrice.html#post2823519
+##     xA <- firstNoNA ; yA <- traj[xA]
+##     xB <- lastNoNA ; yB <- traj[xB]
+##     xC <- secondNoNA ; yC <- traj[xC]
+##     xD <- penultimateNoNA ; yD <- traj[xD]
+##     if((xA-xB)*(yA-yC)-(yA-yB)*(xA-xC)<1e-15){
+##         a <- (yA-yC)/(xA-xC)
+##         b <- yA - a*xA
+##         indNA <- c(1:firstNoNA,lastNoNA:lengthTraj)
+##         traj[indNA]<-a*indNA+b
+##     }else{
+##         dAB <- as.numeric(dist(rbind(c(xA,yA),c(xB,yB))))
+##         dAC <- as.numeric(dist(rbind(c(xA,yA),c(xC,yC))))
+##         dBD <- as.numeric(dist(rbind(c(xB,yB),c(xD,yD))))
 
-#    alpha <- (xC-xA)*dAB-(xB-xA)*dAC
-#    beta <-  (yC-yA)*dAB-(yB-yA)*dAC
-#    a <- -alpha/beta
-#    b <- yA-a*xA
-        a <- -((xC-xA)*dAB-(xB-xA)*dAC)/((yC-yA)*dAB-(yB-yA)*dAC)
-        b <- yA-a*xA
-        indNA <- 1:firstNoNA
-        traj[indNA]<-a*indNA+b
+## #    alpha <- (xC-xA)*dAB-(xB-xA)*dAC
+## #    beta <-  (yC-yA)*dAB-(yB-yA)*dAC
+## #    a <- -alpha/beta
+## #    b <- yA-a*xA
+##         a <- -((xC-xA)*dAB-(xB-xA)*dAC)/((yC-yA)*dAB-(yB-yA)*dAC)
+##         b <- yA-a*xA
+##         indNA <- 1:firstNoNA
+##         traj[indNA]<-a*indNA+b
 
-        a <- -((xD-xB)*dAB-(xA-xB)*dBD)/((yD-yB)*dAB-(yA-yB)*dBD)
-        b <- yB-a*xB
-        indNA <- lastNoNA:lengthTraj
-        traj[indNA]<-a*indNA+b
-    }
-    return(traj)
-}
+##         a <- -((xD-xB)*dAB-(xA-xB)*dBD)/((yD-yB)*dAB-(yA-yB)*dBD)
+##         b <- yB-a*xB
+##         indNA <- lastNoNA:lengthTraj
+##         traj[indNA]<-a*indNA+b
+##     }
+##     return(traj)
+## }
 
-trajImput.interpoLin <- function(traj){
-    return(trajImput.interpoLin.middle(trajImput.localGlobalSlope.beginEnd(traj)))
-}
+## trajImput.interpoLin <- function(traj){
+##     return(trajImput.interpoLin.middle(trajImput.localGlobalSlope.beginEnd(traj)))
+## }
 
 
 

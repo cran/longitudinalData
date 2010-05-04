@@ -1,6 +1,6 @@
 #setwd("C:/Documents and Settings/Christophe/Mes documents/Recherche/Trajectoires/kmeal/longitudinalData/src")
 source("testCriterion.r")
-dyn.load("../src/longitudinalData.dll")
+dyn.load("../src/kml.dll")
 source("../R/distanceFrechet.r")
 #dyn.unload("distanceTraj.dll")
 
