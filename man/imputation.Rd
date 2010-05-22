@@ -36,10 +36,10 @@ imputation(object, method, partition)
 	\item{Missing in the middle / at the end:}{ the previous non-missing value is
 	  dipplicated forward.}
 	\item{Missing at start:}{ the first non-missing occurence is
-	  dupplicated backward (LOCB).}
+	  dupplicated backward (FOCB).}
       }
     }
-    \item{LOCB (Last Occurence Carried Backward)}{
+    \item{FOCB (First Occurence Carried Backward)}{
       \itemize{
 	\item{Missing at start / in the middle:}{ the next non-missing value is
 	  dipplicated backward.}
@@ -47,7 +47,7 @@ imputation(object, method, partition)
 	  occurence is dupplicated forward (LOCF).}
       }
     }
-    \item{linearInterpolation}{
+        \item{'LI-Global' (linear interpolation, global slope)}{
       \itemize{
 	\item{Missing in the middle:}{ the value imediatly
 	  surounding the missing are join by a line.}
@@ -57,30 +57,41 @@ imputation(object, method, partition)
 	  this line.}
       }
     }
-
-    \item{linearInterpolation2}{
+    \item{'LI-Local' (linear interpolation, local slope)}{
       \itemize{
 	\item{Missing in the middle:}{ like
-	  \code{linearInterpolation}, the value imediatly
+	  \code{LI-Global}, the value imediatly
 	  surounding the missing are join by a line;}
 	\item{Missing at start:}{ they are
-	  chosen to prolongate the line going through the first and
-	  second non missing value.}
+	  chosen to prolongate the line going through the first non
+	  missing and second non missing value.}
 	\item{Missing at the end:}{ They are chosen to prolongate the line going through the last
-	  and the penultimate value.}
+	  missing value and the penultimate value.}
       }
     }
-    \item{linearInterpolation3}{
+    \item{'LI-Bisector', (linear interpolation, mixed between global and local)}{
       \itemize{
 	\item{Missing in the middle:}{ like
-	  \code{linearInterpolation}, the value imediatly
+	  \code{LI-Global}, the value imediatly
 	  surounding the missing are join by a line.}
-	\item{Missing at start:}{ They are
-	  imputed bu LOCB.}
-	\item{Missing at the end:}{ They are imputed by LOCF.}
+	\item{Missing at start / at end:}{ since LI-Global is not
+	  sensitive to local variation and LI-Local is too much sensitive to
+	  abnormal value, LI-Mixed offer a medium solution by considering the
+	  bissectrice of Global and Local solution. Point are chosen on
+	  the bissectrices.}
       }
     }
-    \item{copyMean:}{
+    \item{'linearInterpolation'}{Same than LI-Bisector, for backward compatibility only.}
+    \item{'LI-OCBF', (linear interpolation, FOCB and LOCF)}{
+      \itemize{
+	\item{Missing in the middle:}{ like
+	  \code{LI-Global}, values imediatly
+	  surounding the missing are join by a line.}
+	\item{Missing at start:}{ imputed by FOCB.}
+	\item{Missing at end:}{ imputed by LOCF.}
+      }
+    }
+    \item{'copyMean'}{
       this method impute \code{LongData} relativly to
       a \code{Partition}. More precisely, each individual trajectorie is
       imputed relatively to its clusters center. For all kind of missing
@@ -119,23 +130,28 @@ plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LOCF")
 lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### LOCB
-trajImp <- imputation(trajMissing,method="LOCB")
+trajImp <- imputation(trajMissing,method="FOCB")
 plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LOCB")
 lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### linearInterpolation
-trajImp <- imputation(trajMissing,method="linearInterpolation")
-plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation")
+trajImp <- imputation(trajMissing,method="LI-Global")
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LI-Global")
 lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### linearInterpolation2
-trajImp <- imputation(trajMissing,method="linearInterpolation2")
-plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation2")
+trajImp <- imputation(trajMissing,method="LI-Local")
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LI-Local")
 lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### linearInterpolation3
-trajImp <- imputation(trajMissing,method="linearInterpolation3")
-plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="linearInterpolation3")
+trajImp <- imputation(trajMissing,method="LI-Bisector")
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LI-Bissector")
+lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
+
+### linearInterpolation3
+trajImp <- imputation(trajMissing,method="LI-OCFB")
+plot(timeV,trajImp["traj"][1,],type="o",ylim=c(-2,10),ylab="",xlab="LI-LOCFB")
 lines(timeV,trajMissing["traj"][1,],col=2,type="o",lwd=3)
 
 ### copyMean
