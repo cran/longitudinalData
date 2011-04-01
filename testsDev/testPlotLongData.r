@@ -1,11 +1,15 @@
-source("testDistance.r")
-source("../R/plotLongData.R")
+#source("testDistance.r")
+source("../R/longDataPlot.R")
 
 
 cat("###################################################################
 #################### Test  LongData & Partition ###################
 ############################### plot ##############################
 ###################################################################\n")
+
+cleanProg(resizePartition)
+resizePartition()
+
 cleanProg(.LongData.partition.plot,,,2) # LETTERSletters meanNA
 par(mfrow=c(3,3))
 plot(ld3)

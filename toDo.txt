@@ -1,0 +1,8 @@
+Il faut un moyen facile de récuperer une partition.
+
+Moyen de récuperer les vecteurs des meilleurs postProba pour chaque
+clusters.
+
+PostProba et BIC :
+ - quand il y a des manquantes dans les traj, vérifier le fonctionnement
+ - quand l'écart type est nul, que faire ?

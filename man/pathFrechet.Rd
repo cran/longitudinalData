@@ -1,6 +1,5 @@
 \name{pathFrechet}
 \alias{pathFrechet}
-\alias{pathFrechetR}
 
 \title{~ Function: Frechet distance ~}
 
@@ -9,7 +8,6 @@ Compute Frechet distance and Frechet path between two trajectories.
 }
 \usage{
 pathFrechet(P, Q, method = "max", Fdist = dist)
-pathFrechetR(P, Q, method = "max", Fdist = dist)
 }
 
 \arguments{
@@ -44,19 +42,31 @@ pathFrechetR(P, Q, method = "max", Fdist = dist)
 \value{
   A numeric value and the Frechet path.
 }
-\references{
-  Thomas Eiter & Heikki Mannila: "Computing Discrete Fr´echet Distance"
+
+
+\section{Author}{
+Christophe Genolini\cr
+1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
+2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
-\author{Christophe Genolini}
+
+\references{
+  Thomas Eiter & Heikki Mannila: "Computing Discrete Fr´echet Distance"\cr
+
+  [1] C. Genolini and B. Falissard\cr
+  "KmL: k-means for longitudinal data"\cr
+  Computational Statistics, vol 25(2), pp 317-328, 2010\cr
+
+  [2] C. Genolini and B. Falissard\cr
+  "KmL: A package to cluster longitudinal data"\cr
+  Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
+}
 
 \seealso{distFrechet}
 
 \examples{
    P <- rnorm(7)
    Q <- rnorm(6)
-
-   ### Optimized function
-   pathFrechetR(P,Q)
 
    ### Function compiled in C
    pathFrechet(P,Q)
@@ -65,7 +75,7 @@ pathFrechetR(P, Q, method = "max", Fdist = dist)
    pathFrechet(P,Q,method="sum")
 
    ### Frechet using "manhattan" distance
-   pathFrechetR(P,Q,Fdist=function(x)dist(x,method="manhattan"))
+   pathFrechet(P,Q,Fdist=function(x)dist(x,method="manhattan"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

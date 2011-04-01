@@ -1,19 +1,25 @@
 \name{longData-internal}
 \alias{catShort}
 %\alias{cleanProg}
-\alias{LETTERSletters}
 \alias{METHODS}
 
 \alias{medianNA}
 \alias{meanNA}
 \alias{sdNA}
+\alias{sdcNA}
+\alias{varNA}
+\alias{rangeNA}
+
 \alias{which.minNA}
 
 \alias{is.tna}
 
-\alias{NAtrunc}
+%\alias{NAtrunc}
 
-%\alias{trajImput.copy.begin}
+\alias{showLongData}
+\alias{showLongData3d}
+\alias{showListPartition}
+
 %\alias{trajImput.copy.end}
 %\alias{trajImput.copy.middle}
 
@@ -41,36 +47,40 @@
 
 \title{~ longData: internal objects and methods ~}
 \description{longData: internal objects and methods}
-\details{These are not to be called by the user.\cr
-  If you have a specific need or for more details on longData, feel free to contact
-  the author.
+\details{These are not to be called by the user.
   \itemize{
     \item medianNA : median with option na.rm=TRUE
     \item meaanNA : mean with option na.rm=TRUE
-    \item sdNA : sd with option na.rm=TRUE
+    \item sdNA : sandard deviation with option na.rm=TRUE
+    \item sdcNA : standard deviation corrected (n-1)/n with option na.rm=TRUE
+    \item varNA : var with option na.rm=TRUE
+    \item rangeNA : range with option na.rm=TRUE
     \item which.minNA : which.min that return NA if it argument has only
     NA values.
     \item NAtrunc : function that remove only the NA value in the tail
     of its argument.
-    \item LETTERSletters : constant = c(LETTERS,letters)
+    \item showLongData : methods use to define the function 'show'
     \item METHODS : constant=c("manhattan", "euclidean", "minkowski",
     "maximum", "canberra", "binary")
   }
 }
 
 
-\section{Author(s)}{
-  Christophe Genolini\cr
-  PSIGIAM: Paris Sud Innovation Group in Adolescent Mental Health\cr
-  INSERM U669 / Maison de Solenn / Paris\cr\cr
 
-  Contact author : <genolini@u-paris10.fr>
+\section{Author}{
+Christophe Genolini\cr
+1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
+2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
-\section{English translation}{
-  Raphaël Ricaud\cr
-  Laboratoire "Sport & Culture" / "Sports & Culture" Laboratory \cr
-  University of Paris 10 / Nanterre
+\references{
+  [1] C. Genolini and B. Falissard\cr
+  "KmL: k-means for longitudinal data"\cr
+  Computational Statistics, vol 25(2), pp 317-328, 2010\cr
+
+  [2] C. Genolini and B. Falissard\cr
+  "KmL: A package to cluster longitudinal data"\cr
+  Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
 }
 
 \keyword{internal}

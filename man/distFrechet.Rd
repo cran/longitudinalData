@@ -1,7 +1,5 @@
 \name{distFrechet}
 \alias{distFrechet}
-\alias{distFrechetR}
-\alias{distFrechetRec}
 
 \title{~ Function: Frechet distance ~}
 
@@ -10,8 +8,6 @@ Compute Frechet distance between two trajectories.
 }
 \usage{
 distFrechet(P, Q, method = "max", Fdist = dist)
-distFrechetR(P, Q, method = "max", Fdist = dist)
-distFrechetRec(P, Q, method = "max", Fdist = dist)
 }
 
 \arguments{
@@ -43,10 +39,25 @@ distFrechetRec(P, Q, method = "max", Fdist = dist)
 \value{
   A numeric value.
 }
-\references{
-  Thomas Eiter & Heikki Mannila: "Computing Discrete Fr´echet Distance"
+
+
+\section{Author}{
+Christophe Genolini\cr
+1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
+2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
-\author{Christophe Genolini}
+
+\references{
+  Thomas Eiter & Heikki Mannila: "Computing Discrete Fr´echet Distance"\cr
+
+  [1] C. Genolini and B. Falissard\cr
+  "KmL: k-means for longitudinal data"\cr
+  Computational Statistics, vol 25(2), pp 317-328, 2010\cr
+
+  [2] C. Genolini and B. Falissard\cr
+  "KmL: A package to cluster longitudinal data"\cr
+  Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
+}
 
 \seealso{distTraj}
 
@@ -54,20 +65,14 @@ distFrechetRec(P, Q, method = "max", Fdist = dist)
    P <- rnorm(7)
    Q <- rnorm(6)
 
-   ### Function from Eiter and Mannila
-   distFrechetRec(P,Q)
-
-   ### Optimized function
-   distFrechetR(P,Q)
-
-   ### Function compiled in C
+   ### Function from Eiter and Mannila compiled in C
    distFrechet(P,Q)
 
    ### Frechet using sum instead of max.
    distFrechet(P,Q,method="sum")
 
    ### Frechet using "manhattan" distance
-   distFrechetR(P,Q,Fdist=function(x)dist(x,method="manhattan"))
+   distFrechet(P,Q,Fdist=function(x)dist(x,method="manhattan"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

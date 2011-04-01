@@ -1,21 +1,49 @@
 export(
-       "meanNA","medianNA","sdNA","which.minNA",
-       "is.tna","catShort","NAtrunc",
-       "longData","as.longData","plotTraj",
-       "gald","generateArtificialLongData",
-       "LETTERSletters","METHODS",
-       "distTraj",
-       "distFrechet","distFrechetR","distFrechetRec",
-       "pathFrechet","pathFrechetR"
+       ## function
+       "meanNA","medianNA","rangeNA","sdNA","varNA","which.minNA","is.tna","catShort",
+       #"MAX_CLUSTERS","CRITERION_MIN_OR_MAX","DISTANCE_METHODS","CHOICE_STYLE",
+
+       ## distFrechet
+       "distTraj","distFrechet","pathFrechet",#"distFrechetR","distFrechetRec","pathFrechetR",
+
+       ## parLongData
+       "parLongData","parTRAJ","parMEAN",
+
+       ## ListClustering
+       "listPartition","regroup","ordered","plot","showListPartition",
+
+       ## parWindows
+       "parWindows","windowsCut",
+
+       ## longData
+       "gald","generateArtificialLongData","gald3d","generateArtificialLongData3d","longDataFrom3d","longDataTo3d","showLongData","showLongData3d",
+       ## longDataPlot
+
+       #"resizePartition",
+       "saveTrianglesAsASY","makeLatexFile"
+       #"calculTrajMean","calculTrajMeanPoint","legendCol","varNumAndName","adjustGraph3d",
+       #"misc3dPlan","misc3dPave","misc3dLine","misc3dLines",
 )
 exportMethods(
-    "selectSupTrajMinSize",
-    "plot","plotSubGroups",
-    "partition","ordered","criterion","criterion3","imputation"
+              ## partition
+              "partition","initializePartition",#"ordered",
+              ## parLongData
+              "expandParLongData",
+              ## longData
+              "longData","longData3d","scale","restaureRealData",
+              ## longDataPlot
+              "plot","plot3d","plot3dPdf",
+              ## imputation
+              "imputation",
+              ## criterion
+              "qualityCriterion",
+              ## listPartition
+              "plotCriterion"
 )
 exportClasses(
-    "LongData",
-    "Partition"
+              "Partition","ListPartition",
+              "ParLongData","ParWindows",
+              "LongData","LongData3d"
 )
 
-import(methods,graphics,clv)
+import(methods,clv,rgl,misc3d,graphics)

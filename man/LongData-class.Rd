@@ -4,133 +4,181 @@
 \alias{LongData-class}
 \alias{[,LongData-method}
 \alias{[<-,LongData-method}
-%\alias{addClusterization,LongData-method}
-%\alias{addPartition,LongData-method}
-%\alias{choice,LongData-method}
-%\alias{getCalinskiCriterion,LongData-method}
-%\alias{getClusterizList,LongData,missing,missing-method}
-%\alias{getClusterizList,LongData,numeric,missing-method}
-%\alias{getClusterizList,LongData,numeric,numeric-method}
-%\alias{KmL,LongData-method}
-%\alias{plot,LongData,ANY-method}
-%\alias{print,LongData-method}
 \alias{show,LongData-method}
+
 
 \title{~ Class: LongData ~}
 \description{\code{LongData} is an objet containing the longitudinal
   data (the individual trajectories) and some associate value (like time, individual
-  identifiant,...)
+  identifiant,...). It can be used either for a single
+  variable-trajectory or for joint variable-trajectories.
 }
 
 \section{Objects from the Class}{
-  Object \code{LongData} can be created either directly by calling
-  the fonction \code{\link{longData}} or form an existing structure
-  (\code{data.frame} or \code{matrix}) by using
-  \code{\link{as.longData}}.
+  Object \code{LongData} for single variable-trajectory can be created using
+  the fonction \code{\link{longData}} on a \code{data.frame} or on a \code{matrix}.
+
+  \code{LongData} for joint trajectories can be created by calling
+  the fonction \code{\link{longData3d}} on a \code{data.frame} or on an \code{array}.
 }
 
 \section{Slots}{
   \describe{
-    \item{\code{id}}{\code{[character]}: Single identifier
-      for each of the longData (each individual).}
-    \item{\code{time}}{\code{[numeric]}: Time during which measures were made.}
-    \item{\code{varName}}{\code{[character]}: Name of the variable measured.}
-    \item{\code{traj}}{\code{[array(numeric)]}: Contains
-      the longitudianl data. Each line corresponds to the trajectory of an
-      individual. The columns refer to the time during which measures
-      were made.}
-    \item{\code{other}}{\code{[list]}: list of additionnal information (see
-      section \code{Value} in
-      \code{\link{generateArtificialLongData}} for an example).}
+    \item{\code{idAll}}{\code{[vector(character)]}: Single identifier
+      for each of the longData (each individual). Usefull to export clusters.}
+    \item{\code{idFewNA}}{\code{[vector(character)]}: Restriction of
+      \code{idAll} to the trajectories that does not have 'too many' missing
+      value. See \code{maxNA} for 'too many' definition.}
+    \item{\code{time}}{\code{[numeric]}: Time at which measures are made.}
+    \item{\code{varNames}}{\code{[character]}: Name of the variable measured.}
+    \item{\code{traj}}{\code{[matrix(numeric)]}: Contains
+      the longitudianl data. Each lines is the trajectories of an
+      individual. Each column is the time at which measures
+      are made.}
+    \item{\code{dimTraj}}{\code{[vector3(numeric)]}: size of the matrix
+      \code{traj} (ie \code{dimTraj=c(length(idFewNA),length(time))}).}
+    \item{\code{maxNA}}{\code{[numeric]} or \code{[vector(numeric)]}:
+      Individual whose trajectories contain 'too many' missing value
+      are exclude from \code{traj} and will no be use in
+      the analysis. Their identifier is preserved in \code{idAll} but
+      not in \code{idFewNA}. 'too many' is define by \code{maxNA}: a
+      trajectory with more missing than \code{maxNA} is exclude.}
+    \item{\code{reverse}}{\code{[matrix(numeric)]}: if the trajectories
+      are scale using the function \code{\link{scale}}, the 'scaling
+      parameters' (probably mean and standard deviation) are saved in
+      \code{reverse}. This is usefull to restaure the original data after a
+      scaling operation.}
   }
 }
 
 \section{Construction}{
-  Object \code{LongData} can be created either directly by calling
-  the fonction \code{\link{longData}} (build from scratch) or
-  via \code{\link{as.longData}}
-  (turning a \code{data.frame} into a \code{LongData}).
+  Object \code{LongData} for single variable-trajectory can be created by calling
+  the fonction \code{\link{longData}} on a \code{data.frame} or on a \code{matrix}.
+
+  \code{LongData} for joint trajectories can be created by calling
+  the fonction \code{\link{longData3d}} on a \code{data.frame} or on an \code{array}.
 }
 
 \section{Get [}{
   \describe{
-    \item{Object["id"]}{[vecteur(character)]: Gets each individual
-      indentifiant (the value of the slot \code{id})}
+    \item{Object["idAll"]}{[vecteur(character)]: Gets the full list of individual
+      identifiant (the value of the slot \code{idAll})}
+    \item{Object["idFewNA"]}{[vecteur(character)]: Gets the list of individual
+      identifiant with not too many missing values (the value of the slot \code{idFewNA})}
+    \item{Object["varNames"]}{[character]: Gets the name(s) of the variable (the value of the slot \code{varNames})}
     \item{Object["time"]}{[vecteur(numeric)]: Gets the times (the value of the slot \code{time})}
-    \item{Object["varName"]}{[character]: Gets the name of the variable (the value of the slot \code{varName})}
-    \item{Object["traj"]}{[matrix(numeric)]: Gets all the longData'
-      values (the value of the slot \code{traj})}
+    \item{Object["traj"]}{[array(numeric)]: Gets all the longData' values (the value of the slot \code{traj})}
+    \item{Object["dimTraj"]}{[vector3(numeric)]: Gets the dimension of \code{traj}.}
+    \item{Object["nbIdFewNA"]}{[numeric]: Gets the first dimension of
+      \code{traj} (ie the number of individual include in the analysis).}
+    \item{Object["nbTime"]}{[numeric]: Gets the second dimension of
+      \code{traj} (ie the number of time measurement).}
+    \item{Object["nbVar"]}{[numeric]: Gets the third dimension of
+      \code{traj} (ie the number of variables).}
+    \item{Object["maxNA"]}{[vecteur(numeric)]: Gets maxNA.}
+    \item{Object["reverse"]}{[matrix(numeric)]: Gets the matrix of the
+      scaling parameters.}
   }
 }
 
 
-\section{Set [<-}{
-  \describe{
-    \item{Object["id"]<-value}{[vecteur(character)]: Sets each individual
-      indentifiant to \code{value}}
-    \item{Object["time"]<-value}{[vecteur(numeric)]: Sets the times to
-      \code{value}.}
-    \item{Object["varName"]<-value}{[character]: Sets the name of the
-      variable to \code{value}.}
-    \item{Object["traj"]}{[matrix(numeric)]: Sets all the longData'
-      to \code{values}.}
-    \item{Object["traj"][3,]<-value}{[vecteur(numeric)]: Sets the trajectorie of
-      the individual 3 to \code{value}.}
-  }
-}
+% \section{Set [<-}{
+%   \describe{
+%     \item{Object["time"]<-value}{[vecteur(numeric)]: Sets the slot \code{time} to
+%       \code{value}.}
+%     \item{Object["varNames"]<-value}{[character]: Sets the name of the
+%       variable to \code{value}.}
+%     \item{Object["traj"]}{[array(numeric)]: Sets the trajectories
+%       to \code{values}. Value can be either an array or a matrix (that
+%       will be turn into an array)}
+%     \item{Object["traj"][3,,]<-value}{[vecteur(numeric)]: Sets the trajectory of
+%       the individual 3 to \code{value}.}
+%   }
+% }
 
 
 
 \section{Methods}{
   \describe{
-    \item{\code{\link[=plotTraj]{plot(LongData)}}}{display the LongData.}
-    \item{\code{\link[=plotTraj]{plot(LongData,Partition)}}}{display the LongData according to a specific
-      \code{\linkS4class{Partition}}.}
-    \item{\code{\link[=plotSubGroups]{plotSubGroups(LongData,Partition)}}}{display
-      one graph for each clusters, sub-groups by sub-groups
-      according to a specific\code{\linkS4class{Partition}}.}
-    \item{\code{\link[=selectSupTrajMinSize]{selecSupTrajMinSize(LongData,minSize)}}}{select
-      the individual trajectories that are made by at least \code{minSize} values
-      (usefull to exclude from the LongData some individual trajectories with to many missing values.)}
+    \item{\code{\link{scale}}}{scale the trajectories. Usefull to
+      normalize variable trajectories measured with different units.}
+    \item{\code{\link{restaureRealData}}}{restaure original data that
+      have been modified after a scaling operation.}
+    \item{\code{\link{generateArtificialLongData}} (or
+      \code{\link{gald}})}{Generate an artifial dataset of a single variable-trajectory.}
+    \item{\code{\link{generateArtificialLongData3d}} (or
+      \code{\link{gald3d}})}{Generate a artifial dataset of some joint
+      variable-trajectory.}
+    \item{\code{\link{longDataFrom3d}}}{Extract a variable trajectory
+      form a dataset of joint trajectories.}
+    \item{\code{plot}}{plot all the variable of the \code{LongData}, optionnaly according to a \code{\linkS4class{Partition}}.}
+    \item{\code{plot3d}}{plot tow variable of the \code{LongData} in 3 dimensions, optionnaly according to a \code{\linkS4class{Partition}}.}
+    \item{\code{plot3dPdf}}{create 'Triangle objects' representing in
+      3D the cluster's center according to a
+      \code{\linkS4class{Partition}}. 'Triangle object' can latter be
+      include in a LaTeX file to get a dynamique (rotationg) pdf
+      figure.}
+    \item{\code{imputation}}{Impute the missing values of the trajectories.}
+    \item{\code{qualityCriterion}}{Compute some quality criterion that
+      can be use to compare the quality of differents \code{\linkS4class{Partition}}.}
   }
 }
 
-\references{Article submited\cr
+
+\section{Author}{
+Christophe Genolini\cr
+1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
+2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
-\section{Author(s)}{
-  Christophe Genolini\cr
-  PSIGIAM: Paris Sud Innovation Group in Adolescent Mental Health\cr
-  INSERM U669 / Maison de Solenn / Paris\cr\cr
+\references{
+  [1] C. Genolini and B. Falissard\cr
+  "KmL: k-means for longitudinal data"\cr
+  Computational Statistics, vol 25(2), pp 317-328, 2010\cr
 
-  Contact author : <genolini@u-paris10.fr>
+  [2] C. Genolini and B. Falissard\cr
+  "KmL: A package to cluster longitudinal data"\cr
+  Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
 }
 
 \seealso{
   Overview: \code{\link{longitudinalData-package}} \cr
-  Methods: \code{\link{longData}}, \code{\link{as.longData}}, \code{\link{selectSupTrajMinSize}}, \code{\link{imputation}}, \code{\link{criterion}}\cr
-  Plot: \code{\link[=plotTraj]{plot(LongData)}},\code{\link[=plotSubGroups]{plotSubGroups(LongData)}}
+  Methods: \code{\link{longData}},  \code{\link{longData3d}}, \code{\link{imputation}}, \code{\link{qualityCriterion}}\cr
+  Plot: \code{\link[=plot,LongData]{plot}},
+  \code{\link[=plot3d,LongData3d]{plot3d}},  \code{\link{plot3dPdf}}
 }
 
 
 \examples{
-### building longData
+#################
+### building trajectory (longData)
 mat <- matrix(c(NA,2,3,4,1,6,2,5,1,3,8,10),4)
-ld <- new("LongData",id=c("I1","I2","I3","I4"),time=c(2,4,8),varName="Age",traj=mat)
+ld <- longData(mat,idAll=c("I1","I2","I3","I4"),time=c(2,4,8),varNames="Age")
 
 ### '[' and '[<-'
-ld["id"]
-ld["time"]<- c(1,3,9)
-ld["varName"]
+ld["idAll"]
+ld["idFewNA"]
+ld["varNames"]
 ld["traj"]
-ld["traj"][3,]<-c(2,7,9)
 (ld)
 
 ### Plot
-plot(ld,type.mean="n",legend=FALSE)
+plot(ld)
 
-### Only trajectories with at least 3 values
-selectSupTrajMinSize(ld,3)
+
+#################
+### building join trajectories (longData3d)
+dn <- data.frame(id=1:3,v1=c(11,14,16),t1=c(1,5,7),v2=c(12,10,13),t2=c(2,5,0),t3=c(3,6,8))
+(ld <- longData3d(dn,timeInData=list(Vir=c(2,4,NA),Tes=c(3,5,6))))
+
+### Scaling
+scale(ld)
+(ld)
+
+### Plotting
+plot(ld)
+plot3d(ld)
+restaureRealData(ld)
 }
 \keyword{classes}
 \keyword{classif}  % Classification	['class' package]
