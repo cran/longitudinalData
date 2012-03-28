@@ -63,12 +63,27 @@ distTraj(x, y, method = "euclidean", p = 2)
 \value{
   A numeric value.
 }
+
+
+
+\section{Author}{
+Christophe Genolini\cr
+1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
+2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+}
+
 \references{
-  Brian Everitt, Sabine Landau & Morven Leese : "Cluster Analysis"
+  Brian Everitt, Sabine Landau & Morven Leese : "Cluster Analysis"\cr
+
+  [1] C. Genolini and B. Falissard\cr
+  "KmL: k-means for longitudinal data"\cr
+  Computational Statistics, vol 25(2), pp 317-328, 2010\cr
+
+  [2] C. Genolini and B. Falissard\cr
+  "KmL: A package to cluster longitudinal data"\cr
+  Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
 }
-\author{
-Christophe Genolini
-}
+
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
@@ -79,8 +94,8 @@ Christophe Genolini
     x <- -1+rnorm(25);x[floor(runif(5,1,26))] <- NA
     y <- 1+rnorm(25);y[floor(runif(5,1,26))] <- NA
 
-    plot(x,type="b",col=2,ylim=c(-5,5))
-    lines(y,type="b",col=3)
+#    plot(x,type="b",col=2,ylim=c(-5,5))
+ #   lines(y,type="b",col=3)
 
     system.time(for(i in 1:10000)dist(rbind(x,y)))
     system.time(for(i in 1:10000)distTraj(x,y))

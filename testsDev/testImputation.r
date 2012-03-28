@@ -1,151 +1,139 @@
-source("./testPartition.r")
+source("../R/imputTraj.r")
+source("../R/imputCross.r")
+source("../R/imputLinearInterpol.r")
+source("../R/imputCopyMean.r")
 source("../R/imputation.r")
 
 cat("###########################################################
-########################## LOCF ###########################
+####################### imput Traj #######################
 ###########################################################\n")
 
 cat("### Sous fonctions ###\n")
-cleanProg(trajImput.LOCB.begin,,,0)
-cleanProg(trajImput.LOCF.middle,,,0)
 
-a <- c(NA,2,NA,4,NA,1,NA,NA,NA,-5,NA,3,NA,NA)
-a2 <- trajImput.LOCB.begin(a)
-(a2 <- trajImput.LOCF.middle(a2))
-
-a <- c(NA,NA,4,NA,NA,NA,NA)
-a2 <- trajImput.LOCB.begin(a)
-(a2 <- trajImput.LOCF.middle(a2))
-
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a2 <- trajImput.LOCB.begin(a)
-(a2 <- trajImput.LOCF.middle(a2))
-
-a <- c(NA,NA,NA,NA,NA,NA)
-a2 <- trajImput.LOCB.begin(a)
-a2 <- trajImput.LOCF.middle(a2)
-
-a <- c(1,NA)
-a2 <- trajImput.LOCB.begin(a)
-(a2 <- trajImput.LOCF.middle(a2))
-
-a <- c(NA,-1)
-a2 <- trajImput.LOCB.begin(a)
-(a2 <- trajImput.LOCF.middle(a2))
-
-a <- c(1)
-a2 <- trajImput.LOCB.begin(a)
-(a2 <- trajImput.LOCF.middle(a2))
+#a0 <- c(9 , 8, 6, 5,5.5,7,8.5,9.5,9,10)
+a1 <- c(NA, 2, NA, NA, NA, -5,NA,NA, 0, NA,NA)
+a2 <- c(NA,NA,  4, NA, NA, NA,NA,NA,NA, NA,NA)+1
+a3 <- c(NA,NA, NA,  4,  2, NA,NA,NA,NA, NA,NA)+4
+a4 <- c(NA,NA, NA, NA, NA, NA,NA,NA,NA, NA,NA)
+a5 <- c( 1,NA, NA, NA, NA, NA,NA,NA,NA, NA,NA)+9
+a6 <- c(NA,NA, NA, NA, NA, NA,NA,NA,NA, NA, 1)+11
+a7 <- c( 3, 4,4.1,3.5,3.9,2.5,NA,NA, 3,3.2, 4)
+A <- rbind(-a1,-a2,-a3,-a4,-a5,-a6,-a7-0.2,-a7+0.5)+12
 
 
-cat("### function complete ###\n")
-cleanProg(trajImput.LOCF,,,0)
+cleanProg(imput.locf.traj,,,0)
+cleanProg(imput.locf,,,1)  ## imput.locf.traj
 
-par(mfrow=c(4,5))
-a <- c(NA,2,NA,4,NA,1,2,NA,NA,-5,NA,3,NA,NA)
-a2 <- trajImput.LOCF(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
+imput.locf.traj(a1)
+(imp <- imput.locf(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(NA,NA,4,NA,NA,NA,NA)
-a2 <- trajImput.LOCF(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a2 <- trajImput.LOCF(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,NA,NA,NA,NA)
-a2 <- trajImput.LOCF(a)
-
-a <- c(1,NA)
-a2 <- trajImput.LOCF(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,-1)
-a2 <- trajImput.LOCF(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(1)
-trajImput.LOCF(a)
+cleanProg(imput.nocb,,,0)  ## imput.nocb.traj
+(imp <- imput.nocb(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
 
+
+cleanProg(imput.trajMean.traj,,,0)
+cleanProg(imput.trajMean,,,1)  ## imput.trajMean.traj
+
+imput.trajMean.traj(a1)
+(imp <- imput.trajMean(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
+
+
+cleanProg(imput.trajMedian.traj,,,0)
+cleanProg(imput.trajMedian,,,1)  ## imput.trajMedian.traj
+
+imput.trajMedian.traj(a1)
+(imp <- imput.trajMedian(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
+
+
+cleanProg(imput.trajHotDeck.traj,,,0)
+cleanProg(imput.trajHotDeck,,,1)  ## imput.trajHotDeck.traj
+
+imput.trajHotDeck.traj(a1)
+(imp <- imput.trajHotDeck(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
+
+
+cleanProg(imput.spline.traj,,,0)
+cleanProg(imput.spline,,,1)  ## imput.trajSpline.traj
+
+imput.spline.traj(a1)
+(imp <- imput.spline(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
 
 cat("###########################################################
-########################## LOCB ###########################
+####################### imput Cross #######################
 ###########################################################\n")
 
-cat("### Sous fonctions ###\n")
-cleanProg(trajImput.LOCF.end,,,0)
-cleanProg(trajImput.LOCB.middle,,,0)
+cleanProg(imput.mean.col,,,0)
+cleanProg(imput.crossMean,,,1)  ## imput.crossMean.cross
 
-a <- c(NA,2,NA,4,NA,1,NA,NA,NA,-5,NA,3,NA,NA)
-a <- trajImput.LOCF.end(a)
-(a <- trajImput.LOCB.middle(a))
+imput.mean.col(a1)
 
-a <- c(NA,NA,4,NA,NA,NA,NA)
-a <- trajImput.LOCF.end(a)
-(a <- trajImput.LOCB.middle(a))
+(imp <- imput.crossMean(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a <- trajImput.LOCF.end(a)
-(a <- trajImput.LOCB.middle(a))
+(imp <- imput.crossMean(A,force=TRUE))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(NA,NA,NA,NA,NA,NA)
-a <- trajImput.LOCF.end(a)
-a <- trajImput.LOCB.middle(a)
+(imp <- imput.crossMean(A,force=5))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(1,NA)
-a <- trajImput.LOCF.end(a)
-(a <- trajImput.LOCB.middle(a))
 
-a <- c(NA,-1)
-a <- trajImput.LOCF.end(a)
-(a <- trajImput.LOCB.middle(a))
 
-a <- c(1)
-a <- trajImput.LOCF.end(a)
-(a <- trajImput.LOCB.middle(a))
 
-cat("### function complete ###\n")
-cleanProg(trajImput.LOCF,,,0)
 
-#par(mfrow=c(4,5))
-a <- c(NA,2,NA,4,NA,1,2,NA,NA,-5,NA,3,NA,NA)
-a2 <- trajImput.LOCB(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
+cleanProg(imput.median.col,,,0)
+cleanProg(imput.crossMedian,,,1)  ## imput.crossMedian.cross
 
-a <- c(NA,NA,4,NA,NA,NA,NA)
-a2 <- trajImput.LOCB(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
+imput.median.col(a1)
 
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a2 <- trajImput.LOCB(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
+(imp <- imput.crossMedian(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(NA,NA,NA,NA,NA,NA)
-a2 <- trajImput.LOCB(a)
+(imp <- imput.crossMedian(A,force=TRUE))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(1,NA)
-a2 <- trajImput.LOCB(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
+(imp <- imput.crossMedian(A,force=5))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(NA,-1)
-a2 <- trajImput.LOCB(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
 
-a <- c(1)
-trajImput.LOCB(a)
+
+cleanProg(imput.hotDeck.col,,,0)
+cleanProg(imput.crossHotDeck,,,1)  ## imput.crossHotDeck.cross
+
+imput.hotDeck.col(a1)
+
+(imp <- imput.crossHotDeck(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
+
+(imp <- imput.crossHotDeck(A,force=TRUE))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
+
+(imp <- imput.crossHotDeck(A,force=5))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
+
+
 
 
 
@@ -153,416 +141,338 @@ cat("###################################################################
 ###################### Interpolation Lineraire ####################
 ###################################################################\n")
 
-cleanProg(trajImput.interpoLin.middle,,,0)
-cleanProg(trajImput.globalSlope.beginEnd,,,0)
-cleanProg(trajImput.interpoLin2,,,0)
+cleanProg(bisector,,,0)
+bisector(0,0,1,0,0,2)
+bisector(0,0,1,-2,0,1)
+bisector(0,0,1,1,2,2)
 
-cat("###############
-### Linear interpolation 2 : global\n")
+cleanProg(imput.linearInterpol.centerTrajAux)
+imput.linearInterpol.centerTrajAux(a1[2:9])
+imput.linearInterpol.centerTrajAux(a7)
 
-cat("### sous fonction ###\n")
-a <- c(NA,2,NA,4,NA,1,NA,NA,NA,-5,NA,3,NA,NA)
-a <- trajImput.globalSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
+imput.linearInterpol.centerTraj(a1)
+imput.linearInterpol.centerTraj(a7)
 
-a <- c(NA,NA,4,NA,NA,NA,NA)
-a <- trajImput.globalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
 
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a <- trajImput.globalSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
+cleanProg(imput.linearInterpol.locfTraj)
+cleanProg(imput.linearInterpol.locf,,,1)
 
-a <- c(NA,NA,NA,NA,NA,NA)
-a <- trajImput.globalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
+imput.linearInterpol.locfTraj(a1)
+(imp <- imput.linearInterpol.locf(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(1,NA)
-a <- trajImput.globalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
 
-a <- c(NA,-1)
-a <- trajImput.globalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
+cleanProg(imput.linearInterpol.globalTraj)
+cleanProg(imput.linearInterpol.global,,,1)
 
-a <- c(1)
-a <- trajImput.globalSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
+imput.linearInterpol.globalTraj(a1)
+(imp <- imput.linearInterpol.global(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
 
-cat("### Fonction complete ###\n")
-a <- c(NA,2,NA,4,NA,1,2,NA,NA,NA,-25,NA,3,NA,NA)
-a2 <- trajImput.interpoLin2(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
+cleanProg(imput.linearInterpol.localTraj)
+cleanProg(imput.linearInterpol.local,,,1)
 
-a <- c(NA,NA,4,NA,NA,NA,NA)
-try(a2 <- trajImput.interpoLin2(a))
+imput.linearInterpol.localTraj(a1)
+(imp <- imput.linearInterpol.local(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a2 <- trajImput.interpoLin2(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
 
-a <- c(NA,NA,NA,NA,NA,NA)
-try(trajImput.interpoLin2(a))
+cleanProg(imput.linearInterpol.bisectorTraj)
+cleanProg(imput.linearInterpol.bisector,,,1)
 
-a <- c(1,NA)
-try(a2 <- trajImput.interpoLin2(a))
+imput.linearInterpol.bisectorTraj(a1)
+(imp <- imput.linearInterpol.bisector(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(1,2,NA)
-try(a2 <- trajImput.interpoLin2(a))
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
 
-a <- c(NA,NA,NA,-1,2)
-a2 <- trajImput.interpoLin2(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
 
-a <- c(1)
-a2 <- trajImput.interpoLin2(a)
 
 
 
 
-cat("###############
-### Linear interpolation 3 : Local\n")
+cat("###################################################################
+############################# copyMean ############################
+###################################################################\n")
 
-cleanProg(trajImput.localSlope.beginEnd,,,0)
-cleanProg(trajImput.interpoLin3,,,0)
+cleanProg(imput.copyMean.centerTrajAux)
+imput.copyMean.centerTrajAux(a1[2:9],1:8)
+imput.copyMean.centerTrajAux(a7,1:11)
 
-cat("### sous fonction ###\n")
-a <- c(NA,2,NA,4,NA,1,NA,NA,NA,-5,NA,3,NA,NA)
-a <- trajImput.localSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
+imput.copyMean.centerTraj(a1,1:11)
+imput.copyMean.centerTraj(a7,1:11)
 
-a <- c(NA,NA,4,NA,NA,NA,NA)
-a <- trajImput.localSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
 
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a <- trajImput.localSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
+cleanProg(imput.copyMean.locfTraj)
+cleanProg(imput.copyMean.locf,,,2)
 
-a <- c(NA,NA,NA,NA,NA,NA)
-a <- trajImput.localSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
+imput.copyMean.locfTraj(a1,1:11)
+(imp <- imput.copyMean.locf(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(1,NA)
-a <- trajImput.localSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
 
-a <- c(NA,-1)
-a <- trajImput.localSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
+cleanProg(imput.copyMean.globalTraj)
+cleanProg(imput.copyMean.global,,,2)
 
-a <- c(1)
-a <- trajImput.localSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
+imput.copyMean.globalTraj(a1,1:11)
+(imp <- imput.copyMean.global(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
 
-cat("### Fonction complete ###\n")
-a <- c(NA,2,NA,4,NA,1,2,NA,NA,NA,-5,NA,3,NA,NA)
-a2 <- trajImput.interpoLin3(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
+cleanProg(imput.copyMean.localTraj)
+cleanProg(imput.copyMean.local,,,2)
 
-a <- c(NA,NA,4,NA,NA,NA,NA)
-try(a2 <- trajImput.interpoLin3(a))
+imput.copyMean.localTraj(a1,1:11)
+(imp <- imput.copyMean.local(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a2 <- trajImput.interpoLin3(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
 
-a <- c(NA,NA,NA,NA,NA,NA)
-try(trajImput.interpoLin(a))
+cleanProg(imput.copyMean.bisectorTraj)
+cleanProg(imput.copyMean.bisector,,,2)
 
-a <- c(1,NA)
-try(a2 <- trajImput.interpoLin3(a))
-
-a <- c(1,2,NA)
-a2 <- trajImput.interpoLin3(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,NA,-1,2)
-a2 <- trajImput.interpoLin3(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(1)
-a2 <- trajImput.interpoLin3(a)
-
-
-
-
-cat("###############
-### Linear interpolation 4 : LOCF\n")
-
-cat("### Fonction complete ###\n")
-a <- c(NA,2,NA,4,NA,1,2,NA,NA,NA,-5,NA,3,NA,NA)
-a2 <- trajImput.interpoLin4(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,4,NA,NA,NA,NA)
-try(a2 <- trajImput.interpoLin4(a))
-
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a2 <- trajImput.interpoLin4(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,NA,NA,NA,NA)
-try(trajImput.interpoLin(a))
-
-a <- c(1,NA)
-try(a2 <- trajImput.interpoLin4(a))
-
-a <- c(1,2,NA)
-a2 <- trajImput.interpoLin4(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,NA,-1,2)
-a2 <- trajImput.interpoLin4(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(1)
-a2 <- trajImput.interpoLin4(a)
-
-
-cat("###############
-### Linear interpolation : bissectrice\n")
-
-cleanProg(trajImput.localGlobalSlope.beginEnd,,,0)
-cleanProg(trajImput.interpoLin,,,0)
-
-cat("### sous fonction ###\n")
-a <- c(NA,2,NA,4,NA,1,NA,NA,NA,-5,NA,3,NA,NA)
-a <- trajImput.localGlobalSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
-
-a <- c(NA,NA,4,NA,NA,NA,NA)
-a <- trajImput.localGlobalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
-
-a <- c(NA,NA,-4,5,NA,NA,NA)
-a <- trajImput.localGlobalSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
-
-a <- c(NA,NA,NA,NA,NA,NA)
-a <- trajImput.localGlobalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
-
-a <- c(1,NA)
-a <- trajImput.localGlobalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
-
-a <- c(NA,-1)
-a <- trajImput.localGlobalSlope.beginEnd(a)
-try(a <- trajImput.interpoLin.middle(a))
-
-a <- c(1)
-a <- trajImput.localGlobalSlope.beginEnd(a)
-(a <- trajImput.interpoLin.middle(a))
-
-
-cat("### Fonction complete ###\n")
-a <- c(NA,2,NA,4,NA,1,2,NA,NA,NA,-5,NA,3,NA,NA)
-a2 <- trajImput.interpoLin(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,4,NA,NA,NA,NA)
-try(a2 <- trajImput.interpoLin(a))
-
-a <- c(NA,NA,-4,NA,NA,NA)
-a2 <- trajImput.interpoLin(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,NA,NA,NA,NA)
-try(trajImput.interpoLin(a))
-
-a <- c(1,NA)
-try(a2 <- trajImput.interpoLin(a))
-
-a <- c(1,2,NA)
-try(a2 <- trajImput.interpoLin(a))
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,NA,-1,2)
-a2 <- trajImput.interpoLin(a)
-plot(a2,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(1)
-a2 <- trajImput.interpoLin(a)
-
-
-
-
-cat("############################################################
-######################## CopyBegin #########################
-############################################################\n")
-
-cat("### Sous fonction ###\n")
-cleanProg(trajImput.copy.begin,,,0)
-cleanProg(trajImput.copy.end,,,0)
-cleanProg(trajImput.copy.middle,,,0)
-cleanProg(trajImput.copyMean,,,0)
-
-(a <- c(NA,-2,NA,4,NA,1,NA,NA,NA,5,NA,3,NA,NA))
-(m <- rep(1,14))
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(NA,-2,NA,4,NA,1,NA,NA,NA,5,NA,3,NA,NA))
-(m <- (14:1)*2)
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(NA,2,NA,4,NA,1,NA,NA,NA,5,NA,-3,NA,NA))
-(m <- (14:1)*2+10)
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(NA,NA,4,NA,NA,NA,NA))
-(m <- 1:7)
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(NA,NA,-4,3,NA,NA,NA))
-(m <- 1:7)
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(NA,NA,NA,NA,NA,NA))
-(m <- 1:6)
-try(a <- trajImput.copy.begin(a,m))
-try(a <- trajImput.copy.end(a,m))
-try(a <- trajImput.copy.middle(a,m))
-
-
-(a <- c(1,NA))
-(m <- 1:2)
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(NA,1))
-(m <- 1:2)
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(1))
-(m <- 2)
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-(a <- trajImput.copy.middle(a,m))
-
-(a <- c(NA,NA,NA,4,3,6,NA,NA))
-(m <- c(8, NA, 2,3,3,5,NA,4))
-a <- trajImput.copy.begin(a,m)
-a <- trajImput.copy.end(a,m)
-try(a <- trajImput.copy.middle(a,m))
-
-
-cat("### Fonction complete ###\n")
-a <- c(NA,-2,NA,4,NA,1,2,NA,NA,NA,5,NA,3,NA,NA)
-(m <- rep(1,15))
-a2 <- trajImput.copyMean(a,m)
-plot(a2,type="o")
-lines(m,lwd=2,col=3,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,4,NA,NA,NA,NA)
-(m <- 1:7)
-a2 <- trajImput.copyMean(a,m)
-plot(a2,type="o",ylim=c(1,10))
-lines(m,lwd=2,col=3,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,NA,-4,3,NA,NA,NA)
-(m <- 1:7)
-a2 <- trajImput.copyMean(a,m)
-plot(a2,type="o",ylim=c(-10,8))
-lines(m,lwd=2,col=3,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-(a <- c(NA,NA,NA,NA,NA,NA))
-(m <- 1:7)
-try(trajImput.copyMean(a,m))
-
-a <- c(1,NA)
-(m <- 1:2)
-a2 <- trajImput.copyMean(a,m)
-plot(a2,type="o")
-lines(m,lwd=2,col=3,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,1)
-(m <- 1:2)
-a2 <- trajImput.copyMean(a,m)
-plot(a2,type="o")
-lines(m,lwd=2,col=3,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(1)
-(m <- 2)
-trajImput.copyMean(a,m)
-
-a <- c(NA,-2,NA,4,NA,1,2,NA,NA,NA,5,NA,3,NA,NA)
-(m <- (15:1)*2)
-a2 <- trajImput.copyMean(a,m)
-plot(a2,type="o",ylim=c(-8,30))
-lines(m,lwd=2,col=3,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-a <- c(NA,2,NA,4,NA,1,2,NA,NA,NA,5,NA,-3,NA,NA)
-(m <- (15:1)*2-10)
-a2 <- trajImput.copyMean(a,m)
-plot(a2,type="o",ylim=c(-8,20))
-lines(m,lwd=2,col=3,type="o")
-lines(a,lwd=3,col=2,type="o")
-
-
-a <- c(NA,NA,NA,4,3,6,NA,NA)
-(m <- c(8, NA, 2,3,3,5,NA,4))
-try(trajImput.copyMean(a,m))
-
+imput.copyMean.bisectorTraj(a1,1:11)
+(imp <- imput.copyMean.bisector(A))
+matplot(t(imp),type="l",lty=1)
+matlines(t(A),lwd=4,type="o",pch=1,lty=1)
 
 
 cat("############################################################
 #################### Imputation Method #####################
 ############################################################\n")
-cleanProg(matrixImput,,,7) # trajImput.interpoLin  .LongData.Locf meanNA
-cleanProg(trajImput,,,7) # trajImput.interpoLin trajImput.interpoLinS trajImput.LOCF trajImput.LOCB meanNA
-
-imputation(ld2n,method="LOCF")
-imputation(ld2n,method="LOCB")
-imputation(ld2n,method="linearInterpolation")
-imputation(ld2n,method="linearInterpolation2")
-imputation(ld3n,method="LOCF")
-imputation(ld3n,method="linearInterpolation")
-imputation(ld2n,p2a,method="copyMean")
 
 
-traj <- ld2n@traj
-part <- p2a@clusters
-imputation(traj,part,method="copyMean")
+cleanProg(.imputationMatrix,,,2) # min max
+imputation(ld3n["traj"])
+matplot(t(imputation(ld3n["traj"])),type="l",lty=1,col=1)
+matlines(t(ld3n["traj"]),type="l",lty=1,col=2)
 
+imputation(LD3n["traj"])
+
+imputation(ld1n)
+imputation(ld2n)
+imputation(ld3n)
+imputation(ld4n)
+imputation(ld5n)
+
+imputation(LD1n)
+imputation(LD2n)
+imputation(LD3n)
+imputation(LD4n)
+imputation(LD5n)
+imputation(LD6n)
+imputation(LD7n)
+
+
+B <- rbind(c( NA, NA,  4,  2,  15, NA, NA),
+           c( 15, 16, 24, 26, 20, 14, 12)-3,
+           c( -5,  0,  3,  4,  3,  0,  1)-3,
+           c( NA,  2, NA, 12, NA,  1, NA))
+lB <- longData(B)
+meanB <- apply(B,2,meanNA)
+
+
+####################
+### cross
+
+matplot(t(imputation(lB,method="locf")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="locf",upperBound=Inf)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="locf",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="nocb")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="nocb",upperBound=Inf)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="nocb",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="crossMean")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="crossMedian")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="crossHotDeck")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+####################
+### traj
+
+matplot(t(imputation(lB,method="trajMean")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="trajMedian")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="trajHotDeck")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="spline")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="spline",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="spline",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="spline",lowerBound=-5,upperBound=15+1:11)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+####################
+### linearInterpol
+
+matplot(t(imputation(lB,method="linearInterpol")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="linearInterpol.global")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol.global",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol.global",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="linearInterpol.local")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol.local",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol.local",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="linearInterpol.bisector")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol.bisector",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="linearInterpol.bisector",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+####################
+### copyMean
+
+matplot(t(imputation(lB,method="copyMean")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="copyMean.global")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean.global",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean.global",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="copyMean.local")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean.local",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean.local",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+
+
+matplot(t(imputation(lB,method="copyMean.bisector")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean.bisector",lowerBound="globalMin",upperBound="globalMax")["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
+
+matplot(t(imputation(lB,method="copyMean.bisector",lowerBound=NA,upperBound=NA)["traj"]),type="l",lty=1,col=1)
+matlines(t(B),type="b",lty=1,col=2,lwd=2,pch=16)
+lines(meanB,col=1,lwd=3,type="b")
 
 
 # Pour la premiere ou la derniere, on copie la variation de la moyenne.

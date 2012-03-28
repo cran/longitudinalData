@@ -1,105 +1,107 @@
-source("./testLongData.r")
+library("clv")
 source("../R/partition.r")
+cleanProg(.qualityCriterion.matrix,,,4) # meanNA prod sdcNA sum
+
+qualityCriterion(ld2["traj"],c(1,2,1,2,2))
+qualityCriterion(ld2["traj"],as.integer(c(1,2,1,2,2)))
+qualityCriterion(ld2["traj"],as.numeric(c(1,2,1,2,2)))
+qualityCriterion(ld4["traj"],rep(1:4,50))
+qualityCriterion(ld4["traj"],rep(1:4,each=50))
+qualityCriterion(ld4n["traj"],rep(1:4,each=50)[1:ld4n["nbIdFewNA"]],"copyMean")
+qualityCriterion(ld4n["traj"],rep(1:4,each=50)[1:ld4n["nbIdFewNA"]],"copyMean")
+qualityCriterion(LD4["traj"],rep(1:4,50))
+
+tryBug(qualityCriterion(LD4["traj"],rep(1:4,25)))
+
 
 cat("####################################################################
 ########################## Test  Partition #########################
-############################# Creation #############################
 ####################################################################\n")
 
-cleanProg(.Partition.validity,,,1)  # LETTERSletters
+
+
+cleanProg(.partition.validity,,,2)  # LETTERS MAX_CLUSTERS
 new("Partition") # Doit marcher meme apres recompilation
 new("Partition",clusters=as.factor(c("A","B","A")),nbClusters=2)
 new("Partition",clusters=as.factor(c("A","B","A")),nbClusters=4)
-new("Partition",clusters=as.factor(c("A","M","c")),nbClusters=40)
+new("Partition",clusters=as.factor(c("A","M","A")),nbClusters=20)
 new("Partition",clusters=as.factor(c("A","B",NA,"A")),nbClusters=3)
 new("Partition",clusters=as.factor(c(NA,NA)),nbClusters=3)
-new("Partition",clusters=as.factor(c("A","B","A")),nbClusters=52)
-new("Partition",clusters=as.factor(c("A","B","B")),nbClusters=52)
-ordered(new("Partition",clusters=as.factor(c("A","B","B")),nbClusters=52))
+new("Partition",clusters=as.factor(c("A","B","A")),nbClusters=26)
+new("Partition",clusters=as.factor(c("A","B","B")),nbClusters=26)
+new("Partition",clusters=as.factor(c("A","A","A")),nbClusters=1)
 
-#try(new("Partition",clusters=as.factor(c("A","B")),id=as.character(c(101,108))))
-#try(new("Partition",clusters=factor(c("A","C","A"),levels=LETTERS[1:3]),id=as.character(c(101,108,2)),nbClusters=3))
-try(new("Partition",clusters=factor(c("A","C","A"),levels=LETTERS[1:3]),nbClusters=2))
-try(new("Partition",clusters=as.factor(c("A","B","D")),nbClusters=4))
-try(new("Partition",clusters=as.factor(c("A","C",NA,"A")),nbClusters=3))
-try(new("Partition",clusters=as.factor(c("A","C",NA,"A")),nbClusters=20))
-try(new("Partition",clusters=as.factor(c("A","C",NA,"M")),nbClusters=3))
-try(new("Partition",clusters=factor(c("A","C",NA,"aa")),nbClusters=3))
+#ordered(new("Partition",clusters=as.factor(c("A","B","B")),nbClusters=26))
 
+tryBug(new("Partition",clusters=factor(c("A","C","A"),levels=LETTERS[1:3]),nbClusters=2))
+new("Partition",clusters=as.factor(c("A","B","D")),nbClusters=4)
+new("Partition",clusters=as.factor(c("A","C",NA,"A")),nbClusters=3)
+new("Partition",clusters=as.factor(c("A","C",NA,"A")),nbClusters=20)
+tryBug(new("Partition",clusters=as.factor(c("A","C",NA,"M")),nbClusters=3))
+tryBug(new("Partition",clusters=factor(c("A","C",NA,"aa")),nbClusters=3))
+
+
+
+cleanProg(.partition.constructor,,,7) # CRITERION_NAMES LETTERS MAX_CLUSTERS meanNA prod sdcNA sum
+cleanProg(.partition.constructor3d,,,) # CRITERION_NAMES LETTERS MAX_CLUSTERS meanNA prod sdcNA sum
+cleanProg(.partition.show,,,1) # LETTERS
 
 partition()
 partition(clusters=c("A","B"))
 partition(clusters=c("A",NA))
-try(partition(nbClusters=3))
-partition(clusters=c("C","B","C"),nbClusters=4)
-partition(clusters=c(NA,NA))
-partition(clusters=c("A","C","A"),nbClusters=4)
-partition(clusters=c(1,3,1),nbClusters=4)
+tryBug(partition(nbClusters=3))
+tryBug(partition(clusters=c("C","B","C"),nbClusters=4))
+partition(clusters=c("C","B","C"))
+tryBug(partition(clusters=c(NA,NA)))
+partition(clusters=c(1,3,1))
 
 
-cat("### Jeux de données ###")
-
+cat("### Jeux de données ###\n")
+##cleanProg(.partition.ordered,,,1) # LETTERS
 p0a <- p0b <- partition()
 
 p1a <- partition(clusters=c("A","B","B"))
-p1a <- ordered(p1a)
-p1b <- partition(clusters=c("A","B","A"))
-p1c <- partition(nbClusters=2,clusters=c("A","B","B")) # Réarrangement pour avoir le plus gros cluster en A
+p1b <- partition(clusters=c("A","B","A"),ld1["traj"])
+p1b <- partition(clusters=c("A","B","A"),ld1n["traj"])
+p1c <- partition(clusters=c("A","C","B"),LD1["traj"])
+p1d <- partition(clusters=c("A","C","A"),ld2n["traj"])
+p1d <- partition(clusters=c("A","C","A"),ld2n["traj"])
 
-p2a <- partition(nbClusters=3,clusters=c("A","A","B"))
-p2b <- partition(nbClusters=3,clusters=c("A","B","A"))
-p2c <- partition(nbClusters=3,clusters=c("A","C","B"))
+p2a <- partition(clusters=c("A","A","B","A","B"))
+(p2b <- partition(clusters=c("A","B","A","A","B"),ld2["traj"],details=c(convergenceTime="3",algorithm="kml",aze=4,multiplicity="4")))
+p2c <- partition(clusters=c("A","C","B","A","B"),LD2["traj"])
 
-p2an <- partition(nbClusters=3,clusters=c("A",NA,"B"))
-p2bn <- partition(nbClusters=3,clusters=c("A",NA,NA))
-p2cn <- partition(nbClusters=3,clusters=c(NA,NA,NA))
+p2an <- partition(clusters=c("A",NA,"B",NA,"B"))
+p2bn <- partition(clusters=c("A",NA,NA,"B",NA))
+tryBug(p2cn <- partition(clusters=c(NA,NA,NA,NA,NA)))
 
-p3a <- partition(nbClusters=9,clusters=rep(LETTERS[1:9],27))
-p3b <- partition(nbClusters=3,clusters=rep(LETTERS[1:3],81))
-p3b["clusters"][1:6]<-"B"
-p3b["clusters"][7:9]<-"C"
-p3b <- ordered(p3b)
-p3c <- partition(nbClusters=5,clusters=rep(LETTERS[1:3],81))
-p3d <- partition(nbClusters=25,clusters=rep(LETTERS[1:3],81))
-p3d <- partition(nbClusters=25,clusters=rep(LETTERS[1:3],81))
-p3e <- partition(nbClusters=21,clusters=rep(LETTERS[c(1:20,1:4,1:2,1)],9))
-p3f <- partition(nbClusters=18,clusters=rep(LETTERS[c(1:18,1:9)],9))
+p3a <- partition(clusters=rep(LETTERS[1:2],4))
+p3b <- partition(clusters=rep(LETTERS[c(1:3,1:3,1:2)]),ld3n["traj"])
+p3c <- partition(clusters=rep(LETTERS[1:4],each=2),LD3["traj"])
+p3d <- partition(clusters=rep(LETTERS[1:4],2),LD3["traj"])
+p3e <- partition(clusters=rep(c(4,4,1,3,2,3,3,2)),ld3["traj"])
+p3f <- partition(clusters=rep(c(1,1,1,3,3,3,3,2)),ld3["traj"])
+p3g <- partition(clusters=rep(c(6,5,4,3,2,3,1,2)),ld3["traj"])
+p3h <- partition(clusters=rep(c(2,2,1,2,2,3,3,2)),ld3["traj"])
+p3i <- partition(clusters=rep(c(1,2,3,3,3,3,3,2)),ld3["traj"])
+p3j <- partition(clusters=rep(c(1,2,1,3,4,3,4,2)),ld3["traj"])
 
-p4a <- partition(nbClusters=2,clusters=rep(LETTERS[1:2],c(80,100)))
-p4b <- partition(nbClusters=3,clusters=rep(LETTERS[1:3],c(50,30,100)))
-p4c <- partition(nbClusters=3,clusters=rep(LETTERS[1:3],c(80,100,0)))
-p4d <- partition(nbClusters=4,clusters=rep(LETTERS[1:4],c(50,30,50,50)))
-p4e <- partition(nbClusters=3,clusters=rep(LETTERS[1:3],c(60,60,60)))
+p4a <- partition(clusters=c(rep(1:2,each=100)))
+p4b <- partition(clusters=c(rep(1:3,c(50,30,120))),ld4["traj"])
+tryBug(p4b["clusters"][1:6]<-"B")
+tryBug(p4b["clusters"][7:9]<-"C")
+p4c <- partition(clusters=c(rep(c(1:4,2:3,2:3),25)),ld4["traj"])
+p4d <- partition(clusters=c(rep(c(3,2:4,1,3:5),25)),LD4["traj"])
+p4e <- partition(clusters=c(rep(c(1:6,2,2),25)),ld4["traj"])
+p4f <- partition(clusters=c(rep(c(1:7,4),25)),LD4["traj"])
 
-p4an <- p4a
-for(i in 1:20){p4an@clusters[round(runif(1,1,180))] <- NA}
-p4an <- partition(nbClusters=p4an["nbClusters"],clusters=p4an["clusters"])
-validObject(p4an)
+p5a <- partition(clusters=LETTERS[rep(c(1,2),1000)])
+p5b <- partition(clusters=LETTERS[c(rep(c(1,2,3),666),1:2)],ld5["traj"]) ###PROBLEME DE VRAISEMBLANCE NaN
+p5c <- partition(clusters=rep(1:4,500),LD5["traj"])
+p7e <- partition(clusters=c(rep(1:6,333),1,2),ld5["traj"])
+p7g <- partition(clusters=c(rep(1:8,250)),LD5["traj"])
 
-p4bn <- p4b
-for(i in 1:30){p4bn@clusters[round(runif(1,1,180))] <- NA}
-p4bn <- partition(nbClusters=p4bn["nbClusters"],clusters=p4bn["clusters"])
-validObject(p4bn)
 
-p4cn <- p4c
-for(i in 1:60){p4cn@clusters[round(runif(1,1,180))] <- NA}
-p4cn <- partition(nbClusters=p4cn["nbClusters"],clusters=p4cn["clusters"])
-validObject(p4cn)
-
-p4dn <- p4d
-for(i in 1:90){p4dn@clusters[round(runif(1,1,180))] <- NA}
-p4dn <- partition(nbClusters=p4dn["nbClusters"],clusters=p4dn["clusters"])
-validObject(p4dn)
-
-p4en <- p4e
-for(i in 1:160){p4en@clusters[round(runif(1,1,180))] <- NA}
-p4en <- partition(nbClusters=p4en["nbClusters"],clusters=p4en["clusters"])
-validObject(p4en)
-
-p5a <- partition(nbClusters=2,clusters=LETTERS[c(1,2,1,2,1,2,1,2)])
-p5b <- partition(nbClusters=3,clusters=LETTERS[c(1,2,3,1,2,3,1,2)])
-p5c <- partition(nbClusters=4,clusters=c("A","A","B","A","C","D","D","C"))
-p5cn <- partition(nbClusters=4,clusters=c("A","A","B","A",NA,NA,"D","C"))
 
 
 cat("\n####################################################################
@@ -118,13 +120,11 @@ p3a["nbClusters"]
 p3b["nbClusters"]
 p3c["nbClusters"]
 p4a["nbClusters"]
-p4bn["nbClusters"]
 p4c["nbClusters"]
-p4dn["nbClusters"]
 p4e["nbClusters"]
 p5a["nbClusters"]
 p5b["nbClusters"]
-p5cn["nbClusters"]
+
 
 p0a["clusters"]
 p1a["clusters"]
@@ -136,29 +136,48 @@ p2c["clusters"]
 p3a["clusters"]
 p3b["clusters"]
 p3c["clusters"]
-p4an["clusters"]
 p4b["clusters"]
-p4cn["clusters"]
-p4dn["clusters"]
 p4e["clusters"]
 p5a["clusters"]
 p5b["clusters"]
-p5cn["clusters"]
+p5c["clusters"]
 
-p1a["nbClusters"]<-4
-try(p1a["nbClusters"]<-0)
-p1b["nbClusters"]<-2
-try(p0a["nbClusters"]<-4)
-try(p1a["nbClusters"]<-1)
+p2a["clustersAsInteger"]
+p3b["clustersAsInteger"]
+p4e["clustersAsInteger"]
 
-p1a["clusters"]<-c("A","B","A")
-p1a["nbClusters"]<-2
-### DANGER  devrait planter, mais ne plante pas...
-p1a["clusters"]<-c("A","B","C")
-p1a["nbClusters"]<-3
-p1a["clusters"]<-c("A","B","C")
-p1a <- partition(clusters=c("A","A","B"))
+p1a["percentEachCluster"]
+p2b["percentEachCluster"]
+p3c["percentEachCluster"]
+p4a["percentEachCluster"]
+p5b["percentEachCluster"]
 
+
+p1b["criterionValues"]
+p2c["criterionValues"]
+p3a["criterionValues"]
+p4b["criterionValues"]
+p5c["criterionValues"]
+
+p2b["convergenceTime"]
+p2b["aze"]
+tryBug(p2b["ert"])
+p2b["Genolini.Calinski"]
+
+
+p2b["multiplicity"] <- "6"
+p2b["multiplicity"] <- 8
+
+
+p5c["postProba"]
+
+
+p5c["postProbaEachCluster"]
+p5c["BIC"]
+p5c["BIC2"]
+p5c["AIC"]
+p5c["AICc"]
+p5c["postProbaGlobal"]
 
 
 cat("\n####################################################################
@@ -166,10 +185,10 @@ cat("\n####################################################################
 ############################# Affichage ############################
 ####################################################################\n")
 
-cleanProg(.Partition.show,,,1) #LETTERSletters
+cleanProg(.partition.show,,,1) #LETTERS
 p0a
 p1a
-p4dn
+
 
 
 cat("\n####################################################################
@@ -177,6 +196,16 @@ cat("\n####################################################################
 ############################### Autre ##############################
 ####################################################################\n")
 
+
+
+qualityCriterion(ld1,p1c)
+qualityCriterion(LD2,p2b)
+qualityCriterion(ld3,p3c)
+qualityCriterion(LD3,p3c)
+qualityCriterion(ld4,p4a)
+qualityCriterion(LD4,p4b)
+qualityCriterion(ld5,p5c)
+qualityCriterion(LD5,p5b)
 
 
 cat("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

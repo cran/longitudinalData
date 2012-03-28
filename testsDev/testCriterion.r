@@ -6,14 +6,20 @@ source("../R/criterion.r")
 cat("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++ Test criterion ++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
-cleanProg(.LongData.quality.criterion,,,1) # LETTERS
-cleanProg(.matrix.quality.criterion,,,1) # LETTERS
+cleanProg(resizePartition)
+resizePartition(ld2n,p2a)
+resizePartition(ld2n,p2b)
+resizePartition(ld2n,p2bn)
 
-criterion(ld2,p2a)
-criterion(ld3,p3a)
-criterion(ld2n,p2a,"LOCF")
-criterion(ld3n,p3a,"copyMean")
-criterion(ld4n,p4cn,"copyMean")
+
+cleanProg(.qualityCriterion.matrix)
+cleanProg(.qualityCriterion.longData)
+
+qualityCriterion(ld2,p2a)
+qualityCriterion(ld3,p3a)
+qualityCriterion(ld3n,p3a,"copyMean")
+qualityCriterion(ld3n,p3b,"copyMean")
+tryBug(qualityCriterion(ld4n,p3a,"copyMean"))
 
 
 

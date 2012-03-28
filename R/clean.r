@@ -1,13 +1,15 @@
-rm(.LongData.validity)
-rm(.LongData.show)
-rm(.LongData.selectSupTrajMinSize)
+rm(.partition.validity,.partition.constructor,.partition.show)
 
-rm(.Partition.validity)
-rm(.Partition.show)
+rm(.ParLongData.validity,.ParLongData.show,.parLongData.Partition.expand,.parLongData.nbClusters.expand)
 
-rm(.matrixImput)
-rm(.trajImput)
+rm(.ParWindows.validity,.parWindows.show)
 
-rm(.LongData.partition.plot)
-rm(.LongData.plotSubGroups)
+rm(.LongData.validity,.longData.constructor,.longData3d.constructor,.longData.get,
+   .longData.print,.longData.scale,.longData.restaureRealData)
+
+rm(.longData.plot)
+
+rm(.imputationMatrix,.imputationArray,.imputationLongData)
+
+#rm(.LongData.quality.criterion,.matrix.quality.criterion,.LongData.quality.criterion3,.matrix.quality.criterion3)
 
