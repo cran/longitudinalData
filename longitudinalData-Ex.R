@@ -53,13 +53,15 @@ flush(stderr()); flush(stdout())
 
 ##############
 ### Preparing data
-data <- gald(30)["traj"]
+data(artificialData)
+data <- as.matrix(artificialData[,-1])
+
 
 ### Some clustering
-part2 <- partition(rep(c("A","B","A"),time=40),data)
-part3 <- partition(rep(c("A","B","C"),time=40),data)
-part3b <- partition(rep(c("A","B","C","B","C"),time=24),data)
-part4 <- partition(rep(c("A","B","A","C","D"),time=24),data)
+part2 <- partition(rep(c("A","B"),time=100),data)
+part3 <- partition(rep(c("A","B","C","A"),time=50),data)
+part3b <- partition(rep(c("A","B","C","B","C"),time=40),data)
+part4 <- partition(rep(c("A","B","A","C","D"),time=40),data)
 
 
 ################
@@ -112,7 +114,7 @@ ld["traj"]
 (ld)
 
 ### Plot
-plot(ld)
+plotTraj(ld)
 
 
 #################
@@ -125,9 +127,9 @@ scale(ld)
 (ld)
 
 ### Plotting
-plot(ld)
-plot3d(ld)
-restaureRealData(ld)
+plotTraj(ld)
+plotTraj3d(ld)
+restoreRealData(ld)
 
 
 
@@ -156,9 +158,9 @@ scale(ld)
 (ld)
 
 ### Plotting
-plot(ld)
-plot3d(ld)
-restaureRealData(ld)
+plotTraj(ld)
+plotTraj3d(ld)
+restoreRealData(ld)
 
 
 
@@ -268,6 +270,42 @@ part["multiplicity"] <- 2
 
 
 cleanEx()
+nameEx("artificialData")
+### * artificialData
+
+flush(stderr()); flush(stdout())
+
+### Name: artificialData
+### Title: ~ Articial Data ~
+### Aliases: artificialData
+### Keywords: datasets documentation
+
+### ** Examples
+
+data(artificialData)
+str(artificialData)
+
+
+
+cleanEx()
+nameEx("artificialData3d")
+### * artificialData3d
+
+flush(stderr()); flush(stdout())
+
+### Name: artificialData3d
+### Title: ~ Articial 3D Data ~
+### Aliases: artificialData3d
+### Keywords: datasets documentation
+
+### ** Examples
+
+data(artificialData3d)
+str(artificialData3d)
+
+
+
+cleanEx()
 nameEx("distFrechet")
 ### * distFrechet
 
@@ -308,8 +346,8 @@ flush(stderr()); flush(stdout())
     x <- -1+rnorm(25);x[floor(runif(5,1,26))] <- NA
     y <- 1+rnorm(25);y[floor(runif(5,1,26))] <- NA
 
-#    plot(x,type="b",col=2,ylim=c(-5,5))
- #   lines(y,type="b",col=3)
+    plot(x,type="b",col=2,ylim=c(-5,5))
+    lines(y,type="b",col=3)
 
     system.time(for(i in 1:10000)dist(rbind(x,y)))
     system.time(for(i in 1:10000)distTraj(x,y))
@@ -355,117 +393,6 @@ expandParLongData(paramMean,3)
 
 ### If there is 5 clusters :
 expandParLongData(paramMean,5)
-
-
-
-cleanEx()
-nameEx("generateArtificialLongData")
-### * generateArtificialLongData
-
-flush(stderr()); flush(stdout())
-
-### Name: generateArtificialLongData
-### Title: ~ Function: generateArtificialLongData (or gald) ~
-### Aliases: gald generateArtificialLongData
-### Keywords: datagen cluster ts
-
-### ** Examples
-
-par(ask=TRUE)
-
-
-#####################
-### Default example
-
-(ex1 <- generateArtificialLongData())
-plot(ex1)
-part1 <- partition(rep(1:4,each=50))
-plot(ex1,part1)
-
-
-#####################
-### Three diverging lines
-
-ex2 <- generateArtificialLongData(functionClusters=list(function(t)0,function(t)-t,function(t)t))
-part2 <- partition(rep(1:3,each=50))
-plot(ex2,part2)
-
-
-#####################
-### Three diverging lines with high variance, unbalance groups and missing value
-
-ex3 <- generateArtificialLongData(
-   functionClusters=list(function(t)0,function(t)-t,function(t)t),
-   nbEachClusters=c(100,30,10),
-   functionNoise=function(t){rnorm(1,0,3)},
-   percentOfMissing=c(0.25,0.5,0.25)
-)
-part3 <- partition(rep(1:3,c(100,30,10)))
-plot(ex3,part3)
-
-
-#####################
-### Four strange functions
-
-ex4 <- generateArtificialLongData(
-    nbEachClusters=c(300,200,100,100),
-    functionClusters=list(function(t){-10+2*t},function(t){-0.6*t^2+6*t-7.5},function(t){10*sin(t)},function(t){30*dnorm(t,2,1.5)}),
-    functionNoise=function(t){rnorm(1,0,3)},
-    time=0:10,decimal=2,percentOfMissing=0.3)
-part4 <- partition(rep(1:4,c(300,200,100,100)))
-plot(ex4,part4)
-
-
-#####################
-### To get only longData (if you want some artificial longData
-###    to deal with another algorithm), use the getteur ["traj"]
-
-ex5 <- gald(nbEachCluster=3,time=1:3)
-ex5["traj"]
-
-par(ask=FALSE)
-
-
-
-graphics::par(get("par.postscript", pos = 'CheckExEnv'))
-cleanEx()
-nameEx("generateArtificialLongData3d")
-### * generateArtificialLongData3d
-
-flush(stderr()); flush(stdout())
-
-### Name: generateArtificialLongData3d
-### Title: ~ Function: generateArtificialLongData3d (or gald3d) ~
-### Aliases: gald3d generateArtificialLongData3d
-### Keywords: datagen cluster ts
-
-### ** Examples
-
-#####################
-### Default example
-
-ex1 <- generateArtificialLongData3d()
-plot3d(ex1)
-part1 <- partition(rep(1:3,each=50))
-plot3d(ex1,part1)
-
-
-#####################
-### 4 lines with unbalanced groups
-
-ex2 <- generateArtificialLongData3d(
-  nbEachClusters=c(5,10,20,40),
-  functionClusters=list(
-     function(t)c(t,t^3/100),
-     function(t)c(0,t),
-     function(t)c(t,t),
-     function(t)c(0,t^3/100)
-  ),
-  functionNoise = function(t){c(rnorm(1,0,1),rnorm(1,0,1))}
-)
-plot3d(ex2)
-part2 <- partition(rep(1:4,time=c(5,10,20,40)))
-plot3d(ex2,part2)
 
 
 
@@ -739,27 +666,28 @@ flush(stderr()); flush(stdout())
 par(ask=TRUE)
 ###################
 ### Constrution of some longitudinal data
-dn <- gald()
-plot(dn)
+data(artificialData)
+dn <- longData(artificialData)
+plotTraj(dn)
 
 ###################
 ### partition using randamAll
 pa1a <- initializePartition(3,lengthPart=200,method="randomAll")
-plot(dn,partition(pa1a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTraj(dn,partition(pa1a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 pa1b <- initializePartition(3,lengthPart=200,method="randomAll")
-plot(dn,partition(pa1b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTraj(dn,partition(pa1b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 
 ###################
 ### partition using randamK
 pa2a <- initializePartition(3,lengthPart=200,method="randomK")
-plot(dn,partition(pa2a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTraj(dn,partition(pa2a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 pa2b <- initializePartition(3,lengthPart=200,method="randomK")
-plot(dn,partition(pa2b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTraj(dn,partition(pa2b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 
 ###################
 ### partition using maxDist
 pa3 <- initializePartition(3,lengthPart=200,method="maxDist",data=dn["traj"])
-plot(dn,partition(pa3),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTraj(dn,partition(pa3),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 ### maxDist is deterministic, so no need for a second example
 
 
@@ -808,7 +736,7 @@ flush(stderr()); flush(stdout())
 mat <- matrix(c(1,NA,3,2,3,6,1,8,10),3,3,dimnames=list(c(101,102,104),c("T2","T4","T8")))
 longData(mat)
 (ld1 <- longData(traj=mat,idAll=as.character(c(101,102,104)),time=c(2,4,8),varNames="V"))
-plot(ld1)
+plotTraj(ld1)
 
 ### Big data
 mat <- matrix(runif(1051*325),1051,325)
@@ -851,12 +779,12 @@ flush(stderr()); flush(stdout())
 mat <- array(c(1,NA,3,2,3,6,1,8,10,1,NA,1,2,NA,3,2,3,2),dim=c(3,3,2))
 longData3d(mat)
 (ld1 <- longData3d(mat,varNames=c("Hyp","Col"),idAll=c("i101","i104","i105")))
-plot3d(ld1)
+plotTraj3d(ld1)
 
 ### Big data
 mat <- array(c(runif(1051*325),rnorm(1051*325),rexp(1051*325)),c(1051,325,3))
 (ld2 <- longData3d(traj=mat,time=(1:325)+0.5,varNames=c("unif","norm","rexp")))
-plot3d(ld2,nbSample=200)
+plotTraj3d(ld2,nbSample=200)
 
 #################
 ### From data.frame
@@ -864,7 +792,7 @@ plot3d(ld2,nbSample=200)
 dn <- data.frame(id=1:3,v1=c(2,2,1),t1=c(20,21,22),v1=c(3,2,2),t2=c(23,20,28),t3=c(25,24,29))
 longData3d(dn,timeInData=list(c(2,4),c(3,5)),varNames=c("V","T"))
 (ld3 <- longData3d(dn,timeInData=list(V=c(2,4,NA),T=c(3,5,6))))
-plot3d(ld3)
+plotTraj3d(ld3)
 
 
 
@@ -932,15 +860,14 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
 ### Generation of artificial longData
-data <- gald3d(percentOfMissing=0.3)
-part <- partition(rep(1:3,each=50))
-plot3d(data,part)
+data(artificialData3d)
+myData <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
 
-### Imputation
-data1 <- imputation(data,method="copyMean")
+part <- partition(rep(1:3,each=50))
+plotTraj3d(myData,part)
 
 ### Quality criterion
-# qualityCriterion(data,part)
+qualityCriterion(myData,part)
 
 
 
@@ -957,9 +884,10 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
   ### Generating the data
-  myLd <- gald3d()
+  data(artificialData3d)
+  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
-  plot3d(myLd,part)
+  plotTraj3d(myLd,part)
 
   ### Creation of the scene
   scene <- plot3dPdf(myLd,part)
@@ -996,14 +924,14 @@ flush(stderr()); flush(stdout())
 
 ##############
 ### Preparing data
-
-data <- gald(30)["traj"]
+data(artificialData)
+data <- as.matrix(artificialData[,-1])
 
 ### Some clustering
-part2 <- partition(rep(c("A","B","A"),time=40),data)
-part3 <- partition(rep(c("A","B","C"),time=40),data)
-part3b <- partition(rep(c("A","B","C","B","C"),time=24),data)
-part4 <- partition(rep(c("A","B","A","C","D"),time=24),data)
+part2 <- partition(rep(c("A","B"),time=100),data)
+part3 <- partition(rep(c("A","B","C","A"),time=50),data)
+part3b <- partition(rep(c("A","B","C","B"),time=50),data)
+part4 <- partition(rep(c("A","B","C","D"),time=50),data)
 
 
 ################
@@ -1040,7 +968,7 @@ nameEx("parLongData")
 flush(stderr()); flush(stdout())
 
 ### Name: parLongData
-### Title: ~ Functions: parLongData, parTraj and parMean~
+### Title: ~ Function: parLongData, parTraj and parMean~
 ### Aliases: parLongData parTRAJ parMEAN
 ### Keywords: methods
 
@@ -1056,14 +984,14 @@ g <- function(id,t)(id%%2+1)*t
 ld2 <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g))+rnorm(120*8*2,0,3),dim=c(120,8,2)))
 
 ### Example with default value
-plot(ld2)
-plot(ld2,parTraj=parTRAJ())
+plotTraj(ld2)
+plotTraj(ld2,parTraj=parTRAJ())
 
 ### Example with default values for mean trajectories
-plot(ld2,parTraj=parMEAN())
+plotTraj(ld2,parTraj=parMEAN())
 
 ### Example with default value except for the color
-plot(ld2,parTraj=parTRAJ(col="blue"))
+plotTraj(ld2,parTraj=parTRAJ(col="blue"))
 
 
 
@@ -1131,7 +1059,8 @@ partition(clusters=LETTERS[floor(runif(100,1,5))])
 
 ### Partition that clusters correctly some data
 ###   Quality criterion are high
-data <- gald()["traj"]
+data(artificialData)
+data <- as.matrix(artificialData[,-1])
 partition(clusters=rep(1:4,each=50),data)
 
 ### Partition that does not cluster correctly the data
@@ -1167,117 +1096,6 @@ flush(stderr()); flush(stdout())
 
 
 cleanEx()
-nameEx("plot")
-### * plot
-
-flush(stderr()); flush(stdout())
-
-### Name: plot,LongData
-### Title: ~ function: plot for LongData or LongData3d~
-### Aliases: plot plot,LongData plot,LongData-method
-###   plot,LongData,missing-method plot,LongData,Partition-method
-###   plot,LongData3d plot,LongData3d-method plot,LongData3d,missing-method
-###   plot,LongData3d,Partition-method
-### Keywords: package aplot
-
-### ** Examples
-
-##################
-### Construction of the data
-
-ld <- gald3d()
-part <- partition(rep(1:3,each=50))
-
-### Basic plotting
-plot(ld)
-plot(ld,part)
-
-### Change the windows orientation
-plot(ld,parWin=windowsCut(c(1,2),addLegend=FALSE))
-
-
-##################
-### Changing graphical parameters 'par'
-
-### No letters on the mean trajectories
-plot(ld,part,parMean=parMEAN(type="l"))
-
-### Only one letter on the mean trajectories
-plot(ld,part,parMean=parMEAN(pchPeriod=Inf))
-
-### Color individual according to its clusters (col="clusters")
-plot(ld,part,parTraj=parTRAJ(col="clusters"))
-
-### Mean without individual
-plot(ld,part,parTraj=parTRAJ(type="n"))
-
-
-### No mean trajectories (type="n")
-### Color individual according to its clusters (col="clusters")
-plot(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"))
-
-### Only few trajectories
-plot(ld,part,nbSample=10,parTraj=parTRAJ(col='clusters'),parMean=parMEAN(type="n"))
-
-##################
-### single variable trajectory
-
-ld2 <- gald()
-part2 <- partition(rep(1:4,each=50))
-plot(ld2)
-plot(ld2,part2)
-
-
-
-cleanEx()
-nameEx("plot3d")
-### * plot3d
-
-flush(stderr()); flush(stdout())
-
-### Name: plot3d,LongData
-### Title: ~ Function: plot3d for LongData3d ~
-### Aliases: plot3d plot3d,LongData3d plot3d,LongData3d-method
-###   plot3d,LongData3d,Partition-method plot3d,LongData3d,missing-method
-### Keywords: package ts aplot
-
-### ** Examples
-
-
-##################
-### Construction of the data
-
-time=c(1,2,3,4,8,12,16,20)
-id2=1:120
-f <- function(id,t)((id-1)%%3-1) * t
-g <- function(id,t)(id%%2+1)*t
-h <- function(id,t)(id%%4-0.5)*(20-t)
-ld <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g),outer(id2,time,h))+rnorm(120*8*3,0,3),dim=c(120,8,3)))
-part <- partition(rep(1:6,20))
-
-### Basic plotting
-plot3d(ld)
-plot3d(ld,part)
-
-### Variable 1 and 3, then 2 and 3
-plot3d(ld,part)
-plot3d(ld,part,varY=3,varZ=2)
-plot3d(ld,part,varY=1,varZ=3)
-
-##################
-### Changing graphical parameters 'par'
-
-### Color individual according to its clusters (col="clusters")
-plot3d(ld,part,parTraj=parTRAJ(col="clusters"))
-plot3d(ld,part,parTraj=parTRAJ(col="clusters"),varY=1,varZ=3)
-
-### No mean trajectories (type="n"), only few trajectories
-### Color individual according to its clusters (col="clusters")
-plot3d(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"),nbSample=10)
-
-
-
-cleanEx()
 nameEx("plot3dPdf")
 ### * plot3dPdf
 
@@ -1293,9 +1111,10 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
   ### Generating the data
-  myLd <- gald3d()
+  data(artificialData3d)
+  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
-  plot3d(myLd,part)
+  plotTraj3d(myLd,part)
 
   ### Creation of the scene
   scene <- plot3dPdf(myLd,part)
@@ -1331,23 +1150,137 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
 ###############
-### Data génération
-
-data <- gald(30)["traj"]
+### Data generation
+data(artificialData)
+data <- as.matrix(artificialData[,-1])
 
 ### Some clustering
 listPart <- listPartition()
-listPart["add"] <- partition(rep(c("A","B","A"),time=40),data)
-listPart["add"] <- partition(rep(c("A","B","B"),time=40),data)
-listPart["add"] <- partition(rep(c("A","B","C"),time=40),data)
-listPart["add"] <- partition(rep(c("A","B","C","B","C"),time=24),data)
-listPart["add"] <- partition(rep(c("A","B","A","C","D"),time=24),data)
+listPart["add"] <- partition(rep(c("A","B"),time=100),data)
+listPart["add"] <- partition(rep(c("A","B","B","B"),time=50),data)
+listPart["add"] <- partition(rep(c("A","B","C","A"),time=50),data)
+listPart["add"] <- partition(rep(c("A","B","C","D"),time=50),data)
 ordered(listPart)
 
 ################
 ### graphical display
 plotCriterion(listPart)
-plotCriterion(listPart,criterion=CRITERION_NAMES)
+plotCriterion(listPart,criterion=CRITERION_NAMES[1:5],TRUE)
+
+
+
+cleanEx()
+nameEx("plotTraj")
+### * plotTraj
+
+flush(stderr()); flush(stdout())
+
+### Name: plotTraj,LongData
+### Title: ~ function: plotTraj for LongData or LongData3d~
+### Aliases: plotTraj plotTraj,LongData plotTraj,LongData-method
+###   plotTraj,LongData,missing-method plotTraj,LongData,Partition-method
+###   plotTraj,LongData3d plotTraj,LongData3d-method
+###   plotTraj,LongData3d,missing-method
+###   plotTraj,LongData3d,Partition-method
+### Keywords: package aplot
+
+### ** Examples
+
+##################
+### Construction of the data
+data(artificialData3d)
+ld <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+part <- partition(rep(1:3,each=50))
+
+### Basic plotting
+plotTraj(ld)
+plotTraj(ld,part)
+
+### Change the windows orientation
+plotTraj(ld,parWin=windowsCut(c(1,2),addLegend=FALSE))
+
+
+##################
+### Changing graphical parameters 'par'
+
+### No letters on the mean trajectories
+plotTraj(ld,part,parMean=parMEAN(type="l"))
+
+### Only one letter on the mean trajectories
+plotTraj(ld,part,parMean=parMEAN(pchPeriod=Inf))
+
+### Color individual according to its clusters (col="clusters")
+plotTraj(ld,part,parTraj=parTRAJ(col="clusters"))
+
+### Mean without individual
+plotTraj(ld,part,parTraj=parTRAJ(type="n"))
+
+
+### No mean trajectories (type="n")
+### Color individual according to its clusters (col="clusters")
+plotTraj(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"))
+
+### Only few trajectories
+plotTraj(ld,part,nbSample=10,parTraj=parTRAJ(col='clusters'),parMean=parMEAN(type="n"))
+
+
+##################
+### single variable trajectory
+
+data(artificialData)
+ld2 <- longData(artificialData)
+part2 <- partition(rep(1:4,each=50))
+plotTraj(ld2)
+plotTraj(ld2,part2)
+
+
+
+cleanEx()
+nameEx("plotTraj3d")
+### * plotTraj3d
+
+flush(stderr()); flush(stdout())
+
+### Name: plotTraj3d,LongData
+### Title: ~ Function: plotTraj3d for LongData3d ~
+### Aliases: plotTraj3d plotTraj3d,LongData3d plotTraj3d,LongData3d-method
+###   plotTraj3d,LongData3d,Partition-method
+###   plotTraj3d,LongData3d,missing-method
+### Keywords: package ts aplot
+
+### ** Examples
+
+
+##################
+### Construction of the data
+
+time=c(1,2,3,4,8,12,16,20)
+id2=1:120
+f <- function(id,t)((id-1)%%3-1) * t
+g <- function(id,t)(id%%2+1)*t
+h <- function(id,t)(id%%4-0.5)*(20-t)
+ld <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g),outer(id2,time,h))+rnorm(120*8*3,0,3),dim=c(120,8,3)))
+part <- partition(rep(1:6,20))
+
+### Basic plotting
+plotTraj3d(ld)
+plotTraj3d(ld,part)
+
+### Variable 1 and 3, then 2 and 3
+plotTraj3d(ld,part)
+plotTraj3d(ld,part,varY=3,varZ=2)
+plotTraj3d(ld,part,varY=1,varZ=3)
+
+##################
+### Changing graphical parameters 'par'
+
+### Color individual according to its clusters (col="clusters")
+plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"))
+plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"),varY=1,varZ=3)
+
+### No mean trajectories (type="n"), only few trajectories
+### Color individual according to its clusters (col="clusters")
+plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"),nbSample=10)
 
 
 
@@ -1370,26 +1303,28 @@ flush(stderr()); flush(stdout())
 ##################
 ### Preparation of some artificial data
 par(ask=TRUE)
-ld <- gald()
+data(artificialData)
+ld <- longData(artificialData)
+
 
 ### Correct partition
 part1 <- partition(rep(1:4,each=50))
-plot(ld,part1)
+plotTraj(ld,part1)
 (cr1 <- qualityCriterion(ld,part1))
 
 ### Random partition
 part2 <- partition(floor(runif(200,1,5)))
-plot(ld,part2)
+plotTraj(ld,part2)
 (cr2 <- qualityCriterion(ld,part2))
 
 ### Partition with 3 clusters instead of 4
 part3 <- partition(rep(c(1,2,3,3),each=50))
-plot(ld,part3)
+plotTraj(ld,part3)
 (cr3 <- qualityCriterion(ld,part3))
 
 
 ### Comparisons of the Partition
-plot(c(cr1[[1]],cr2[[2]],cr3[[3]]),main="The highest give the best partition
+plot(c(cr1[[1]],cr2[[1]],cr3[[1]]),main="The highest give the best partition
 (according to Calinski & Harabatz criterion)")
 par(ask=FALSE)
 
@@ -1410,11 +1345,11 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
 ### Some data
-data <- gald(30)["traj"]
-
+data(artificialData)
+myLd <- as.matrix(artificialData[,-1])
 ### Some clustering
-part2 <- partition(rep(c("A","B","A"),time=40),data)
-part3 <- partition(rep(c("A","B","C"),time=40),data)
+part2 <- partition(rep(c("A","B","A","C"),time=50),myLd)
+part3 <- partition(rep(c("A","B","C","D"),time=50),myLd)
 
 ################
 ### ListPartition
@@ -1433,16 +1368,16 @@ plotCriterion(listPart)
 
 
 cleanEx()
-nameEx("restaureRealData")
-### * restaureRealData
+nameEx("restoreRealData")
+### * restoreRealData
 
 flush(stderr()); flush(stdout())
 
-### Name: restaureRealData
-### Title: ~ Function: restaureRealData ~
-### Aliases: restaureRealData restaureRealData,LongData
-###   restaureRealData,LongData3d restaureRealData,LongData-method
-###   restaureRealData,LongData3d-method
+### Name: restoreRealData
+### Title: ~ Function: restoreRealData ~
+### Aliases: restoreRealData restoreRealData,LongData
+###   restoreRealData,LongData3d restoreRealData,LongData-method
+###   restoreRealData,LongData3d-method
 
 ### ** Examples
 
@@ -1454,17 +1389,17 @@ id2=1:12
 f <- function(id,t)((id-1)%%3-1) * t
 g <- function(id,t)(id%%2+1)*t
 ld1 <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g))+rnorm(12*8*2,0,1),dim=c(12,8,2)))
-plot3d(ld1)
+plotTraj3d(ld1)
 
 ##################
 ### Scaling by 'mean' and 'standard deviation'
 scale(ld1,scale=c(-1,-1))
-plot(ld1)
+plotTraj(ld1)
 
 ##################
 ### Back to the first version of the data
-restaureRealData(ld1)
-plot(ld1)
+restoreRealData(ld1)
+plotTraj(ld1)
 
 
 
@@ -1481,9 +1416,10 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
   ### Generating the data
-  myLd <- gald3d()
+  data(artificialData3d)
+  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
-  plot3d(myLd,part)
+  plotTraj3d(myLd,part)
 
   ### Creation of the scene
   scene <- plot3dPdf(myLd,part)
@@ -1527,21 +1463,21 @@ id2=1:12
 f <- function(id,t)((id-1)%%3-1) * t
 g <- function(id,t)(id%%2+1)*t
 ld1 <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g))+rnorm(12*8*2,0,1),dim=c(12,8,2)))
-plot3d(ld1)
+plotTraj3d(ld1)
 
 ##################
 ### Scaling by 'mean' and 'standard deviation'
-plot(ld1)
+plotTraj(ld1)
 scale(ld1)
-plot(ld1)
+plotTraj(ld1)
 
 ### Scaling by some parameters
 scale(ld1,center=c(10,100),scale=c(3,-1))
-plot(ld1)
+plotTraj(ld1)
 
 ##################
-### To restaure the data
-restaureRealData(ld1)
+### To restore the data
+restoreRealData(ld1)
 
 
 

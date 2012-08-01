@@ -1,13 +1,16 @@
-.onLoad <- function(lib,pkg){library.dynam("longitudinalData",pkg,lib)}
+.onLoad <- function(lib,pkg){
+    library.dynam("longitudinalData",pkg,lib)
+}
+
 
 setGeneric("longData",function(traj,idAll,time,timeInData,varNames,maxNA){standardGeneric("longData")})
 setGeneric("longData3d",function(traj,idAll,time,timeInData,varNames,maxNA){standardGeneric("longData3d")})
 setGeneric("partition",function(clusters,traj,details=character()){standardGeneric("partition")})
 setGeneric("imputation",function(traj,method="copyMean",lowerBound="min",upperBound="max"){standardGeneric("imputation")})
-setGeneric("restaureRealData",function(object){standardGeneric("restaureRealData")})
+setGeneric("restoreRealData",function(object){standardGeneric("restoreRealData")})
 setGeneric("expandParLongData",function(xParLongData,y){standardGeneric("expandParLongData")})
-#setGeneric("plot",function(x,y,...){standardGeneric("plot")})
-setGeneric("plot3d",function(x,y,...){standardGeneric("plot3d")})
+setGeneric("plotTraj",function(x,y,...){standardGeneric("plotTraj")})
+setGeneric("plotTraj3d",function(x,y,...){standardGeneric("plotTraj3d")})
 setGeneric("plot3dPdf",function(x,y,varY=1,varZ=2){standardGeneric("plot3dPdf")})
 setGeneric("qualityCriterion",function(traj,clusters,imputationMethod="copyMean"){standardGeneric("qualityCriterion")})
 setGeneric("initializePartition",function(nbClusters,lengthPart,method="kmeans++",data){standardGeneric("initializePartition")})

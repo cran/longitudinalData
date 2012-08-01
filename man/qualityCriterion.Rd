@@ -52,7 +52,7 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
   probabilities of the individual trajectories and the
   likelihood. From there, we can also compute the BIC, the AIC and
   the global posterior probability. The function \code{qualityCriterion}
-  also compute there criterion. But the user should alway keep in mind
+  also compute these criterion. But the user should alway keep in mind
   that these criterion are
   valid ONLY under the hypothesis of normality. If this
   hypothèsis is not respected, algorithm like k-means will converge but the BIC and AIC
@@ -61,8 +61,7 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
   IMPORTANT NOTE: Some criterion should be maximized, some other should be
   minimized. This might be confusing for the non expert. In order to
   simplify the comparison of the criterion, \code{qualityCriterion}
-  compute the OPPOSITE of the criterion that should be minimized (the
-  opposite off Ray & Bouldin, Davies & Turi, BIC and AIC). Thus,
+  compute the OPPOSITE of the criterion that should be minimized (Ray & Bouldin, Davies & Turi, BIC and AIC). Thus,
   all the criterion computed by this function should be maximized.
 }
 
@@ -73,9 +72,9 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
   \itemize{
     \item{Calinski.Harabatz}{\code{[numeric]}: Calinski and Harabatz
       criterion: \code{c(k)=Trace(B)/Trace(W)*(n-k)/(k-1)}.}
-    \item{Krysczuk.Calinski}{\code{[numeric]}: Calinski and Harabatz
+    \item{Calinski.Harabatz2}{\code{[numeric]}: Calinski and Harabatz
       criterion modified by Krysczuk: \code{c(k)=Trace(B)/Trace(W)*(n-1)/(n-k)}.}
-    \item{Genolini.Calinski}{\code{[numeric]}: Calinski and Harabatz
+    \item{Calinski.Harabatz3}{\code{[numeric]}: Calinski and Harabatz
       criterion modified by Genolini:
       \code{g(k)=Trace(B)/Trace(W)*(n-k)/sqrt(k-1)}.}
     \item{Ray.Turi}{\code{[numeric]}: Ray and Turi criterion: \code{r(k)=-Vintra/Vinter} with
@@ -92,12 +91,21 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
 }
 
 \section{Parametric criterion}{
-  Under their classics form, all these indices should be minimized. So the function
+  All the parametric indices should be minimized. So the function
   \code{qualityCriterion} compute their opposite (see IMPORTANT NOTE above.)
 
   Notation: L=likelihood; h=number of parameters; n=number of
   trajectories; t=number of time measurement; N=total number of
   measurement (N=t.n).
+
+
+  SECOND IMPORTANT NOTE: the formula of parametrics criterion ofen
+  include the size of the population. In the specific case on
+  longitudinal data, the definition of the "size of the population" is
+  not obvious. It can be either the number of individual \code{n}, or the number of
+  measurement \code{N=n.t}. So, the function \code{qualityCriterion} gives
+  two version of all the non parametrics criterion, the first using \code{n},
+  the second using \code{N}.
 
   \itemize{
     \item{BIC}{\code{[numeric]}: Bayesian Information Criterion: BIC=2*log(L)-h*log(n). See IMPORTANT NOTE above.}
@@ -105,6 +113,9 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
     \item{AIC}{\code{[numeric]}: Akaike Information Criterion, bis: AIC=2*log(L)-2*h. See IMPORTANT NOTE above.}
     \item{AICc}{\code{[numeric]}: Akaike Information Criterion with correction: AIC=AIC+(2h(h+1))/(n-h-1). See IMPORTANT NOTE above.}
     \item{AICc2}{\code{[numeric]}: Akaike Information Criterion with correction, bis: AIC=AIC+(2h(h+1))/(n-h-1). See IMPORTANT NOTE above.}
+%    \item{entropy}{\code{[numeric]}: Entropy : -Sum_i Pi.log(Pi)}
+%    \item{ICL}{\code{[numeric]}: BIC penalised by the entropy: ICL=BIC-2.entropy. See IMPORTANT NOTE above.}
+%    \item{ICL2}{\code{[numeric]}: BIC2 penalised by the entropy: ICL2=BIC-2.entropy. See IMPORTANT NOTE above.}
   }
 }
 
@@ -123,7 +134,7 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
 \section{Author}{
   Christophe Genolini\cr
   1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-  2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+  2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
 \references{
@@ -140,26 +151,28 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
 ##################
 ### Preparation of some artificial data
 par(ask=TRUE)
-ld <- gald()
+data(artificialData)
+ld <- longData(artificialData)
+
 
 ### Correct partition
 part1 <- partition(rep(1:4,each=50))
-plot(ld,part1)
+plotTraj(ld,part1)
 (cr1 <- qualityCriterion(ld,part1))
 
 ### Random partition
 part2 <- partition(floor(runif(200,1,5)))
-plot(ld,part2)
+plotTraj(ld,part2)
 (cr2 <- qualityCriterion(ld,part2))
 
 ### Partition with 3 clusters instead of 4
 part3 <- partition(rep(c(1,2,3,3),each=50))
-plot(ld,part3)
+plotTraj(ld,part3)
 (cr3 <- qualityCriterion(ld,part3))
 
 
 ### Comparisons of the Partition
-plot(c(cr1[[1]],cr2[[2]],cr3[[3]]),main="The highest give the best partition
+plot(c(cr1[[1]],cr2[[1]],cr3[[1]]),main="The highest give the best partition
 (according to Calinski & Harabatz criterion)")
 par(ask=FALSE)
 }

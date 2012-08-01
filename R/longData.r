@@ -340,7 +340,7 @@ setMethod(f="scale",
 #)
 
 
-.longData.restaureRealData <- function(object){
+.longData.restoreRealData <- function(object){
     nameObject<-deparse(substitute(object))
     traj <- object@traj
 
@@ -351,50 +351,50 @@ setMethod(f="scale",
     assign(nameObject,object,envir=parent.frame())
     return(invisible())
 }
-setMethod(f="restaureRealData",
+setMethod(f="restoreRealData",
     signature=c(object="LongData"),
-    definition=.longData.restaureRealData
+    definition=.longData.restoreRealData
 )
 
 
-gald <- generateArtificialLongData <- function(
-    nbEachClusters=50,time=0:10,varNames="V",
-    functionClusters=list(function(t){0},function(t){t},function(t){10-t},function(t){-0.4*t^2+4*t}),
-    constantPersonal=function(t){rnorm(1,0,2)},
-    functionNoise=function(t){rnorm(1,0,2)},
-    decimal=2,percentOfMissing=0
-){
-    nbClusters <- length(functionClusters)
-    if(length(nbEachClusters)==1){nbEachClusters <- rep(nbEachClusters,nbClusters)}else{}
-    if(is.numeric(constantPersonal)){eval(parse(text=paste("constantPersonal <- function(t){rnorm(1,0,",constantPersonal,")}",sep="")))}else{}
-    if(length(constantPersonal)==1){constantPersonal <- rep(list(constantPersonal),nbClusters)}else{}
-    if(is.numeric(functionNoise)){eval(parse(text=paste("functionNoise <- function(t){rnorm(1,0,",functionNoise,")}",sep="")))}else{}
-    if(length(functionNoise)==1){functionNoise <- rep(list(functionNoise),nbClusters)}else{}
-    if(length(percentOfMissing)==1){percentOfMissing <- rep(percentOfMissing,nbClusters)}else{}
-    nbTime <- length(time)
-    idAll <- paste("i",1:(sum(nbEachClusters)),sep="")
-    indivInCluster <- rep(1:nbClusters,times=nbEachClusters)
+## gald <- generateArtificialLongData <- function(
+##     nbEachClusters=50,time=0:10,varNames="V",
+##     functionClusters=list(function(t){0},function(t){t},function(t){10-t},function(t){-0.4*t^2+4*t}),
+##     constantPersonal=function(t){rnorm(1,0,2)},
+##     functionNoise=function(t){rnorm(1,0,2)},
+##     decimal=2,percentOfMissing=0
+## ){
+##     nbClusters <- length(functionClusters)
+##     if(length(nbEachClusters)==1){nbEachClusters <- rep(nbEachClusters,nbClusters)}else{}
+##     if(is.numeric(constantPersonal)){eval(parse(text=paste("constantPersonal <- function(t){rnorm(1,0,",constantPersonal,")}",sep="")))}else{}
+##     if(length(constantPersonal)==1){constantPersonal <- rep(list(constantPersonal),nbClusters)}else{}
+##     if(is.numeric(functionNoise)){eval(parse(text=paste("functionNoise <- function(t){rnorm(1,0,",functionNoise,")}",sep="")))}else{}
+##     if(length(functionNoise)==1){functionNoise <- rep(list(functionNoise),nbClusters)}else{}
+##     if(length(percentOfMissing)==1){percentOfMissing <- rep(percentOfMissing,nbClusters)}else{}
+##     nbTime <- length(time)
+##     idAll <- paste("i",1:(sum(nbEachClusters)),sep="")
+##     indivInCluster <- rep(1:nbClusters,times=nbEachClusters)
 
-    traj <- matrix(NA,nrow=sum(nbEachClusters),ncol=nbTime)
-    for (iIndiv in 1:nrow(traj)){
-        traj[iIndiv,] <- functionClusters[[indivInCluster[iIndiv]]](time)+
-                         constantPersonal[[indivInCluster[iIndiv]]](time)+
-                         apply(t(time),2,functionNoise[[indivInCluster[iIndiv]]])
-    }
-    traj <- round(traj,digits=decimal)
+##     traj <- matrix(NA,nrow=sum(nbEachClusters),ncol=nbTime)
+##     for (iIndiv in 1:nrow(traj)){
+##         traj[iIndiv,] <- functionClusters[[indivInCluster[iIndiv]]](time)+
+##                          constantPersonal[[indivInCluster[iIndiv]]](time)+
+##                          apply(t(time),2,functionNoise[[indivInCluster[iIndiv]]])
+##     }
+##     traj <- round(traj,digits=decimal)
 
 
-    for (iCluster in 1:nbClusters){
-        nbVal <- nbTime*nbEachClusters[iCluster]
-        while(sum(is.na(traj[indivInCluster==iCluster,]))/nbVal < percentOfMissing[iCluster]){
-            randL <- floor(runif(1,cumsum(c(0,nbEachClusters))[iCluster]+1,cumsum(nbEachClusters)[iCluster]+1))
-            randC <- floor(runif(1,1,nbTime+1))
-            if(sum(!is.na(traj[randL,]))>1){traj[randL,randC]<-NA}else{}
-        }
-    }
+##     for (iCluster in 1:nbClusters){
+##         nbVal <- nbTime*nbEachClusters[iCluster]
+##         while(sum(is.na(traj[indivInCluster==iCluster,]))/nbVal < percentOfMissing[iCluster]){
+##             randL <- floor(runif(1,cumsum(c(0,nbEachClusters))[iCluster]+1,cumsum(nbEachClusters)[iCluster]+1))
+##             randC <- floor(runif(1,1,nbTime+1))
+##             if(sum(!is.na(traj[randL,]))>1){traj[randL,randC]<-NA}else{}
+##         }
+##     }
 
-    return(longData(traj,idAll=idAll,time=time,varNames=varNames))
-}
+##     return(longData(traj,idAll=idAll,time=time,varNames=varNames))
+## }
 
 
 cat("\n-------------------------------------------------------------------

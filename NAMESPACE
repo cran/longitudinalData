@@ -10,14 +10,16 @@ export(
        "parLongData","parTRAJ","parMEAN",
 
        ## ListClustering
-       "listPartition","regroup","ordered","plot","showListPartition",
+       "listPartition","regroup","ordered","showListPartition",
 
        ## parWindows
        "parWindows","windowsCut",
 
        ## longData
-       "gald","generateArtificialLongData","gald3d","generateArtificialLongData3d","longDataFrom3d","longDataTo3d","showLongData","showLongData3d",
+       #"gald","generateArtificialLongData","gald3d","generateArtificialLongData3d",
+       "longDataFrom3d","longDataTo3d","showLongData","showLongData3d",
        ## longDataPlot
+       "plotTraj","plotTraj3d","plot3dPdf",
 
        #"resizePartition",
        "saveTrianglesAsASY","makeLatexFile"
@@ -30,9 +32,9 @@ exportMethods(
               ## parLongData
               "expandParLongData",
               ## longData
-              "longData","longData3d","scale","restaureRealData",
+              "longData","longData3d","scale","restoreRealData",
               ## longDataPlot
-              "plot","plot3d","plot3dPdf",
+              "plotTraj","plotTraj3d","plot3dPdf",
               ## imputation
               "imputation",
               ## criterion
@@ -46,4 +48,4 @@ exportClasses(
               "LongData","LongData3d"
 )
 
-import(methods,clv,rgl,misc3d,graphics)
+import(methods,clv,rgl,misc3d,graphics,utils)

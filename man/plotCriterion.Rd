@@ -51,23 +51,22 @@ plotCriterion(x, criterion=x["criterionActif"],nbCriterion=100,standardized = FA
 
 \examples{
 ###############
-### Data génération
-
-data <- gald(30)["traj"]
+### Data generation
+data(artificialData)
+data <- as.matrix(artificialData[,-1])
 
 ### Some clustering
 listPart <- listPartition()
-listPart["add"] <- partition(rep(c("A","B","A"),time=40),data)
-listPart["add"] <- partition(rep(c("A","B","B"),time=40),data)
-listPart["add"] <- partition(rep(c("A","B","C"),time=40),data)
-listPart["add"] <- partition(rep(c("A","B","C","B","C"),time=24),data)
-listPart["add"] <- partition(rep(c("A","B","A","C","D"),time=24),data)
+listPart["add"] <- partition(rep(c("A","B"),time=100),data)
+listPart["add"] <- partition(rep(c("A","B","B","B"),time=50),data)
+listPart["add"] <- partition(rep(c("A","B","C","A"),time=50),data)
+listPart["add"] <- partition(rep(c("A","B","C","D"),time=50),data)
 ordered(listPart)
 
 ################
 ### graphical display
 plotCriterion(listPart)
-plotCriterion(listPart,criterion=CRITERION_NAMES)
+plotCriterion(listPart,criterion=CRITERION_NAMES[1:5],TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -1,22 +1,22 @@
-\name{restaureRealData}
-\alias{restaureRealData}
-\alias{restaureRealData,LongData}
-\alias{restaureRealData,LongData3d}
-\alias{restaureRealData,LongData-method}
-\alias{restaureRealData,LongData3d-method}
+\name{restoreRealData}
+\alias{restoreRealData}
+\alias{restoreRealData,LongData}
+\alias{restoreRealData,LongData3d}
+\alias{restoreRealData,LongData-method}
+\alias{restoreRealData,LongData3d-method}
 
 \title{
-~ Function: restaureRealData ~
+~ Function: restoreRealData ~
 }
 \description{
   This function revert the effect of \code{\link{scale}} by restauring
   the initial values of trajectories.
 }
 \usage{
-restaureRealData(object)
+restoreRealData(object)
 }
 \arguments{
-  \item{object}{\code{[LongData]}: Object containnig trajectories to restaure.}
+  \item{object}{\code{[LongData]}: Object containnig trajectories to restore.}
 }
 
 \details{
@@ -56,15 +56,15 @@ id2=1:12
 f <- function(id,t)((id-1)\%\%3-1) * t
 g <- function(id,t)(id\%\%2+1)*t
 ld1 <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g))+rnorm(12*8*2,0,1),dim=c(12,8,2)))
-plot3d(ld1)
+plotTraj3d(ld1)
 
 ##################
 ### Scaling by 'mean' and 'standard deviation'
 scale(ld1,scale=c(-1,-1))
-plot(ld1)
+plotTraj(ld1)
 
 ##################
 ### Back to the first version of the data
-restaureRealData(ld1)
-plot(ld1)
+restoreRealData(ld1)
+plotTraj(ld1)
 }

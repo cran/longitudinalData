@@ -99,10 +99,9 @@ legendCol <- function(nbVar){
 }
 
 
-cat("### Method: 'plot' pour LongData sans Partition ###\n")
+cat("### Method: 'plot' pour LongData3d sans Partition ###\n")
 
-
-.longData3d.plot <- function(x,parTraj=parTRAJ(),parWin=windowsCut(x['nbVar'],addLegend=FALSE),nbSample=Inf){
+.longData3d.plotTraj <- function(x,parTraj=parTRAJ(),parWin=windowsCut(x['nbVar'],addLegend=FALSE),nbSample=Inf,...){
     ## Duplication de la couleur (équivalent a expandParLongData)
     ## Comme il n'y a pas de partition, 'clusters' devient 'black'
     if(identical(parTraj['col'],'clusters')){parTraj['col']<-'black'}else{}
@@ -119,7 +118,7 @@ cat("### Method: 'plot' pour LongData sans Partition ###\n")
         screen(listScreen[i])
         par(mar=c(3,4,2,1))
         matplot(x['time'],t(x['traj'][toKeep,,i]),type=parTraj['type'],col=parTraj['col'][toKeep],lty=1,
-                pch=parTraj['pch'],cex=parTraj['cex'],xlab="",ylab=x['varNames'][i])
+                pch=parTraj['pch'],cex=parTraj['cex'],xlab="",ylab=x['varNames'][i],...)
     }
     if(parWin['closeScreen']){
         close.screen(listScreen)
@@ -128,11 +127,12 @@ cat("### Method: 'plot' pour LongData sans Partition ###\n")
         return(listScreen)
     }
 }
-setMethod("plot",signature=c(x="LongData3d",y="missing"),.longData3d.plot)
+setMethod("plotTraj",signature=c(x="LongData3d",y="missing"),.longData3d.plotTraj)
 
 
-cat("### Method: 'plot' pour LongData et Partition ###\n")
-.longData3d.Partition.plot <- function(x,y,parTraj=parTRAJ(),parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000){
+cat("### Method: 'plot' pour LongData3d et Partition ###\n")
+
+.longData3d.Partition.plotTraj <- function(x,y,parTraj=parTRAJ(),parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...){
     ## ############################# Preparation ############################# ##
     nbVar <- x['nbVar']
     nbTime <- x['nbTime']
@@ -174,7 +174,7 @@ cat("### Method: 'plot' pour LongData et Partition ###\n")
         screen(listScreen[i])
         par(mar=c(3,4,2,1))
         matplot(x['time'],t(traj[toKeep,,i]),type=parTraj['type'],col=parTraj['col'][toKeep],lty=1,
-                pch=parTraj['pch'],cex=parTraj['cex'],xlab="",ylab=x['varNames'][i])
+                pch=parTraj['pch'],cex=parTraj['cex'],xlab="",ylab=x['varNames'][i],...)
 
         ## Tracé des moyennes avec ou sans symbols
         if(parMean['type'] %in% c("l","b","c","o","h","s","S")){
@@ -205,19 +205,22 @@ cat("### Method: 'plot' pour LongData et Partition ###\n")
     }
     close.screen(listScreen)
 }
-setMethod("plot",signature=c(x="LongData3d",y="Partition"),.longData3d.Partition.plot)
+setMethod("plotTraj",signature=c(x="LongData3d",y="Partition"),.longData3d.Partition.plotTraj)
 
-.longData.Partition.plot <- function(x,y,parTraj=parTRAJ(),parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000){
-    plot(longDataTo3d(x),y=y,parTraj=parTraj,parMean=parMean,parWin=parWin,nbSample=nbSample)
+
+cat("### Method: 'plot' pour LongData, avec ou sans Partition ###\n")
+
+.longData.Partition.plotTraj <- function(x,y,parTraj=parTRAJ(),parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...){
+    plotTraj(longDataTo3d(x),y=y,parTraj=parTraj,parMean=parMean,parWin=parWin,nbSample=nbSample,...)
 }
 
-setMethod("plot",signature=c(x="LongData",y="Partition"),.longData.Partition.plot)
+setMethod("plotTraj",signature=c(x="LongData",y="Partition"),.longData.Partition.plotTraj)
 
-.longData.plot <- function(x,parTraj=parTRAJ(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000){
-    plot(longDataTo3d(x),parTraj=parTraj,parWin=parWin,nbSample=nbSample)
+.longData.plotTraj <- function(x,parTraj=parTRAJ(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...){
+    plotTraj(longDataTo3d(x),parTraj=parTraj,parWin=parWin,nbSample=nbSample,...)
 }
 
-setMethod("plot",signature=c(x="LongData",y="missing"),.longData.plot)
+setMethod("plotTraj",signature=c(x="LongData",y="missing"),.longData.plotTraj)
 
 
 
@@ -240,7 +243,7 @@ adjustGraph3d <- function(varName1,varName2){
     rgl.viewpoint(0,-90,zoom=1.2)
 }
 
-.LongData3d.plot3d <- function(x,y,varY=1,varZ=2,parTraj=parTRAJ(),parMean=parMEAN(),nbSample=1000){
+.LongData3d.plotTraj3d <- function(x,y,varY=1,varZ=2,parTraj=parTRAJ(),parMean=parMEAN(),nbSample=1000,...){
     ## Duplication de la couleur (équivalent a expandParLongData)
     if(identical(parTraj['col'],'clusters')){parTraj['col']<-'black'}else{}
     if(length(parTraj['col'])==1){parTraj['col'] <- rep(parTraj['col'],x['nbIdFewNA'])}else{color<-parTraj['col']}
@@ -261,12 +264,12 @@ adjustGraph3d <- function(varName1,varName2){
 
      adjustGraph3d(varY$name,varZ$name)
 }
-setMethod("plot3d",signature=c("LongData3d","missing"),.LongData3d.plot3d)
+setMethod("plotTraj3d",signature=c("LongData3d","missing"),.LongData3d.plotTraj3d)
 
 
 
 
-.LongData3d.Partition.plot3d <- function(x,y,varY=1,varZ=2,parTraj=parTRAJ(type="n"),parMean=parMEAN(),nbSample=1000){
+.LongData3d.Partition.plotTraj3d <- function(x,y,varY=1,varZ=2,parTraj=parTRAJ(type="n"),parMean=parMEAN(),nbSample=1000,...){
     ## ############################# Preparation ############################# ##
     nbVar <- x['nbVar']
     nbTime <- x['nbTime']
@@ -319,7 +322,7 @@ setMethod("plot3d",signature=c("LongData3d","missing"),.LongData3d.plot3d)
 
     adjustGraph3d(varY$name,varZ$name)
 }
-setMethod("plot3d",signature=c("LongData3d","Partition"),.LongData3d.Partition.plot3d)
+setMethod("plotTraj3d",signature=c("LongData3d","Partition"),.LongData3d.Partition.plotTraj3d)
 
 
 

@@ -94,8 +94,8 @@ Christophe Genolini\cr
     x <- -1+rnorm(25);x[floor(runif(5,1,26))] <- NA
     y <- 1+rnorm(25);y[floor(runif(5,1,26))] <- NA
 
-#    plot(x,type="b",col=2,ylim=c(-5,5))
- #   lines(y,type="b",col=3)
+    plot(x,type="b",col=2,ylim=c(-5,5))
+    lines(y,type="b",col=3)
 
     system.time(for(i in 1:10000)dist(rbind(x,y)))
     system.time(for(i in 1:10000)distTraj(x,y))

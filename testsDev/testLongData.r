@@ -231,9 +231,9 @@ restaureRealData(ld5)
 restaureRealData(ld5n)
 
 
-cleanProg(generateArtificialLongData,,,1)
-ga1 <- gald()
-ga2 <- gald(10)
+#cleanProg(generateArtificialLongData,,,1)
+#ga1 <- gald()
+#ga2 <- gald(10)
 
 ## par(mfrow=c(2,3))
 ## part3 <- partition(rep(LETTERS[1:3],each=50))

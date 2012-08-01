@@ -60,8 +60,8 @@ lcl3['random']
 
 lcl3['criterionValues']
 lcl3['criterionValuesAsMatrix']
-lcl3['criterionValuesAsMatrix',"Genolini.Calinski"]
-lcl3['Genolini.Calinski']
+lcl3['criterionValuesAsMatrix',"Calinski.Harabatz3"]
+lcl3['Calinski.Harabatz3']
 
 lcl3['sorted']
 
@@ -120,10 +120,10 @@ plotCriterion(lcl3)
 lcl3['criterionActif'] <- "Davies.Bouldin"
 plotCriterion(lcl3)
 
-plotCriterion(lcl0,criterion=c("Calinski.Harabatz","Calinski.Genolini","Davies.Bouldin"))
+plotCriterion(lcl0,criterion=c("Calinski.Harabatz","Calinski.Harabatz3","Davies.Bouldin"))
 plotCriterion(lcl3,criterion=CRITERION_NAMES)
 ordered(lcl3)
-plotCriterion(lcl3,criterion=c("Calinski.Harabatz","Calinski.Genolini","Davies.Bouldin"))
+plotCriterion(lcl3,criterion=c("Calinski.Harabatz","Calinski.Harabatz3","Davies.Bouldin"))
 dev.off()
 
 
