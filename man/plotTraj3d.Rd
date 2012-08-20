@@ -1,21 +1,21 @@
-\name{plot3d,LongData}
+\name{plotTraj3d,LongData}
 \Rdversion{1.1}
-\alias{plot3d}
-\alias{plot3d,LongData3d}
-\alias{plot3d,LongData3d-method}
-\alias{plot3d,LongData3d,Partition-method}
-\alias{plot3d,LongData3d,missing-method}
+\alias{plotTraj3d}
+\alias{plotTraj3d,LongData3d}
+\alias{plotTraj3d,LongData3d-method}
+\alias{plotTraj3d,LongData3d,Partition-method}
+\alias{plotTraj3d,LongData3d,missing-method}
 %\alias{plot3d,LongData3d,Partition-method}
 
-\title{ ~ Function: plot3d for LongData3d ~ }
+\title{ ~ Function: plotTraj3d for LongData3d ~ }
 \description{
   Plot two variables of a \code{\linkS4class{LongData3d}} object in 3D, optionnaly
   relatively to a \code{\linkS4class{Partition}}.
 }
 
 \usage{
-\S4method{plot3d}{LongData3d,missing}(x,y,varY=1,varZ=2,parTraj=parTRAJ(),parMean=parMEAN(),nbSample=1000)
-\S4method{plot3d}{LongData3d,Partition}(x,y,varY=1,varZ=2,parTraj=parTRAJ(type="n"),parMean=parMEAN(),nbSample=1000)
+\S4method{plotTraj3d}{LongData3d,missing}(x,y,varY=1,varZ=2,parTraj=parTRAJ(),parMean=parMEAN(),nbSample=1000,...)
+\S4method{plotTraj3d}{LongData3d,Partition}(x,y,varY=1,varZ=2,parTraj=parTRAJ(type="n"),parMean=parMEAN(),nbSample=1000,...)
 }
 
 \arguments{
@@ -37,6 +37,7 @@
   \item{nbSample}{\code{[numeric]}: Graphical display of huge sample can
     be time consumming. This parameters fixe the maximum numbre of
     trajectories (randomly chosen) that will be drawn.}
+  \item{...}{Arguments to be passed to methods, such as graphical parameters.}
 }
 
 \details{
@@ -80,24 +81,24 @@ ld <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g),outer(id2,time,
 part <- partition(rep(1:6,20))
 
 ### Basic plotting
-plot3d(ld)
-plot3d(ld,part)
+plotTraj3d(ld)
+plotTraj3d(ld,part)
 
 ### Variable 1 and 3, then 2 and 3
-plot3d(ld,part)
-plot3d(ld,part,varY=3,varZ=2)
-plot3d(ld,part,varY=1,varZ=3)
+plotTraj3d(ld,part)
+plotTraj3d(ld,part,varY=3,varZ=2)
+plotTraj3d(ld,part,varY=1,varZ=3)
 
 ##################
 ### Changing graphical parameters 'par'
 
 ### Color individual according to its clusters (col="clusters")
-plot3d(ld,part,parTraj=parTRAJ(col="clusters"))
-plot3d(ld,part,parTraj=parTRAJ(col="clusters"),varY=1,varZ=3)
+plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"))
+plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"),varY=1,varZ=3)
 
 ### No mean trajectories (type="n"), only few trajectories
 ### Color individual according to its clusters (col="clusters")
-plot3d(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"),nbSample=10)
+plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"),nbSample=10)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

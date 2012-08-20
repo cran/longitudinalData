@@ -46,7 +46,7 @@
     \item{\code{reverse}}{\code{[matrix(numeric)]}: if the trajectories
       are scale using the function \code{\link{scale}}, the 'scaling
       parameters' (probably mean and standard deviation) are saved in
-      \code{reverse}. This is usefull to restaure the original data after a
+      \code{reverse}. This is usefull to restore the original data after a
       scaling operation.}
   }
 }
@@ -102,17 +102,17 @@
   \describe{
     \item{\code{\link{scale}}}{scale the trajectories. Usefull to
       normalize variable trajectories measured with different units.}
-    \item{\code{\link{restaureRealData}}}{restaure original data that
+    \item{\code{\link{restoreRealData}}}{restore original data that
       have been modified after a scaling operation.}
-    \item{\code{\link{generateArtificialLongData}} (or
-      \code{\link{gald}})}{Generate an artifial dataset of a single variable-trajectory.}
-    \item{\code{\link{generateArtificialLongData3d}} (or
-      \code{\link{gald3d}})}{Generate a artifial dataset of some joint
-      variable-trajectory.}
+%    \item{\code{\link{generateArtificialLongData}} (or
+%      \code{\link{gald}})}{Generate an artifial dataset of a single variable-trajectory.}
+ %   \item{\code{\link{generateArtificialLongData3d}} (or
+  %    \code{\link{gald3d}})}{Generate a artifial dataset of some joint
+   %   variable-trajectory.}
     \item{\code{\link{longDataFrom3d}}}{Extract a variable trajectory
       form a dataset of joint trajectories.}
-    \item{\code{plot}}{plot all the variable of the \code{LongData}, optionnaly according to a \code{\linkS4class{Partition}}.}
-    \item{\code{plot3d}}{plot tow variable of the \code{LongData} in 3 dimensions, optionnaly according to a \code{\linkS4class{Partition}}.}
+    \item{\code{plotTraj}}{plot all the variable of the \code{LongData}, optionnaly according to a \code{\linkS4class{Partition}}.}
+    \item{\code{plotTraj3d}}{plot tow variable of the \code{LongData} in 3 dimensions, optionnaly according to a \code{\linkS4class{Partition}}.}
     \item{\code{plot3dPdf}}{create 'Triangle objects' representing in
       3D the cluster's center according to a
       \code{\linkS4class{Partition}}. 'Triangle object' can latter be
@@ -126,9 +126,9 @@
 
 
 \section{Author}{
-Christophe Genolini\cr
-1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+  Christophe Genolini\cr
+  1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
+  2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
 \references{
@@ -144,8 +144,8 @@ Christophe Genolini\cr
 \seealso{
   Overview: \code{\link{longitudinalData-package}} \cr
   Methods: \code{\link{longData}},  \code{\link{longData3d}}, \code{\link{imputation}}, \code{\link{qualityCriterion}}\cr
-  Plot: \code{\link[=plot,LongData]{plot}},
-  \code{\link[=plot3d,LongData3d]{plot3d}},  \code{\link{plot3dPdf}}
+  Plot: \code{\link[=plotTraj,LongData]{plotTraj}},
+  \code{\link[=plotTraj3d,LongData3d]{plotTraj3d}},  \code{\link{plot3dPdf}}
 }
 
 
@@ -163,7 +163,7 @@ ld["traj"]
 (ld)
 
 ### Plot
-plot(ld)
+plotTraj(ld)
 
 
 #################
@@ -176,9 +176,9 @@ scale(ld)
 (ld)
 
 ### Plotting
-plot(ld)
-plot3d(ld)
-restaureRealData(ld)
+plotTraj(ld)
+plotTraj3d(ld)
+restoreRealData(ld)
 }
 \keyword{classes}
 \keyword{classif}  % Classification	['class' package]

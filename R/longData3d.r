@@ -376,7 +376,7 @@ setMethod(f="scale",
 #)
 
 
-.longData3d.restaureRealData <- function(object){
+.longData3d.restoreRealData <- function(object){
     nameObject<-deparse(substitute(object))
     traj <- object@traj
 
@@ -389,49 +389,49 @@ setMethod(f="scale",
     assign(nameObject,object,envir=parent.frame())
     return(invisible())
 }
-setMethod(f="restaureRealData",
+setMethod(f="restoreRealData",
     signature=c(object="LongData3d"),
-    definition=.longData3d.restaureRealData
+    definition=.longData3d.restoreRealData
 )
 
 
-gald3d <- generateArtificialLongData3d <- function(
-    nbEachClusters=50,time=0:10,varNames=c("V","T"),
-    functionClusters=list(function(t){c(0,0)},function(t){c(10,10)},function(t){c(10-t,10-t)}),
-    constantPersonal=function(t){c(rnorm(1,0,2),rnorm(1,0,2))},
-    functionNoise=function(t){c(rnorm(1,0,2),rnorm(1,0,2))},
-    decimal=2,percentOfMissing=0#,clusterLongData=TRUE
-){
-    nbClusters <- length(functionClusters)
-    if(length(nbEachClusters)==1){nbEachClusters <- rep(nbEachClusters,nbClusters)}else{}
-    if(is.numeric(constantPersonal)){eval(parse(text=paste("constantPersonal <- function(t){c(rnorm(1,0,",constantPersonal,"),rnorm(1,0,",constantPersonal,"))}",sep="")))}else{}
-    if(length(constantPersonal)==1){constantPersonal <- rep(list(constantPersonal),nbClusters)}else{}
-    if(is.numeric(functionNoise)){eval(parse(text=paste("functionNoise <- function(t){c(rnorm(1,0,",functionNoise,"),rnorm(1,0,",functionNoise,"))}",sep="")))}else{}
-    if(length(functionNoise)==1){functionNoise <- rep(list(functionNoise),nbClusters)}else{}
-    if(length(percentOfMissing)==1){percentOfMissing <- rep(percentOfMissing,nbClusters)}else{}
-    nbTime <- length(time)
-    nbVar <- length(varNames)
-    idAll <- paste("i",1:(sum(nbEachClusters)),sep="")
-    indivInCluster <- rep(1:nbClusters,times=nbEachClusters)
+## gald3d <- generateArtificialLongData3d <- function(
+##     nbEachClusters=50,time=0:10,varNames=c("V","T"),
+##     functionClusters=list(function(t){c(0,0)},function(t){c(10,10)},function(t){c(10-t,10-t)}),
+##     constantPersonal=function(t){c(rnorm(1,0,2),rnorm(1,0,2))},
+##     functionNoise=function(t){c(rnorm(1,0,2),rnorm(1,0,2))},
+##     decimal=2,percentOfMissing=0#,clusterLongData=TRUE
+## ){
+##     nbClusters <- length(functionClusters)
+##     if(length(nbEachClusters)==1){nbEachClusters <- rep(nbEachClusters,nbClusters)}else{}
+##     if(is.numeric(constantPersonal)){eval(parse(text=paste("constantPersonal <- function(t){c(rnorm(1,0,",constantPersonal,"),rnorm(1,0,",constantPersonal,"))}",sep="")))}else{}
+##     if(length(constantPersonal)==1){constantPersonal <- rep(list(constantPersonal),nbClusters)}else{}
+##     if(is.numeric(functionNoise)){eval(parse(text=paste("functionNoise <- function(t){c(rnorm(1,0,",functionNoise,"),rnorm(1,0,",functionNoise,"))}",sep="")))}else{}
+##     if(length(functionNoise)==1){functionNoise <- rep(list(functionNoise),nbClusters)}else{}
+##     if(length(percentOfMissing)==1){percentOfMissing <- rep(percentOfMissing,nbClusters)}else{}
+##     nbTime <- length(time)
+##     nbVar <- length(varNames)
+##     idAll <- paste("i",1:(sum(nbEachClusters)),sep="")
+##     indivInCluster <- rep(1:nbClusters,times=nbEachClusters)
 
-    traj <- array(NA,dim=c(sum(nbEachClusters),nbTime,nbVar),dimnames=c(idAll,paste("t",time,sep=""),varNames))
-    for (iIndiv in 1:nrow(traj)){
-	  traj[iIndiv,,] <- t(sapply(time,functionClusters[[indivInCluster[iIndiv]]])+constantPersonal[[indivInCluster[iIndiv]]](0)+sapply(time,functionNoise[[indivInCluster[iIndiv]]]))
-    }
-    traj <- round(traj,digits=decimal)
+##     traj <- array(NA,dim=c(sum(nbEachClusters),nbTime,nbVar),dimnames=c(idAll,paste("t",time,sep=""),varNames))
+##     for (iIndiv in 1:nrow(traj)){
+## 	  traj[iIndiv,,] <- t(sapply(time,functionClusters[[indivInCluster[iIndiv]]])+constantPersonal[[indivInCluster[iIndiv]]](0)+sapply(time,functionNoise[[indivInCluster[iIndiv]]]))
+##     }
+##     traj <- round(traj,digits=decimal)
 
-    for (iCluster in 1:nbClusters){
-        nbVal <- nbTime*nbEachClusters[iCluster]
-        while(sum(is.na(traj[indivInCluster==iCluster,,]))/nbVal < percentOfMissing[iCluster]){
-            randL <- floor(runif(1,cumsum(c(0,nbEachClusters))[iCluster]+1,cumsum(nbEachClusters)[iCluster]+1))
-            randC <- floor(runif(1,1,nbTime+1))
-            randV <- floor(runif(1,1,nbVar+1))
-            if(sum(!is.na(traj[randL,,randV]))>1){traj[randL,randC,randV]<-NA}else{}
-        }
-    }
-#    if(clusterLongData){return(as.clusterLongData(traj,idAll=id,time=time,varNames=varNames))}else{
-    return(longData3d(traj,idAll=idAll,time=time,varNames=varNames))
-}
+##     for (iCluster in 1:nbClusters){
+##         nbVal <- nbTime*nbEachClusters[iCluster]
+##         while(sum(is.na(traj[indivInCluster==iCluster,,]))/nbVal < percentOfMissing[iCluster]){
+##             randL <- floor(runif(1,cumsum(c(0,nbEachClusters))[iCluster]+1,cumsum(nbEachClusters)[iCluster]+1))
+##             randC <- floor(runif(1,1,nbTime+1))
+##             randV <- floor(runif(1,1,nbVar+1))
+##             if(sum(!is.na(traj[randL,,randV]))>1){traj[randL,randC,randV]<-NA}else{}
+##         }
+##     }
+## #    if(clusterLongData){return(as.clusterLongData(traj,idAll=id,time=time,varNames=varNames))}else{
+##     return(longData3d(traj,idAll=idAll,time=time,varNames=varNames))
+## }
 
 ### allVarNames contient les nom des variables presentent dans un LongData.
 ### variable contient soit un nom de variable, soit le numero d'une variable.
@@ -455,10 +455,12 @@ longDataFrom3d <- function(xLongData3d,variable){
     selectVar <- xLongData3d["varNames"] %in% variable
     if(all(!selectVar)){stop("[LongData3d:longDataFrom3d] invalide variable names")}else{}
     idAll <- xLongData3d["idAll"]
+    time <- xLongData3d["time"]
     traj <- xLongData3d["traj"][,,selectVar]
     traj <- rbind(traj,matrix(NA,nrow=length(idAll)-nrow(traj),ncol=ncol(traj),dimnames=list(idAll[!idAll %in% xLongData3d["idFewNA"]])))[idAll,]
     return(longData(traj=traj,
                     idAll=idAll,
+                    time=time,
                     varNames=xLongData3d["varNames"][selectVar],
                     maxNA=xLongData3d["maxNA"][selectVar])
     )
@@ -468,10 +470,12 @@ longDataFrom3d <- function(xLongData3d,variable){
 longDataTo3d <- function(xLongData){
     idAll <- xLongData["idAll"]
     traj <- xLongData["traj"]
+    time <- xLongData["time"]
     traj <- rbind(traj,matrix(NA,nrow=length(idAll)-nrow(traj),ncol=ncol(traj),dimnames=list(idAll[!idAll %in% xLongData["idFewNA"]])))[idAll,]
     dim(traj) <- c(dim(traj),1)
     return(longData3d(traj=traj,
-                      idAll=xLongData["idAll"],
+                      idAll=idAll,
+                      time=time,
                       varNames=xLongData["varNames"],
                       maxNA=xLongData["maxNA"])
     )

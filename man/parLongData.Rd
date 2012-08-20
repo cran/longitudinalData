@@ -5,7 +5,7 @@
 
 
 \title{
- ~ Functions: parLongData, parTraj and parMean~
+ ~ Function: parLongData, parTraj and parMean~
 }
 \description{
 \code{parLongData}, \code{parTraj} and \code{parMean} are constructors for the class
@@ -30,7 +30,7 @@ parMEAN(type = "b", col = "clusters", pch = "letters", pchPeriod = 1, cex = 1.2,
     specifying a symbol or special values 'letters' or 'symbol' (see details).}
   \item{pchPeriod}{\code{[numeric]}: Fix the number of point that should be plot. Usefull to
     plot points on trajectories with a lot of mesurement (see examples
-    in \code{\link[=plot,LongData-method]{plot}} for \code{LongData} for details).}
+    in \code{\link{plotTraj}} for \code{LongData} for details).}
   \item{cex}{\code{[numeric]}: Set the
     amount by which plotting text and symbols should be magnified relative
     to the default.}
@@ -80,14 +80,14 @@ g <- function(id,t)(id\%\%2+1)*t
 ld2 <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g))+rnorm(120*8*2,0,3),dim=c(120,8,2)))
 
 ### Example with default value
-plot(ld2)
-plot(ld2,parTraj=parTRAJ())
+plotTraj(ld2)
+plotTraj(ld2,parTraj=parTRAJ())
 
 ### Example with default values for mean trajectories
-plot(ld2,parTraj=parMEAN())
+plotTraj(ld2,parTraj=parMEAN())
 
 ### Example with default value except for the color
-plot(ld2,parTraj=parTRAJ(col="blue"))
+plotTraj(ld2,parTraj=parTRAJ(col="blue"))
 }
 \keyword{methods}
 

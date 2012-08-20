@@ -45,7 +45,7 @@
     \item{\code{reverse}}{\code{[matrix(numeric)]}: if the trajectories
       are scale using the function \code{\link{scale}}, the 'scaling
       parameters' (probably mean and standard deviation) are saved in
-      \code{reverse}. This is usefull to restaure the original data after a
+      \code{reverse}. This is usefull to restore the original data after a
       scaling operation.}
   }
 }
@@ -98,16 +98,16 @@
   \describe{
     \item{\code{\link{scale}}}{scale the trajectories. Usefull to
       normalize variable trajectories measured with different units.}
-    \item{\code{\link{restaureRealData}}}{restaure original data that
+    \item{\code{\link{restoreRealData}}}{restore original data that
       have been modified after a scaling operation.}
-    \item{\code{\link{generateArtificialLongData3d}} (or
-      \code{\link{gald3d}})}{Generate a artifial dataset of some joint
-      variable-trajectory.}
+%    \item{\code{\link{generateArtificialLongData3d}} (or
+ %     \code{\link{gald3d}})}{Generate a artifial dataset of some joint
+  %    variable-trajectory.}
     \item{\code{\link{longDataFrom3d}}}{Create a
   \code{\linkS4class{LongData}} by extracting a single variable trajectory
       form a dataset of joint variable-trajectories.}
-    \item{\code{plot}}{plot all the variable of the \code{LongData3d}, optionnaly according to a \code{\linkS4class{Partition}}.}
-    \item{\code{plot3d}}{plot tow variables of the \code{LongData3d} in
+    \item{\code{plotTraj}}{plot all the variable of the \code{LongData3d}, optionnaly according to a \code{\linkS4class{Partition}}.}
+    \item{\code{plotTraj3d}}{plot two variables of the \code{LongData3d} in
       a 3 dimensions graph, optionnaly according to a \code{\linkS4class{Partition}}.}
     \item{\code{plot3dPdf}}{create 'Triangle objects' representing in
       3D the cluster's center according to a
@@ -140,8 +140,8 @@ Christophe Genolini\cr
 \seealso{
   Overview: \code{\link{longitudinalData-package}} \cr
   Methods: \code{\linkS4class{LongData}},  \code{\link{longData3d}}, \code{\link{imputation}}, \code{\link{qualityCriterion}}\cr
-  Plot: \code{\link[=plot,LongData3d]{plot}},
-  \code{\link[=plot3d,LongData3d]{plot3d}},  \code{\link{plot3dPdf}}
+  Plot: \code{\link[=plotTraj,LongData3d]{plotTraj}},
+  \code{\link[=plotTraj3d,LongData3d]{plotTraj3d}},  \code{\link{plot3dPdf}}
 }
 
 
@@ -157,9 +157,9 @@ scale(ld)
 (ld)
 
 ### Plotting
-plot(ld)
-plot3d(ld)
-restaureRealData(ld)
+plotTraj(ld)
+plotTraj3d(ld)
+restoreRealData(ld)
 }
 \keyword{classes}
 \keyword{classif}  % Classification	['class' package]

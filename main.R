@@ -14,4 +14,5 @@ source("testListPartition.R") ## Suit partition
 source("testParLongData.R")   ## Besoin de partition.
 source("testParWindows.R")    ## Besoin de rien (1b)
 source("testLongDataPlot.R")  ## Final
-source("../R/clean.r")
+#source("testPlotOneByOne.R")
+#source("../R/clean.r")

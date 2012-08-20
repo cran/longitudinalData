@@ -54,11 +54,11 @@ Christophe Genolini\cr
 
 \examples{
 ### Some data
-data <- gald(30)["traj"]
-
+data(artificialData)
+myLd <- as.matrix(artificialData[,-1])
 ### Some clustering
-part2 <- partition(rep(c("A","B","A"),time=40),data)
-part3 <- partition(rep(c("A","B","C"),time=40),data)
+part2 <- partition(rep(c("A","B","A","C"),time=50),myLd)
+part3 <- partition(rep(c("A","B","C","D"),time=50),myLd)
 
 ################
 ### ListPartition

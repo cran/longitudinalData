@@ -162,7 +162,7 @@ p5c["criterionValues"]
 p2b["convergenceTime"]
 p2b["aze"]
 tryBug(p2b["ert"])
-p2b["Genolini.Calinski"]
+p2b["Calinski.Harabatz3"]
 
 
 p2b["multiplicity"] <- "6"

@@ -349,8 +349,8 @@ restaureRealData(LD7n)
 
 
 
-GA1 <- gald3d()
-(GA2 <- gald3d(10))
+#GA1 <- gald3d()
+#(GA2 <- gald3d(10))
 
 ## par(mfrow=c(2,3))
 ## part3 <- partition(rep(LETTERS[1:3],each=50))
@@ -392,12 +392,11 @@ varNumAndName("Av",LD1["varNames"])
 
 
 
-longDataFrom3d(GA2,"V")
-longDataFrom3d(GA2,"T")
-longDataFrom3d(GA2,1)
-longDataFrom3d(GA2,2)
+longDataFrom3d(LD3,"V1")
+longDataFrom3d(LD3,"V2")
+longDataFrom3d(LD3,1)
+longDataFrom3d(LD3,2)
 
-cleanProg(generateArtificialLongData,,,1)
 
 
 cat("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

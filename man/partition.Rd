@@ -72,7 +72,8 @@ partition(clusters=LETTERS[floor(runif(100,1,5))])
 
 ### Partition that clusters correctly some data
 ###   Quality criterion are high
-data <- gald()["traj"]
+data(artificialData)
+data <- as.matrix(artificialData[,-1])
 partition(clusters=rep(1:4,each=50),data)
 
 ### Partition that does not cluster correctly the data

@@ -56,14 +56,14 @@ Christophe Genolini\cr
 \examples{
 ##############
 ### Preparing data
-
-data <- gald(30)["traj"]
+data(artificialData)
+data <- as.matrix(artificialData[,-1])
 
 ### Some clustering
-part2 <- partition(rep(c("A","B","A"),time=40),data)
-part3 <- partition(rep(c("A","B","C"),time=40),data)
-part3b <- partition(rep(c("A","B","C","B","C"),time=24),data)
-part4 <- partition(rep(c("A","B","A","C","D"),time=24),data)
+part2 <- partition(rep(c("A","B"),time=100),data)
+part3 <- partition(rep(c("A","B","C","A"),time=50),data)
+part3b <- partition(rep(c("A","B","C","B"),time=50),data)
+part4 <- partition(rep(c("A","B","C","D"),time=50),data)
 
 
 ################

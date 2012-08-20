@@ -12,8 +12,8 @@
   \tabular{ll}{
     Package: \tab longitudinalData\cr
     Type: \tab Package\cr
-    Version: \tab 2.0\cr
-    Date: \tab 2012-04-01\cr
+    Version: \tab 2.1\cr
+    Date: \tab 2012-08-01\cr
     License: \tab GPL (>= 2)\cr
     Lazyload: \tab yes\cr
     Depends: \tab methods,clv,rgl,misc3d\cr
@@ -27,7 +27,7 @@
   of longitudinal data, mainly:
 
   \enumerate{
-    \item \link[=plot]{plot}
+    \item \link{plotTraj}
 
     \item \link{imputation}
 
@@ -54,22 +54,21 @@ Christophe Genolini\cr
 \seealso{
   Classes: \code{\linkS4class{LongData}}, \code{\linkS4class{Partition}} \cr
   Methods: \code{\link{longData}}, \code{\link{partition}}, \code{\link{ordered}}\cr
-  Plot: \code{\link[=plot,LongData]{plot(LongData)}}, \code{\link[=plot3d,LongData3d]{plot3d(LongData)}}\cr
+  Plot: \code{\link{plotTraj}}, \code{\link{plotTraj3d}}\cr
   Imputation: \code{\link{imputation}}\cr
   Criterion: \code{\link{qualityCriterion}}\cr
 }
 
 \examples{
 ### Generation of artificial longData
-data <- gald3d(percentOfMissing=0.3)
-part <- partition(rep(1:3,each=50))
-plot3d(data,part)
+data(artificialData3d)
+myData <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
 
-### Imputation
-data1 <- imputation(data,method="copyMean")
+part <- partition(rep(1:3,each=50))
+plotTraj3d(myData,part)
 
 ### Quality criterion
-# qualityCriterion(data,part)
+qualityCriterion(myData,part)
 }
 
 \keyword{package}  % Package Summaries

@@ -90,12 +90,12 @@ Christophe Genolini\cr
 mat <- array(c(1,NA,3,2,3,6,1,8,10,1,NA,1,2,NA,3,2,3,2),dim=c(3,3,2))
 longData3d(mat)
 (ld1 <- longData3d(mat,varNames=c("Hyp","Col"),idAll=c("i101","i104","i105")))
-plot3d(ld1)
+plotTraj3d(ld1)
 
 ### Big data
 mat <- array(c(runif(1051*325),rnorm(1051*325),rexp(1051*325)),c(1051,325,3))
 (ld2 <- longData3d(traj=mat,time=(1:325)+0.5,varNames=c("unif","norm","rexp")))
-plot3d(ld2,nbSample=200)
+plotTraj3d(ld2,nbSample=200)
 
 #################
 ### From data.frame
@@ -103,7 +103,7 @@ plot3d(ld2,nbSample=200)
 dn <- data.frame(id=1:3,v1=c(2,2,1),t1=c(20,21,22),v1=c(3,2,2),t2=c(23,20,28),t3=c(25,24,29))
 longData3d(dn,timeInData=list(c(2,4),c(3,5)),varNames=c("V","T"))
 (ld3 <- longData3d(dn,timeInData=list(V=c(2,4,NA),T=c(3,5,6))))
-plot3d(ld3)
+plotTraj3d(ld3)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

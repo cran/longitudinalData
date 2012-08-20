@@ -16,7 +16,7 @@ cat("\n###################################################################
     nbClusters <- max(clusters)
     if(max(nbClusters,na.rm=TRUE)==1){
         return(list(criters=c(
-                Calinski.Harabatz=NA,Kryszczuk.Calinski=NA,Genolini.Calinski=NA,Ray.Turi=NA,Davies.Bouldin=NA,
+                Calinski.Harabatz=NA,Calinski.Harabatz2=NA,Calinski.Harabatz3=NA,Ray.Turi=NA,Davies.Bouldin=NA,
                 BIC=NA,BIC2=NA,AIC=NA,AICc=NA,AICc2=NA,postProbaGlobal=NA,random=rnorm(1)),
                 postProba=matrix(NA,nbIndiv,1),
                 postProbaEachCluster=numeric()
@@ -56,7 +56,7 @@ cat("\n###################################################################
 
     rayInter <- min(dist(cls.attr[[2]]))^2
     rayIntra <- mean((trajImp-cls.attr[[2]][clusters,])^2)
-    ray <- -as.numeric(rayIntra/rayInter)
+    ray <- as.numeric(rayIntra/rayInter)
 
     ## if(nrow(cls.attr[[2]])==partition@nbClusters){
     ##     rayInter <- +Inf
@@ -89,7 +89,7 @@ cat("\n###################################################################
     ###
 
     clsScat <- cls.scatt.data(trajImp,as.integer(clusters))
-    davies <- -as.numeric(clv.Davies.Bouldin(clsScat,"average","average"))
+    davies <- as.numeric(clv.Davies.Bouldin(clsScat,"average","average"))
 
     ########################
     ### post probabilité, BIC, AIC
@@ -122,10 +122,14 @@ cat("\n###################################################################
     AIC  <- 2*nbParam-2*logVraisemblance
     AICc <- AIC+(2*nbParam*(nbParam+1))/(nbIndiv-nbParam-1)
     AICc2 <- AIC+(2*nbParam*(nbParam+1))/(nbIndiv*nbTime-nbParam-1)
+#    entropie <- sum(apply(postProba,1,function(x) {ifelse(x==0,0,x*log(x))}))
+ #   ICL <- BIC-2*entropie
+  #  ICL2 <- BIC2-2*entropie
 
     return(list(criters=c(
-                Calinski.Harabatz=calinski,Kryszczuk.Calinski=calinski2,Genolini.Calinski=calinski3,Ray.Turi=ray,Davies.Bouldin=davies,
-                BIC=-BIC,BIC2=-BIC2,AIC=-AIC,AICc=-AICc,AICc2=-AICc2,postProbaGlobal=postProbaGlobal,random=rnorm(1)),
+                Calinski.Harabatz=calinski,Calinski.Harabatz2=calinski2,Calinski.Harabatz3=calinski3,Ray.Turi=-ray,Davies.Bouldin=-davies,
+                BIC=-BIC,BIC2=-BIC2,AIC=-AIC,AICc=-AICc,AICc2=-AICc2,#entropie=entropie,ICL=-ICL,ICL2=-ICL2,
+                postProbaGlobal=postProbaGlobal,random=rnorm(1)),
                 postProba=postProba,
                 postProbaEachCluster=postProbaEachCluster)
            )
@@ -274,8 +278,8 @@ cat("### Method : 'show' for partition ###\n") # Si on ajouter un titre a traj, 
     cat("\n ~ percentEachCluster   = ",formatC(object@percentEachCluster,digits=2))
     cat("\n ~ qualities criterion:
    - Calinski & Harabatz                       =",object@criterionValues['Calinski.Harabatz'],"
-   - Calinski & Harabatz modified by Kryszczuk =",object@criterionValues['Kryszczuk.Calinski'],"
-   - Calinski & Harabatz modified by Genolini  =",object@criterionValues['Genolini.Calinski'],"
+   - Calinski & Harabatz modified by Kryszczuk =",object@criterionValues['Calinski.Harabatz2'],"
+   - Calinski & Harabatz modified by Genolini  =",object@criterionValues['Calinski.Harabatz3'],"
    - Ray & Turie                        (opp.) =",object@criterionValues['Ray.Turi'],"
    - Davies & Bouldin                   (opp.) =",object@criterionValues['Davies.Bouldin'],"
    - BIC:  ln(L)-0.5xln(N)              (opp.) =",object@criterionValues['BIC'],"
