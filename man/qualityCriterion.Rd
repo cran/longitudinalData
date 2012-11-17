@@ -151,8 +151,8 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
 ##################
 ### Preparation of some artificial data
 par(ask=TRUE)
-data(artificialData)
-ld <- longData(artificialData)
+data(artificialLongData)
+ld <- longData(artificialLongData)
 
 
 ### Correct partition

@@ -1,8 +1,8 @@
 \name{expandParLongData}
 \alias{expandParLongData}
-\alias{expandParLongData,ParLongData,Partition}
+%\alias{expandParLongData,ParLongData,Partition}
 \alias{expandParLongData,ParLongData,Partition-method}
-\alias{expandParLongData,ParLongData,numeric}
+%\alias{expandParLongData,ParLongData,numeric}
 \alias{expandParLongData,ParLongData,numeric-method}
 
 \title{

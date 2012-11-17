@@ -76,8 +76,8 @@ ordered(lcl3)
 
 
 
-cleanProg(.ListPartition.plotOne,,,3) # CLUSTER_NAMES length letters
-cleanProg(.ListPartition.plotCriterion,,,3) # CLUSTER_NAMES CRITERION_MIN_OR_MAX CRITERION_NAMES
+cleanProg(.ListPartition.plotCriterion,,,3) # CLUSTER_NAMES length letters
+cleanProg(.ListPartition.plotAllCriterion,,,2) # CLUSTER_NAMES CRITERION_NAMES
 cleanProg(regroup)
 lcl3['add'] <- p3e
 lcl3['add'] <- p3f
@@ -99,8 +99,12 @@ plotCriterion(lcl0)
 plotCriterion(lcl3)
 plotCriterion(lcl3,nbCriterion=3,criterion="Calinski.Harabatz")
 
-plotCriterion(lcl3)
-plotCriterion(lcl3,criterion=c("random","Calinski.Harabatz"))
+plotAllCriterion(lcl0)
+plotAllCriterion(lcl3)
+plotAllCriterion(lcl3,criterion="Calinski.Harabatz")
+
+plotAllCriterion(lcl3,criterion=CRITERION_NAMES)
+plotAllCriterion(lcl3,criterion=c("random","Calinski.Harabatz"))
 
 
 
@@ -120,10 +124,10 @@ plotCriterion(lcl3)
 lcl3['criterionActif'] <- "Davies.Bouldin"
 plotCriterion(lcl3)
 
-plotCriterion(lcl0,criterion=c("Calinski.Harabatz","Calinski.Harabatz3","Davies.Bouldin"))
-plotCriterion(lcl3,criterion=CRITERION_NAMES)
+plotAllCriterion(lcl0,criterion=c("Calinski.Harabatz","Calinski.Harabatz3","Davies.Bouldin"))
+plotAllCriterion(lcl3,criterion=CRITERION_NAMES)
 ordered(lcl3)
-plotCriterion(lcl3,criterion=c("Calinski.Harabatz","Calinski.Harabatz3","Davies.Bouldin"))
+plotAllCriterion(lcl3,criterion=c("Calinski.Harabatz","Calinski.Harabatz3","Davies.Bouldin"))
 dev.off()
 
 

@@ -54,8 +54,8 @@ Christophe Genolini\cr
 
 \examples{
 ### Some data
-data(artificialData)
-myLd <- as.matrix(artificialData[,-1])
+data(artificialLongData)
+myLd <- as.matrix(artificialLongData[,-1])
 ### Some clustering
 part2 <- partition(rep(c("A","B","A","C"),time=50),myLd)
 part3 <- partition(rep(c("A","B","C","D"),time=50),myLd)

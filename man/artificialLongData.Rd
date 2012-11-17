@@ -1,15 +1,15 @@
-\name{artificialData}
+\name{artificialLongData}
 \Rdversion{1.1}
-\alias{artificialData}
+\alias{artificialLongData}
 \docType{data}
 
-\title{~ Articial Data ~}
+\title{~ Data: artificialLongData ~}
 
 \description{
   Some artificial longitudinal data.
 }
 
-\usage{data(artificialData)}
+\usage{data(artificialLongData)}
 
 \format{
   Some longitudinal data in wide format. It includes 120 trajectories
@@ -25,15 +25,15 @@
 }
 
 \details{
-  Some longitudinal data in wide format. It includes 120 trajectories
+  Some artificial longitudinal data in wide format. It includes 120 trajectories
   divided in 4 groups.
 }
 
 \author{Christophe Genolini}
 
 \examples{
-data(artificialData)
-str(artificialData)
+data(artificialLongData)
+str(artificialLongData)
 }
 
 \keyword{datasets}

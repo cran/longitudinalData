@@ -305,9 +305,9 @@ regroup <- function(object){
 
 
 
-.ListPartition.plotOne <- function(x, criterion=x['criterionActif'],nbCriterion = 100, standardized = FALSE){
+.ListPartition.plotCriterion <- function(x, criterion=x['criterionActif'],nbCriterion = 100){
     ##    minMax <- criterionMinOrMax(calinski=1,test=-1,test2=1)
-    if(length(criterion)!=1){stop("[ListPartition:plot] To plot several criterion, use 'plotCriterion'")}else{}
+    if(length(criterion)!=1){stop("[ListPartition:plot] To plot several criterion, use 'plotAllCriterion'")}else{}
     allCrit <- x["criterionValues",criterion]
     if(length(allCrit)!=0){
         lengthList <- max(sapply(allCrit , length))
@@ -323,8 +323,10 @@ regroup <- function(object){
     return(invisible())
 }
 
+setMethod("plotCriterion",signature=c(x="ListPartition"),.ListPartition.plotCriterion)
 
-.ListPartition.plotCriterion <- function(x, criterion=CRITERION_NAMES[c(1,4,5)], standardized = TRUE){
+
+.ListPartition.plotAllCriterion <- function(x, criterion=CRITERION_NAMES[1:5], standardized = TRUE){
     ##    minMax <- criterionMinOrMax(calinski=1,test=-1,test2=1)
     lengthCrit <- length(criterion)
 
@@ -363,16 +365,7 @@ regroup <- function(object){
     return(invisible())
 }
 
-
-.ListPartition.plot <- function(x, criterion=x["criterionActif"],nbCriterion=100,standardized = FALSE){
-    if(length(criterion)==1){
-        .ListPartition.plotOne(x=x,criterion=criterion,nbCriterion=nbCriterion,standardized=standardized)
-    }else{
-        .ListPartition.plotCriterion(x=x,criterion=criterion,standardized=standardized)
-    }
-    return(invisible())
-}
-setMethod("plotCriterion",signature=c(x="ListPartition"),.ListPartition.plot)
+setMethod("plotAllCriterion",signature=c(x="ListPartition"),.ListPartition.plotAllCriterion)
 
 
 

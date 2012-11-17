@@ -73,13 +73,14 @@ Christophe Genolini\cr
 }
 
 \references{
-  Brian Everitt, Sabine Landau & Morven Leese : "Cluster Analysis"\cr
+  [1] Brian Everitt, Sabine Landau & Morven Leese\cr
+  "Cluster Analysis"\cr
 
-  [1] C. Genolini and B. Falissard\cr
+  [2] C. Genolini and B. Falissard\cr
   "KmL: k-means for longitudinal data"\cr
   Computational Statistics, vol 25(2), pp 317-328, 2010\cr
 
-  [2] C. Genolini and B. Falissard\cr
+  [3] C. Genolini and B. Falissard\cr
   "KmL: A package to cluster longitudinal data"\cr
   Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
 }

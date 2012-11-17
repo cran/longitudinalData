@@ -44,7 +44,7 @@ partition(clusters, traj, details=character())
 \section{Author}{
 Christophe Genolini\cr
 1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
 \references{
@@ -72,13 +72,13 @@ partition(clusters=LETTERS[floor(runif(100,1,5))])
 
 ### Partition that clusters correctly some data
 ###   Quality criterion are high
-data(artificialData)
-data <- as.matrix(artificialData[,-1])
-partition(clusters=rep(1:4,each=50),data)
+data(artificialLongData)
+traj <- as.matrix(artificialLongData[,-1])
+partition(clusters=rep(1:4,each=50),traj)
 
 ### Partition that does not cluster correctly the data
 ###   Quality criterion are low
-partition(clusters=rep(1:4,50),data)
+partition(clusters=rep(1:4,50),traj)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

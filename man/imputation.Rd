@@ -105,23 +105,22 @@ imputation(traj,method="copyMean",lowerBound="min",upperBound="max")
       follow the shape of the average trajectory. For more details, see [gen12] and examples' section.
     }
     \item{locf (Last Occurence Carried Forward)}{
+      THIS METHOD HAS BEEN PROUVEN TO NOT BE EFFICIANT SEVERAL TIME BY VARIOUS AUTHOR, we strongly recommand to not use it !
       \itemize{
 	\item{Intermitant and monotone at end:}{ the previous non-missing value is
 	  dipplicated forward.}
 	\item{Monotone at start:}{ the first non-missing value is
 	  dupplicated backward (nocb).}
       }
-      THIS METHOD HAS BEEN PROUVEN TO NOT BE EFFICIANT SEVERAL TIME BY
-    VARIOUS AUTHOR, we strongly recommand to not use it !
     }
     \item{nocb (Next Occurence Carried Backward)}{
+      THIS METHOD HAS BEEN PROUVEN TO NOT BE EFFICIANT SEVERAL TIME BY VARIOUS AUTHOR, we strongly recommand to not use it !
       \itemize{
 	\item{Intermitant and monotone at start:}{ the next non-missing value is
 	  dipplicated backward.}
 	\item{Monotone at end:}{ the last non-missing value is dupplicated forward (locf).}
       }
-      THIS METHOD HAS BEEN PROUVEN TO NOT BE EFFICIANT SEVERAL TIME BY
-    VARIOUS AUTHOR, we strongly recommand to not use it !
+
     }
     \item{trajMean}{ missing are imputed by the mean of the trajectory.}
     \item{trajMedian}{ missing are imputed by the median of the trajectory.}
@@ -173,7 +172,9 @@ matMissing <- matrix(
 )
 
 
-matplot(t(matMissing),col=c(2,1,1,1),lty=1,type="l",lwd=c(3,1,1,1),pch=16, xlab="Black=trajectories; Green=mean trajectory\nRed=trajectory to impute",ylab="",main="Four trajectories")
+matplot(t(matMissing),col=c(2,1,1,1),lty=1,type="l",lwd=c(3,1,1,1),pch=16,
+   xlab="Black=trajectories; Green=mean trajectory\nRed=trajectory to impute",
+   ylab="",main="Four trajectories")
 moy <- apply(matMissing,2,mean,na.rm=TRUE)
 lines(moy,col=3,lwd=3)
 

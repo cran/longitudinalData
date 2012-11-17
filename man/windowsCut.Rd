@@ -39,7 +39,7 @@ windowsCut(x, addLegend = TRUE,closeScreen=TRUE)
 \section{Author}{
 Christophe Genolini\cr
 1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
 \references{

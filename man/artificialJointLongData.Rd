@@ -1,15 +1,15 @@
-\name{artificialData3d}
+\name{artificialJointLongData}
 \Rdversion{1.1}
-\alias{artificialData3d}
+\alias{artificialJointLongData}
 \docType{data}
 
-\title{~ Articial 3D Data ~}
+\title{~ Data: artificialJointLongData ~}
 
 \description{
   Some artificial joint longitudinal data.
 }
 
-\usage{data(artificialData3d)}
+\usage{data(artificialJointLongData)}
 
 \format{
   Some joint longitudinal data in wide format. It includes 90 trajectories
@@ -25,6 +25,10 @@
     \item{\code{w1}}{Measurment of variable 'W' at time t1}
     \item{\code{...}}{...}
     \item{\code{w10}}{Measurment of variable 'W' at time t0}
+    \item{\code{x0}}{Measurment of variable 'X' at time t0}
+    \item{\code{x1}}{Measurment of variable 'X' at time t1}
+    \item{\code{...}}{...}
+    \item{\code{x10}}{Measurment of variable 'X' at time t0}
   }
 }
 
@@ -36,8 +40,8 @@
 \author{Christophe Genolini}
 
 \examples{
-data(artificialData3d)
-str(artificialData3d)
+data(artificialJointLongData)
+str(artificialJointLongData)
 }
 
 \keyword{datasets}

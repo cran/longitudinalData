@@ -24,19 +24,20 @@ makeLatexFile(filename = "main.tex", asyToInclude = "scene+0.prc")
 }
 
 
-
-\section{Author(s)}{
-  Christophe Genolini\cr
-  PSIGIAM: Paris Sud Innovation Group in Adolescent Mental Health\cr
-  INSERM U669 / Maison de Solenn / Paris\cr\cr
-
-  Contact author : <genolini@u-paris10.fr>
+\section{Author}{
+Christophe Genolini\cr
+1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
+2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
-\section{English translation}{
-  Raphaël Ricaud\cr
-  Laboratoire "Sport & Culture" / "Sports & Culture" Laboratory \cr
-  University of Paris 10 / Nanterre
+\references{
+  [1] C. Genolini and B. Falissard\cr
+  "KmL: k-means for longitudinal data"\cr
+  Computational Statistics, vol 25(2), pp 317-328, 2010\cr
+
+  [2] C. Genolini and B. Falissard\cr
+  "KmL: A package to cluster longitudinal data"\cr
+  Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
 }
 
 \seealso{
@@ -47,8 +48,8 @@ makeLatexFile(filename = "main.tex", asyToInclude = "scene+0.prc")
 
 \examples{
   ### Generating the data
-  data(artificialData3d)
-  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+  data(artificialJointLongData)
+  myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
   plotTraj3d(myLd,part)
 

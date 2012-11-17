@@ -7,7 +7,7 @@
 \alias{CHOICE_STYLE}
 
 \docType{data}
-\title{~ Constants define in the package ~}
+\title{~ Constants ~}
 \description{
   Constants define in the package ~
 }
@@ -25,19 +25,22 @@ CHOICE_STYLE
 
   CLUSTER_NAMES = paste("c",2:MAX_CLUSTERS,sep="")
 
-  CRITERION_NAMES <- c("Calinski.Harabatz","Kryszczuk.Calinski","Genolini.Calinski","Ray.Turi","Davies.Bouldin","BIC","BIC2","AIC","AICc","AICc2","entropie","ICL","ICL2","postProbaGlobal","random")
+  CRITERION_NAMES <- c(\cr
+    "Calinski.Harabatz","Kryszczuk.Calinski","Genolini.Calinski","Ray.Turi","Davies.Bouldin",\cr
+    "BIC","BIC2","AIC","AICc","AICc2","postProbaGlobal","random"\cr
+  )
 
 %  CRITERION_MIN_OR_MAX <- c(Calinski.Harabatz=1,Kryszczuk.Calinski=1,Genolini.Calinski=1,Ray.Turi=-1,Davies.Bouldin=1,random=1)
 
   DISTANCE_METHODS = c("manhattan", "euclidean", "minkowski", "maximum", "canberra", "binary")
 
-  CHOICE_STYLE = list(
-    typeTraj=c("l","l","n"),
-    colTraj=c("clusters","black","black"),
-    typeMean=c("b","b","b","b","l","l","n"),
-    colMean=c("clusters","black","clusters","black","clusters","black","black"),
-    pchMean=c("letters","letters","symbols","symbols","letters","letters","letters")
-  )
+  CHOICE_STYLE = list(\cr
+    typeTraj=c("l","l","n"),\cr
+    colTraj=c("clusters","black","black"),\cr
+    typeMean=c("b","b","b","b","l","l","n"),\cr
+    colMean=c("clusters","black","clusters","black","clusters","black","black"),\cr
+    pchMean=c("letters","letters","symbols","symbols","letters","letters","letters")\cr
+  )\cr
 }
 
 \examples{
