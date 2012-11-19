@@ -1,4 +1,4 @@
-fc2e43a3f537d1050d660520aa94131f *DESCRIPTION
+64b13b9eb2c43f9279e28cb3e3aef70e *DESCRIPTION
 2f7d3899659b6756c54d161a345db912 *NAMESPACE
 2219c6965283f9926a9b682a665b337d *R/distanceFrechet.r
 95ce7653114447b27919be74fae3de09 *R/function.r
@@ -40,7 +40,7 @@ d41ec99e27d51ba72a6c15c032eb451b *man/longData.Rd
 ecf56daac1a01e9797063dc0ff9d41d6 *man/longData3d.Rd
 d4fbbccb96228149b0bbe1df9b09b27c *man/longDataFrom3d.Rd
 a9ed9e87dfe16f3cff064610a4ba71fd *man/longDataTo3d.Rd
-f8e028b7e01bcf4bd3542e13c48faad6 *man/longitudinalData-package.Rd
+946193608115bc0c6170eaba44a94020 *man/longitudinalData-package.Rd
 a1dc0b65c49e2a94b1d5c68417e98744 *man/makeLatexFile.Rd
 b702ed7f62df78899ec4f62e494a1b67 *man/ordered.Rd
 a27610ee5b51565d64599d7a8be5674a *man/parLongData.Rd
