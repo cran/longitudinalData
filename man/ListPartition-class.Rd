@@ -105,9 +105,9 @@
 
 
 \section{Author}{
-Christophe Genolini\cr
+Christophe Genolini^{1,2}\cr
 1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
 \references{
@@ -131,21 +131,19 @@ Christophe Genolini\cr
 \examples{
 ##############
 ### Preparing data
-data(artificialData)
-data <- as.matrix(artificialData[,-1])
-
+data(artificialLongData)
+traj <- as.matrix(artificialLongData[,-1])
 
 ### Some clustering
-part2 <- partition(rep(c("A","B"),time=100),data)
-part3 <- partition(rep(c("A","B","C","A"),time=50),data)
-part3b <- partition(rep(c("A","B","C","B","C"),time=40),data)
-part4 <- partition(rep(c("A","B","A","C","D"),time=40),data)
+part2 <- partition(rep(c("A","B"),time=100),traj)
+part3 <- partition(rep(c("A","B","C","A"),time=50),traj)
+part3b <- partition(rep(c("A","B","C","B","C"),time=40),traj)
+part4 <- partition(rep(c("A","B","A","C","D"),time=40),traj)
 
 
 ################
 ### ListPartition
 listPart <- listPartition()
-listPart['criterionActif'] <-"Davies.Bouldin"
 plotCriterion(listPart)
 
 listPart["add"] <- part2
@@ -161,7 +159,7 @@ ordered(listPart)
 plotCriterion(listPart)
 regroup(listPart)
 plotCriterion(listPart)
-
+plotAllCriterion(listPart)
 }
 
 

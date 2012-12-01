@@ -12,7 +12,7 @@ nameEx("Constants")
 flush(stderr()); flush(stdout())
 
 ### Name: Constants
-### Title: ~ Constants define in the package ~
+### Title: ~ Constants ~
 ### Aliases: MAX_CLUSTERS CLUSTER_NAMES CRITERION_NAMES DISTANCE_METHODS
 ###   CHOICE_STYLE
 ### Keywords: datasets
@@ -53,21 +53,19 @@ flush(stderr()); flush(stdout())
 
 ##############
 ### Preparing data
-data(artificialData)
-data <- as.matrix(artificialData[,-1])
-
+data(artificialLongData)
+traj <- as.matrix(artificialLongData[,-1])
 
 ### Some clustering
-part2 <- partition(rep(c("A","B"),time=100),data)
-part3 <- partition(rep(c("A","B","C","A"),time=50),data)
-part3b <- partition(rep(c("A","B","C","B","C"),time=40),data)
-part4 <- partition(rep(c("A","B","A","C","D"),time=40),data)
+part2 <- partition(rep(c("A","B"),time=100),traj)
+part3 <- partition(rep(c("A","B","C","A"),time=50),traj)
+part3b <- partition(rep(c("A","B","C","B","C"),time=40),traj)
+part4 <- partition(rep(c("A","B","A","C","D"),time=40),traj)
 
 
 ################
 ### ListPartition
 listPart <- listPartition()
-listPart['criterionActif'] <-"Davies.Bouldin"
 plotCriterion(listPart)
 
 listPart["add"] <- part2
@@ -83,7 +81,7 @@ ordered(listPart)
 plotCriterion(listPart)
 regroup(listPart)
 plotCriterion(listPart)
-
+plotAllCriterion(listPart)
 
 
 
@@ -270,38 +268,38 @@ part["multiplicity"] <- 2
 
 
 cleanEx()
-nameEx("artificialData")
-### * artificialData
+nameEx("artificialJointLongData")
+### * artificialJointLongData
 
 flush(stderr()); flush(stdout())
 
-### Name: artificialData
-### Title: ~ Articial Data ~
-### Aliases: artificialData
+### Name: artificialJointLongData
+### Title: ~ Data: artificialJointLongData ~
+### Aliases: artificialJointLongData
 ### Keywords: datasets documentation
 
 ### ** Examples
 
-data(artificialData)
-str(artificialData)
+data(artificialJointLongData)
+str(artificialJointLongData)
 
 
 
 cleanEx()
-nameEx("artificialData3d")
-### * artificialData3d
+nameEx("artificialLongData")
+### * artificialLongData
 
 flush(stderr()); flush(stdout())
 
-### Name: artificialData3d
-### Title: ~ Articial 3D Data ~
-### Aliases: artificialData3d
+### Name: artificialLongData
+### Title: ~ Data: artificialLongData ~
+### Aliases: artificialLongData
 ### Keywords: datasets documentation
 
 ### ** Examples
 
-data(artificialData3d)
-str(artificialData3d)
+data(artificialLongData)
+str(artificialLongData)
 
 
 
@@ -368,9 +366,8 @@ flush(stderr()); flush(stdout())
 
 ### Name: expandParLongData
 ### Title: ~ Function: expandParLongData ~
-### Aliases: expandParLongData expandParLongData,ParLongData,Partition
+### Aliases: expandParLongData
 ###   expandParLongData,ParLongData,Partition-method
-###   expandParLongData,ParLongData,numeric
 ###   expandParLongData,ParLongData,numeric-method
 
 ### ** Examples
@@ -424,7 +421,9 @@ matMissing <- matrix(
 )
 
 
-matplot(t(matMissing),col=c(2,1,1,1),lty=1,type="l",lwd=c(3,1,1,1),pch=16, xlab="Black=trajectories; Green=mean trajectory\nRed=trajectory to impute",ylab="",main="Four trajectories")
+matplot(t(matMissing),col=c(2,1,1,1),lty=1,type="l",lwd=c(3,1,1,1),pch=16,
+   xlab="Black=trajectories; Green=mean trajectory\nRed=trajectory to impute",
+   ylab="",main="Four trajectories")
 moy <- apply(matMissing,2,mean,na.rm=TRUE)
 lines(moy,col=3,lwd=3)
 
@@ -656,8 +655,6 @@ flush(stderr()); flush(stdout())
 ### Name: initializePartition
 ### Title: ~ Function: initializePartition ~
 ### Aliases: initializePartition
-###   initializePartition,numeric,numeric,character,ANY
-###   initializePartition,numeric,numeric,character,array
 ###   initializePartition,numeric,numeric,character,ANY-method
 ###   initializePartition,numeric,numeric,character,array-method
 
@@ -666,8 +663,8 @@ flush(stderr()); flush(stdout())
 par(ask=TRUE)
 ###################
 ### Constrution of some longitudinal data
-data(artificialData)
-dn <- longData(artificialData)
+data(artificialLongData)
+dn <- longData(artificialLongData)
 plotTraj(dn)
 
 ###################
@@ -860,8 +857,8 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
 ### Generation of artificial longData
-data(artificialData3d)
-myData <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+data(artificialJointLongData)
+myData <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23,var3=24:34))
 
 part <- partition(rep(1:3,each=50))
 plotTraj3d(myData,part)
@@ -884,8 +881,8 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
   ### Generating the data
-  data(artificialData3d)
-  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+  data(artificialJointLongData)
+  myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
   plotTraj3d(myLd,part)
 
@@ -924,14 +921,14 @@ flush(stderr()); flush(stdout())
 
 ##############
 ### Preparing data
-data(artificialData)
-data <- as.matrix(artificialData[,-1])
+data(artificialLongData)
+traj <- as.matrix(artificialLongData[,-1])
 
 ### Some clustering
-part2 <- partition(rep(c("A","B"),time=100),data)
-part3 <- partition(rep(c("A","B","C","A"),time=50),data)
-part3b <- partition(rep(c("A","B","C","B"),time=50),data)
-part4 <- partition(rep(c("A","B","C","D"),time=50),data)
+part2 <- partition(rep(c("A","B"),time=100),traj)
+part3 <- partition(rep(c("A","B","C","A"),time=50),traj)
+part3b <- partition(rep(c("A","B","C","B"),time=50),traj)
+part4 <- partition(rep(c("A","B","C","D"),time=50),traj)
 
 
 ################
@@ -1059,13 +1056,13 @@ partition(clusters=LETTERS[floor(runif(100,1,5))])
 
 ### Partition that clusters correctly some data
 ###   Quality criterion are high
-data(artificialData)
-data <- as.matrix(artificialData[,-1])
-partition(clusters=rep(1:4,each=50),data)
+data(artificialLongData)
+traj <- as.matrix(artificialLongData[,-1])
+partition(clusters=rep(1:4,each=50),traj)
 
 ### Partition that does not cluster correctly the data
 ###   Quality criterion are low
-partition(clusters=rep(1:4,50),data)
+partition(clusters=rep(1:4,50),traj)
 
 
 
@@ -1111,8 +1108,8 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
   ### Generating the data
-  data(artificialData3d)
-  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+  data(artificialJointLongData)
+  myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
   plotTraj3d(myLd,part)
 
@@ -1137,6 +1134,39 @@ flush(stderr()); flush(stdout())
 
 
 cleanEx()
+nameEx("plotAllCriterion")
+### * plotAllCriterion
+
+flush(stderr()); flush(stdout())
+
+### Name: plotAllCriterion
+### Title: ~ Function: plotAllCriterion ~
+### Aliases: plotAllCriterion plotAllCriterion-method
+###   plotAllCriterion,ListPartition plotAllCriterion,ListPartition-method
+
+### ** Examples
+
+###############
+### Data generation
+data(artificialLongData)
+traj <- as.matrix(artificialLongData[,-1])
+
+### Some clustering
+listPart <- listPartition()
+listPart["add"] <- partition(rep(c("A","B"),time=100),traj)
+listPart["add"] <- partition(rep(c("A","B","B","B"),time=50),traj)
+listPart["add"] <- partition(rep(c("A","B","C","A"),time=50),traj)
+listPart["add"] <- partition(rep(c("A","B","C","D"),time=50),traj)
+ordered(listPart)
+
+################
+### graphical display
+plotAllCriterion(listPart)
+plotAllCriterion(listPart,criterion=CRITERION_NAMES[1:5],TRUE)
+
+
+
+cleanEx()
 nameEx("plotCriterion")
 ### * plotCriterion
 
@@ -1151,21 +1181,21 @@ flush(stderr()); flush(stdout())
 
 ###############
 ### Data generation
-data(artificialData)
-data <- as.matrix(artificialData[,-1])
+data(artificialLongData)
+traj <- as.matrix(artificialLongData[,-1])
 
 ### Some clustering
 listPart <- listPartition()
-listPart["add"] <- partition(rep(c("A","B"),time=100),data)
-listPart["add"] <- partition(rep(c("A","B","B","B"),time=50),data)
-listPart["add"] <- partition(rep(c("A","B","C","A"),time=50),data)
-listPart["add"] <- partition(rep(c("A","B","C","D"),time=50),data)
+listPart["add"] <- partition(rep(c("A","B"),time=100),traj)
+listPart["add"] <- partition(rep(c("A","B","B","B"),time=50),traj)
+listPart["add"] <- partition(rep(c("A","B","C","A"),time=50),traj)
+listPart["add"] <- partition(rep(c("A","B","C","D"),time=50),traj)
 ordered(listPart)
 
 ################
 ### graphical display
 plotCriterion(listPart)
-plotCriterion(listPart,criterion=CRITERION_NAMES[1:5],TRUE)
+plotAllCriterion(listPart,criterion=CRITERION_NAMES[1:5],TRUE)
 
 
 
@@ -1176,7 +1206,7 @@ nameEx("plotTraj")
 flush(stderr()); flush(stdout())
 
 ### Name: plotTraj,LongData
-### Title: ~ function: plotTraj for LongData or LongData3d~
+### Title: ~ Function: plotTraj for LongData or LongData3d~
 ### Aliases: plotTraj plotTraj,LongData plotTraj,LongData-method
 ###   plotTraj,LongData,missing-method plotTraj,LongData,Partition-method
 ###   plotTraj,LongData3d plotTraj,LongData3d-method
@@ -1188,8 +1218,8 @@ flush(stderr()); flush(stdout())
 
 ##################
 ### Construction of the data
-data(artificialData3d)
-ld <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+data(artificialJointLongData)
+ld <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
 part <- partition(rep(1:3,each=50))
 
 ### Basic plotting
@@ -1227,8 +1257,8 @@ plotTraj(ld,part,nbSample=10,parTraj=parTRAJ(col='clusters'),parMean=parMEAN(typ
 ##################
 ### single variable trajectory
 
-data(artificialData)
-ld2 <- longData(artificialData)
+data(artificialLongData)
+ld2 <- longData(artificialLongData)
 part2 <- partition(rep(1:4,each=50))
 plotTraj(ld2)
 plotTraj(ld2,part2)
@@ -1303,8 +1333,8 @@ flush(stderr()); flush(stdout())
 ##################
 ### Preparation of some artificial data
 par(ask=TRUE)
-data(artificialData)
-ld <- longData(artificialData)
+data(artificialLongData)
+ld <- longData(artificialLongData)
 
 
 ### Correct partition
@@ -1345,8 +1375,8 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
 ### Some data
-data(artificialData)
-myLd <- as.matrix(artificialData[,-1])
+data(artificialLongData)
+myLd <- as.matrix(artificialLongData[,-1])
 ### Some clustering
 part2 <- partition(rep(c("A","B","A","C"),time=50),myLd)
 part3 <- partition(rep(c("A","B","C","D"),time=50),myLd)
@@ -1364,6 +1394,33 @@ listPart["add"] <- part3
 ### regroup will suppress the duplicate one
 regroup(listPart)
 plotCriterion(listPart)
+
+
+
+cleanEx()
+nameEx("reshapeWide")
+### * reshapeWide
+
+flush(stderr()); flush(stdout())
+
+### Name: reshapeWide
+### Title: ~ Function: reshapeWide ~
+### Aliases: reshapeWide
+
+### ** Examples
+
+
+summary(Indometh)
+reshapeWide(Indometh,varTime="time",varFixed="Subject",varLong="conc")
+
+
+df2 <- data.frame(id = rep(1:4, rep(2,4)),
+                 visit = I(rep(c("Before","After"), 4)),
+                 x = rnorm(4), y = runif(4),
+                 sex=rep(c("H","F","H"),time=c(4,2,2)))[1:7,]
+reshapeWide(df2,varTime="visit",varFixed="id",varLong=c("x","y"))
+reshapeWide(df2,varTime="visit",varFixed=c("id","sex"),varLong=c("x"))
+reshapeWide(df2,varTime="visit",varFixed=c("id","sex"),varDrop="")
 
 
 
@@ -1416,8 +1473,8 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
   ### Generating the data
-  data(artificialData3d)
-  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+  data(artificialJointLongData)
+  myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
   plotTraj3d(myLd,part)
 

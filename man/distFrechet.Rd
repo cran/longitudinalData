@@ -28,12 +28,6 @@ distFrechet(P, Q, method = "max", Fdist = dist)
   NP-complex problem. When P and Q are trajectories (discrete curve), the
   problem is polynomial (and quite simple). The Frechet distance can
   also be define using a sum instead of a max: \code{inf_{a,b} sum_{t} d(P(a(t)),Q(b(t)))}
-
-  The function \code{distFrechetRec} use the recursive algorithm define by Thomas
-  Eiter and Heikki Mannila. The function \code{distFrechetR} use a more efficiant
-  algorithm in R. The function \code{distFrechet} use the efficiant algorithm
-  in C (and is thus much faster than the two other). Note that
-  \code{distFrechet} (the fastest) can only use the "2D" and "1D".
 }
 
 \value{
@@ -44,17 +38,18 @@ distFrechet(P, Q, method = "max", Fdist = dist)
 \section{Author}{
 Christophe Genolini\cr
 1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
 \references{
-  Thomas Eiter & Heikki Mannila: "Computing Discrete Fr´echet Distance"\cr
+  [1] Thomas Eiter & Heikki Mannila: \cr
+  "Computing Discrete Fr´echet Distance"\cr
 
-  [1] C. Genolini and B. Falissard\cr
+  [2] C. Genolini and B. Falissard\cr
   "KmL: k-means for longitudinal data"\cr
   Computational Statistics, vol 25(2), pp 317-328, 2010\cr
 
-  [2] C. Genolini and B. Falissard\cr
+  [3] C. Genolini and B. Falissard\cr
   "KmL: A package to cluster longitudinal data"\cr
   Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
 }

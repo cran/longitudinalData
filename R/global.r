@@ -14,7 +14,8 @@ setGeneric("plotTraj3d",function(x,y,...){standardGeneric("plotTraj3d")})
 setGeneric("plot3dPdf",function(x,y,varY=1,varZ=2){standardGeneric("plot3dPdf")})
 setGeneric("qualityCriterion",function(traj,clusters,imputationMethod="copyMean"){standardGeneric("qualityCriterion")})
 setGeneric("initializePartition",function(nbClusters,lengthPart,method="kmeans++",data){standardGeneric("initializePartition")})
-setGeneric("plotCriterion",function(x,criterion=x["criterionActif"],nbCriterion=100,standardized = FALSE){standardGeneric("plotCriterion")})
+setGeneric("plotCriterion",function(x,criterion=x["criterionActif"],nbCriterion=100){standardGeneric("plotCriterion")})
+setGeneric("plotAllCriterion",function(x,criterion=CRITERION_NAMES[1:5],standardized = TRUE){standardGeneric("plotAllCriterion")})
 
 
 #setGeneric("plotSubGroups",function(x,y,...){standardGeneric("plotSubGroups")})

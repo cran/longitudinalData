@@ -1,18 +1,18 @@
-\name{plotCriterion}
+\name{plotAllCriterion}
 \Rdversion{1.1}
-\alias{plotCriterion}
-\alias{plotCriterion-method}
-\alias{plotCriterion,ListPartition}
-\alias{plotCriterion,ListPartition-method}
+\alias{plotAllCriterion}
+\alias{plotAllCriterion-method}
+\alias{plotAllCriterion,ListPartition}
+\alias{plotAllCriterion,ListPartition-method}
 \title{
-~ Function: plotCriterion ~
+~ Function: plotAllCriterion ~
 }
 \description{
   This function graphically displays the quality criterion of all the
   \code{\linkS4class{Partition}} of a \code{\linkS4class{ListPartition}} object.
 }
 \usage{
-plotCriterion(x, criterion=x["criterionActif"],nbCriterion=100)
+plotAllCriterion(x, criterion=CRITERION_NAMES[1:5],standardized = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,20 +21,13 @@ plotCriterion(x, criterion=x["criterionActif"],nbCriterion=100)
   \item{criterion}{[character]: name of the criterion(s) to plot. It can either display all the
     value for a single specific criterion or display several criterion,
     only the best value for each clusters number and for each criterion.}
-  \item{nbCriterion}{[numeric]: if there is a big number of
-    \code{Partition}, the graphical display of all of them can be
-    slow. \code{nbCriterion} lets the user limit the number of criteria
-    that will be taken in account.}
+  \item{standardized}{[logical]: If \code{standardized=TRUE}, all the
+    criterion will be mapped into [0,1]. This makes them more easely comparable.}
 }
 
 \details{
-  This function display graphically the quality criterion (probably to
-  decide the best clusters' number). It can either display all the
-  criterion ; this is useful to see the consistency of the result : is
-  the best clusterization obtain several time or only one ? It can also
-  display only the best result for each clusters number : this helps to
-  find the local maximum, which is classically used to chose the
-  "correct" clusters' number.
+  This function display graphically several quality criterion, probably to
+  decide the best clusters' number.
 }
 
 \value{
@@ -58,7 +51,7 @@ ordered(listPart)
 
 ################
 ### graphical display
-plotCriterion(listPart)
+plotAllCriterion(listPart)
 plotAllCriterion(listPart,criterion=CRITERION_NAMES[1:5],TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -1,6 +1,6 @@
 export(
        ## function
-       "meanNA","medianNA","rangeNA","sdNA","varNA","which.minNA","is.tna","catShort",
+       "meanNA","medianNA","rangeNA","sdNA","varNA","which.minNA","is.tna","catShort","reshapeWide",
        #"MAX_CLUSTERS","CRITERION_MIN_OR_MAX","DISTANCE_METHODS","CHOICE_STYLE",
 
        ## distFrechet
@@ -40,7 +40,7 @@ exportMethods(
               ## criterion
               "qualityCriterion",
               ## listPartition
-              "plotCriterion"
+              "plotCriterion","plotAllCriterion"
 )
 exportClasses(
               "Partition","ListPartition",

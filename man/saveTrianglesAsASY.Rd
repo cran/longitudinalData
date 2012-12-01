@@ -40,8 +40,8 @@ saveTrianglesAsASY(scene, filename = "scene.asy")
 
 \examples{
   ### Generating the data
-  data(artificialData3d)
-  myLd <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+  data(artificialJointLongData)
+  myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
   plotTraj3d(myLd,part)
 

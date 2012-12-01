@@ -10,7 +10,7 @@
 \alias{plotTraj,LongData3d,missing-method}
 \alias{plotTraj,LongData3d,Partition-method}
 
-\title{ ~ function: plotTraj for LongData or LongData3d~ }
+\title{ ~ Function: plotTraj for LongData or LongData3d~ }
 \description{
   Plot the \code{\linkS4class{LongData}} or \code{\linkS4class{LongData3d}} optionnaly relatively
   to a \code{\linkS4class{Partition}}. For joint trajectories, one
@@ -63,7 +63,7 @@
 \section{Author}{
 Christophe Genolini\cr
 1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
 }
 
 \references{
@@ -80,8 +80,8 @@ Christophe Genolini\cr
 \examples{
 ##################
 ### Construction of the data
-data(artificialData3d)
-ld <- longData3d(artificialData3d,timeInData=list(var1=2:12,var2=13:23))
+data(artificialJointLongData)
+ld <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
 part <- partition(rep(1:3,each=50))
 
 ### Basic plotting
@@ -119,8 +119,8 @@ plotTraj(ld,part,nbSample=10,parTraj=parTRAJ(col='clusters'),parMean=parMEAN(typ
 ##################
 ### single variable trajectory
 
-data(artificialData)
-ld2 <- longData(artificialData)
+data(artificialLongData)
+ld2 <- longData(artificialLongData)
 part2 <- partition(rep(1:4,each=50))
 plotTraj(ld2)
 plotTraj(ld2,part2)

@@ -1,8 +1,8 @@
 \name{initializePartition}
 \Rdversion{1.1}
 \alias{initializePartition}
-\alias{initializePartition,numeric,numeric,character,ANY}
-\alias{initializePartition,numeric,numeric,character,array}
+%\alias{initializePartition,numeric,numeric,character,ANY}
+%\alias{initializePartition,numeric,numeric,character,array}
 \alias{initializePartition,numeric,numeric,character,ANY-method}
 \alias{initializePartition,numeric,numeric,character,array-method}
 
@@ -85,8 +85,8 @@ Christophe Genolini\cr
 par(ask=TRUE)
 ###################
 ### Constrution of some longitudinal data
-data(artificialData)
-dn <- longData(artificialData)
+data(artificialLongData)
+dn <- longData(artificialLongData)
 plotTraj(dn)
 
 ###################

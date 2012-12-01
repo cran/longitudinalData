@@ -40,6 +40,15 @@ catShort <- function(x){
 #NAtrunc <- function(x) x[1:max(which(!is.na(x)))]
 
 
+reshapeWide <- function(data,varFixed,varLong,varTime,varDrop){
+    if(missing(varFixed)){varFixed <- names(data)[!names(data)%in%c(varLong,varTime,varDrop)]}else{}
+    if(missing(varLong)){ varLong  <- names(data)[!names(data)%in%c(varFixed,varTime,varDrop)]}else{}
+    if(missing(varTime)){ varTime  <- names(data)[!names(data)%in%c(varFixed,varLong,varDrop)]}else{}
+    if(missing(varDrop)){ varDrop  <- names(data)[!names(data)%in%c(varFixed,varLong,varTime)]}else{}
+    return(reshape(data,idvar=varFixed,v.names = varLong,timevar = varTime,drop=varDrop,direction = "wide"))
+}
+
+
 
 cat("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++ Fin Function ++++++++++++++++++++++++++

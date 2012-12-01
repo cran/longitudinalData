@@ -11,6 +11,8 @@ PostProba et BIC :
 [non, car que fait-on de la premiere colonne ? Comme une matrix ou
 comme un data.frame ?] Pour qualityCriterion et imputation : permettre un data.frame
 
-Faire un reshape ?
+[fait] Faire un reshape ?
 
 [fait] Quand on sort de "choice", l'objet cld doit être modifié (critère actif et ordered)
+
+jitter dans les trajectoires ?
