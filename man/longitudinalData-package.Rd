@@ -12,10 +12,10 @@
   \tabular{ll}{
     Package: \tab longitudinalData\cr
     Type: \tab Package\cr
-    Version: \tab 2.1.1\cr
+    Version: \tab 2.1.2\cr
     Date: \tab 2012-12-01\cr
     License: \tab GPL (>= 2)\cr
-    LazyData: \tab no\cr
+    LazyData: \tab yes\cr
     Depends: \tab methods,clv,rgl,misc3d\cr
     URL:\tab http://www.r-project.org\cr
   }
