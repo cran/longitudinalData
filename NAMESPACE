@@ -1,10 +1,10 @@
-export(
-       ## function
-       "meanNA","medianNA","rangeNA","sdNA","varNA","which.minNA","is.tna","catShort","reshapeWide",
-       #"MAX_CLUSTERS","CRITERION_MIN_OR_MAX","DISTANCE_METHODS","CHOICE_STYLE",
 
-       ## distFrechet
-       "distTraj","distFrechet","pathFrechet",#"distFrechetR","distFrechetRec","pathFrechetR",
+export(
+       "distFrechet",
+       ## function
+       "meanNA","medianNA","rangeNA","sdNA","varNA","which.minNA","is.tna","catShort",
+       "reshapeLong","wideToLong","reshapeWide","longToWide",
+       #"MAX_CLUSTERS","CRITERION_MIN_OR_MAX","DISTANCE_METHODS","CHOICE_STYLE",
 
        ## parLongData
        "parLongData","parTRAJ","parMEAN",
@@ -48,4 +48,4 @@ exportClasses(
               "LongData","LongData3d"
 )
 
-import(methods,clv,rgl,misc3d,graphics,utils)
+import(methods,clv,rgl,misc3d,class,graphics,utils)

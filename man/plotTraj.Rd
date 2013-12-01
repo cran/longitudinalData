@@ -18,8 +18,10 @@
 }
 
 \usage{
-\S4method{plotTraj}{LongData,Partition}(x,y,parTraj=parTRAJ(),parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...)
-\S4method{plotTraj}{LongData3d,Partition}(x,y,parTraj=parTRAJ(),parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...)
+\S4method{plotTraj}{LongData,Partition}(x,y,parTraj=parTRAJ(),
+   parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...)
+\S4method{plotTraj}{LongData3d,Partition}(x,y,parTraj=parTRAJ(),
+   parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...)
 }
 
 \arguments{

@@ -189,6 +189,7 @@ cat("### Getteur ###\n")
            "c26"={return(x@c26)},
            "criterionValues"={
                if(missing(j)){j <- x@criterionActif}else{}
+               listI <- NULL
                result <- list()
                for(i in CLUSTER_NAMES){
                    eval(parse(text=paste("listI <- lapply(x@",i,",function(x){x['criterionValues']['",j,"']})",sep="")))

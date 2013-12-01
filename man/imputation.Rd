@@ -11,7 +11,7 @@
 missing value of a \code{\linkS4class{LongData}} (or a matrix).
 }
 \usage{
-imputation(traj,method="copyMean",lowerBound="min",upperBound="max")
+imputation(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -38,7 +38,7 @@ imputation(traj,method="copyMean",lowerBound="min",upperBound="max")
   \code{imputation} is a function that impute
   missing value of a \code{\linkS4class{LongData}} or a \code{matrix}.
   Several imputation methods are available. A brief description
-  follows. For a fully detailled description, see [gen12] (submitted).
+  follows. For a fully detailled description, see [3].
   Illustrating examples showing strenghs and weakness of methods are presented section "examples".
 
   For each method, the imputation has to deal with monotone missing
@@ -87,22 +87,22 @@ imputation(traj,method="copyMean",lowerBound="min",upperBound="max")
 
     \item{'copyMean.locf' (copy mean, locf)}{
       this method impute in two stages. First, it use 'linearInterpol.locf'. Then it add to each imputed value a variation that make the imputed value
-      follow the shape of the average trajectory. For more details, see [gen12] and examples' section.
+      follow the shape of the average trajectory. For more details, see [3] and examples' section.
     }
 
     \item{'copyMean.global' (copy mean, global slope)}{
       this method impute in two stages. First, it use 'linearInterpol.global'. Then it add to each imputed value a variation that make the imputed value
-      follow the shape of the average trajectory. For more details, see [gen12] and examples' section.
+      follow the shape of the average trajectory. For more details, see [3] and examples' section.
     }
 
     \item{'copyMean.local' (copy mean, local slope)}{
       this method impute in two stages. First, it use 'linearInterpol.local'. Then it add to each imputed value a variation that make the imputed value
-      follow the shape of the average trajectory. For more details, see [gen12] and examples' section.
+      follow the shape of the average trajectory. For more details, see [3] and examples' section.
     }
 
     \item{'copyMean.bisector' (copy mean, bisector)}{
       this method impute in two stages. First, it use 'linearInterpol.bisector'. Then it add to each imputed value a variation that make the imputed value
-      follow the shape of the average trajectory. For more details, see [gen12] and examples' section.
+      follow the shape of the average trajectory. For more details, see [3] and examples' section.
     }
     \item{locf (Last Occurence Carried Forward)}{
       THIS METHOD HAS BEEN PROUVEN TO NOT BE EFFICIANT SEVERAL TIME BY VARIOUS AUTHOR, we strongly recommand to not use it !
@@ -150,7 +150,12 @@ Christophe Genolini\cr
 
   [2] C. Genolini and B. Falissard\cr
   "KmL: A package to cluster longitudinal data"\cr
-  Computer Methods and Programs in Biomedicine, 104, pp e112-121, 2011\cr
+  Computer Methods and Programs in Biomedicine, 104, pp e112-121,
+  2011\cr
+
+  [3] Christophe Genolini, René Écochard and Hélène Jacqmin-Gadda\cr
+  "Copy Mean: A New Method to Impute Intermittent Missing Values in Longitudinal Studies"\cr
+  Open Journal of Statistics, vol 3(26),2013\cr
 }
 
 \seealso{
@@ -196,15 +201,18 @@ mat2 <- matrix(c(
   NA,NA, 1,NA,NA, 1,1),4,7,byrow=TRUE)
 
 ### crossMean
-matplot(t(imputation(mat2,"crossMean")),type="l",ylim=c(0,10),lty=1,col=1,main="crossMean")
+matplot(t(imputation(mat2,"crossMean")),type="l",ylim=c(0,10),
+   lty=1,col=1,main="crossMean")
 matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### crossMedian
-matplot(t(imputation(mat2,"crossMedian")),type="l",ylim=c(0,10),lty=1,col=1,main="crossMedian")
+matplot(t(imputation(mat2,"crossMedian")),type="l",ylim=c(0,10),
+   lty=1,col=1,main="crossMedian")
 matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### crossHotDeck
-matplot(t(imputation(mat2,"crossHotDeck")),type="l",ylim=c(0,10),lty=1,col=1,main="crossHotDeck")
+matplot(t(imputation(mat2,"crossHotDeck")),type="l",ylim=c(0,10),
+   lty=1,col=1,main="crossHotDeck")
 matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 
@@ -216,27 +224,33 @@ par(mfrow=c(2,3))
 mat1 <- matrix(c(NA,NA,3,8,NA,NA,2,2,1,NA,NA),1,11)
 
 ### locf
-matplot(t(imputation(mat1,"locf")),type="l",ylim=c(0,10),main="locf\n DO NOT USE, BAD METHOD !!!")
+matplot(t(imputation(mat1,"locf")),type="l",ylim=c(0,10),
+   main="locf\n DO NOT USE, BAD METHOD !!!")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16)
 
 ### nocb
-matplot(t(imputation(mat1,"nocb")),type="l",ylim=c(0,10),main="nocb\n DO NOT USE, BAD METHOD !!!")
+matplot(t(imputation(mat1,"nocb")),type="l",ylim=c(0,10),
+   main="nocb\n DO NOT USE, BAD METHOD !!!")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16)
 
 ### trajMean
-matplot(t(imputation(mat1,"trajMean")),type="l",ylim=c(0,10),main="trajMean")
+matplot(t(imputation(mat1,"trajMean")),type="l",ylim=c(0,10),
+   main="trajMean")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16)
 
 ### trajMedian
-matplot(t(imputation(mat1,"trajMedian")),type="l",ylim=c(0,10),main="trajMedian")
+matplot(t(imputation(mat1,"trajMedian")),type="l",ylim=c(0,10),
+   main="trajMedian")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16)
 
 ### trajHotDeck
-matplot(t(imputation(mat1,"trajHotDeck")),type="l",ylim=c(0,10),main="trajHotDeck 1")
+matplot(t(imputation(mat1,"trajHotDeck")),type="l",ylim=c(0,10),
+   main="trajHotDeck 1")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16)
 
 ### spline
-matplot(t(imputation(mat1,"spline",lowerBound=NA,upperBound=NA)),type="l",ylim=c(-10,10),main="spline")
+matplot(t(imputation(mat1,"spline",lowerBound=NA,upperBound=NA)),
+   type="l",ylim=c(-10,10),main="spline")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16)
 
 
@@ -249,19 +263,23 @@ matlines(t(mat1),type="o",col=2,lwd=3,pch=16)
 par(mfrow=c(2,2))
 
 ### linearInterpol.locf
-matplot(t(imputation(mat1,"linearInterpol.locf",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="linearInterpol.locf")
+matplot(t(imputation(mat1,"linearInterpol.locf",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="linearInterpol.locf")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### linearInterpol.global
-matplot(t(imputation(mat1,"linearInterpol.global",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="linearInterpol.global")
+matplot(t(imputation(mat1,"linearInterpol.global",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="linearInterpol.global")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### linearInterpol.local
-matplot(t(imputation(mat1,"linearInterpol.local",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="linearInterpol.local")
+matplot(t(imputation(mat1,"linearInterpol.local",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="linearInterpol.local")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### linearInterpol.bisector
-matplot(t(imputation(mat1,"linearInterpol.bisector",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="linearInterpol.bisector")
+matplot(t(imputation(mat1,"linearInterpol.bisector",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="linearInterpol.bisector")
 matlines(t(mat1),type="o",col=2,lwd=3,pch=16,lty=1)
 
 
@@ -279,19 +297,23 @@ mat3 <- matrix(c(
 par(mfrow=c(2,2))
 
 ### copyMean.locf
-matplot(t(imputation(mat2,"copyMean.locf",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="copyMean.locf")
+matplot(t(imputation(mat2,"copyMean.locf",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="copyMean.locf")
 matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### copyMean.global
-matplot(t(imputation(mat2,"copyMean.global",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="copyMean.global")
+matplot(t(imputation(mat2,"copyMean.global",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="copyMean.global")
 matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### copyMean.local
-matplot(t(imputation(mat2,"copyMean.local",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="copyMean.local")
+matplot(t(imputation(mat2,"copyMean.local",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="copyMean.local")
 matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### copyMean.bisector
-matplot(t(imputation(mat2,"copyMean.bisector",NA,NA)),type="l",ylim=c(-5,10),lty=1,col=1,main="copyMean.bisector")
+matplot(t(imputation(mat2,"copyMean.bisector",NA,NA)),type="l",
+   ylim=c(-5,10),lty=1,col=1,main="copyMean.bisector")
 matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 
@@ -299,18 +321,24 @@ matlines(t(mat2),type="o",col=2,lwd=3,pch=16,lty=1)
 
 ### crossMean
 matImp <- imputation(matMissing,method="crossMean")
-matplot(t(matImp),col=c(2,1,1,1),lty=c(2,1,1,1),type="l",lwd=c(2,1,1,1),pch=16, xlab="Dotted red=imputed trajectory\nFull red=trajectory to impute",ylab="",main="Method 'crossMean'")
+matplot(t(matImp),col=c(2,1,1,1),lty=c(2,1,1,1),type="l",lwd=c(2,1,1,1),pch=16,
+   xlab="Dotted red=imputed trajectory\nFull red=trajectory to impute",
+   ylab="",main="Method 'crossMean'")
 lines(timeV,matMissing[1,],col=2,type="o",lwd=3)
 
 
 ### crossMedian
 matImp <- imputation(matMissing,method="crossMedian")
-matplot(t(matImp),col=c(2,1,1,1),lty=c(2,1,1,1),type="l",lwd=c(2,1,1,1),pch=16, xlab="Dotted red=imputed trajectory\nFull red=trajectory to impute",ylab="",main="Method 'crossMedian'")
+matplot(t(matImp),col=c(2,1,1,1),lty=c(2,1,1,1),type="l",lwd=c(2,1,1,1),pch=16,
+   xlab="Dotted red=imputed trajectory\nFull red=trajectory to impute",ylab="",
+   main="Method 'crossMedian'")
 lines(timeV,matMissing[1,],col=2,type="o",lwd=3)
 
 ### crossHotDeck
 matImp <- imputation(matMissing,method="crossHotDeck")
-matplot(t(matImp),col=c(2,1,1,1),lty=c(2,1,1,1),type="l",lwd=c(2,1,1,1),pch=16, xlab="Dotted red=imputed trajectory\nFull red=trajectory to impute",ylab="",main="Method 'crossHotDeck'")
+matplot(t(matImp),col=c(2,1,1,1),lty=c(2,1,1,1),type="l",lwd=c(2,1,1,1),pch=16,
+   xlab="Dotted red=imputed trajectory\nFull red=trajectory to impute",ylab="",
+   main="Method 'crossHotDeck'")
 lines(timeV,matMissing[1,],col=2,type="o",lwd=3)
 
 
