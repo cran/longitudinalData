@@ -1,12 +1,12 @@
-.onLoad <- function(lib,pkg){
-    library.dynam("longitudinalData",pkg,lib)
-}
+#.onLoad <- function(lib,pkg){
+#    library.dynam("longitudinalData",pkg,lib)
+#}
 
 
 setGeneric("longData",function(traj,idAll,time,timeInData,varNames,maxNA){standardGeneric("longData")})
 setGeneric("longData3d",function(traj,idAll,time,timeInData,varNames,maxNA){standardGeneric("longData3d")})
 setGeneric("partition",function(clusters,traj,details=character()){standardGeneric("partition")})
-setGeneric("imputation",function(traj,method="copyMean",lowerBound="min",upperBound="max"){standardGeneric("imputation")})
+setGeneric("imputation",function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){standardGeneric("imputation")})
 setGeneric("restoreRealData",function(object){standardGeneric("restoreRealData")})
 setGeneric("expandParLongData",function(xParLongData,y){standardGeneric("expandParLongData")})
 setGeneric("plotTraj",function(x,y,...){standardGeneric("plotTraj")})

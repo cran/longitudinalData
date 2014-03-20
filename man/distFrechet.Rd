@@ -1,5 +1,6 @@
 \name{distFrechet}
 \alias{distFrechet}
+%\alias{distFrechetRec}
 
 \title{~ Function: Frechet distance ~}
 
@@ -7,27 +8,37 @@
 Compute Frechet distance between two trajectories.
 }
 \usage{
-distFrechet(P, Q, method = "max", Fdist = dist)
+distFrechet(Px,Py,Qx, Qy, timeScale=0.1, FrechetSumOrMax = "max")
+%distFrechetRec(Px,Py,Qx, Qy, FrechetSumOrMax = "max")
 }
 
 \arguments{
-  \item{P}{[vector(numeric)] First trajectories.}
-  \item{Q}{[vector(numeric)] First trajectories.}
-  \item{method}{[character] Method used. Can be either 'max' or 'sum'}
-  \item{Fdist}{[numeric <- function(numeric,numeric)] Frechet distance
-  between two trajectories use a distance that is use the compute the
-  distance between points of the trajectories. Fdist can be used to
-  define a specific distance. The special value "2D" is used for
-  "euclidean" distance. The special value "1D" can be use for
-  considering that the trajectories are in 1D.}
-
+  \item{Px}{[vector(numeric)] Times (abscisse) of the first trajectories.}
+  \item{Py}{[vector(numeric)] Values of the first trajectories.}
+  \item{Qx}{[vector(numeric)] Times of the second trajectories.}
+  \item{Qy}{[vector(numeric)] Values of the second trajectories.}
+  \item{timeScale}{[\code{numeric}]: allow to modify the time scale,
+    increasing or decreasing the cost of the horizontal shift. If timeScale is
+    very big, then the Frechet's distance is equal to the
+    euclidienne distance. If timeScale is very small, then it is equal to
+    the Dynamic Time Warping.}
+  \item{FrechetSumOrMax}{[\code{character}]: The Frechet's distance can
+    be define using the 'sum' function or the 'max' function. This option
+    let the user to chose one or the other.}
 }
 \details{
-  Given two curve P and Q and a distance d, Frechet distance between P and Q is define as
+  Given two curve P and Q, Frechet distance between P and Q is define as
   \code{inf_{a,b} max_{t} d(P(a(t)),Q(b(t)))}. It's computation is a
   NP-complex problem. When P and Q are trajectories (discrete curve), the
-  problem is polynomial (and quite simple). The Frechet distance can
-  also be define using a sum instead of a max: \code{inf_{a,b} sum_{t} d(P(a(t)),Q(b(t)))}
+  problem is polynomial.
+
+  The Frechet distance can also be define using a sum instead of a max:
+  \code{inf_{a,b} sum_{t} d(P(a(t)),Q(b(t)))}
+
+  The function \code{distFrechet} is C compiled,
+  the function \code{distFrechetR} is in R,
+  the function \code{distFrechetRec} is in recursive (the slowest) in R.
+
 }
 
 \value{
@@ -57,17 +68,15 @@ Christophe Genolini\cr
 \seealso{distTraj}
 
 \examples{
-   P <- rnorm(7)
-   Q <- rnorm(6)
+   Px <- 1:20
+   Py <- dnorm(1:20,12,2)
+   Qx <- 1:20
+   Qy <- dnorm(1:20,8,2)
 
-   ### Function from Eiter and Mannila compiled in C
-   distFrechet(P,Q)
+   distFrechet(Px,Py,Qx,Qy)
 
    ### Frechet using sum instead of max.
-   distFrechet(P,Q,method="sum")
-
-   ### Frechet using "manhattan" distance
-   distFrechet(P,Q,Fdist=function(x)dist(x,method="manhattan"))
+   distFrechet(Px,Py,Qx,Qy,FrechetSumOrMax="sum")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

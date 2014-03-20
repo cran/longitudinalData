@@ -194,7 +194,7 @@ cat("### Method: 'plot' pour LongData3d et Partition ###\n")
 
     ## Tracé éventuelle de la legend
     if(parWin['addLegend']){
-        percent <- paste(": ",formatC(table(part)/length(part)*100,digits=3),"%",sep="")
+        percent <- paste(": ",formatC(as.numeric(table(part)/length(part)*100),digits=3),"%",sep="")
         screen(listScreen[length(listScreen)],FALSE)
 #        legend(grconvertX(0.5,'npc'), grconvertY(ifelse(parWin["nbRow"]==1,1.3,1.05),'npc')^2,percent,lty=1,col=parMean['col'],pch=parMean['pch'],
  #              ncol=legendCol(nbClusters),xpd=NA,xjust=0.5,yjust=0.5,inset=-0.1)
@@ -334,13 +334,36 @@ cat("###################################################################
 ############################# plot3dPdf ###########################
 ###################################################################\n")
 
+
+misc3dPoint <- function(A,r,color="black",alpha=1){
+   t1 <- c(A[1]+r,A[2],A[3],A[1],A[2]+r,A[3],A[1],A[2],A[3]+r)
+   t2 <- c(A[1]+r,A[2],A[3],A[1],A[2]+r,A[3],A[1],A[2],A[3]-r)
+   t3 <- c(A[1]+r,A[2],A[3],A[1],A[2]-r,A[3],A[1],A[2],A[3]+r)
+   t4 <- c(A[1]+r,A[2],A[3],A[1],A[2]-r,A[3],A[1],A[2],A[3]-r)
+   t5 <- c(A[1]-r,A[2],A[3],A[1],A[2]+r,A[3],A[1],A[2],A[3]+r)
+   t6 <- c(A[1]-r,A[2],A[3],A[1],A[2]+r,A[3],A[1],A[2],A[3]-r)
+   t7 <- c(A[1]-r,A[2],A[3],A[1],A[2]-r,A[3],A[1],A[2],A[3]+r)
+   t8 <- c(A[1]-r,A[2],A[3],A[1],A[2]-r,A[3],A[1],A[2],A[3]-r)
+   return(data.frame(rbind(t1,t2,t3,t4,t5,t6,t7,t8),color=color,alpha=alpha))
+}
+
+misc3dPoints <- function(MA,r,color="black",alpha=1){
+   dataV <- data.frame()
+   if(length(r)==1){r <- rep(r,ncol(MA))}else{}
+   if(length(color)==1){color <- rep(color,ncol(MA))}else{}
+   if(length(alpha)==1){alpha <- rep(alpha,ncol(MA))}else{}
+   for(i in 1:ncol(MA)){
+       dataV <- rbind(dataV,misc3dPoint(MA[,i],r[i],color=color[i],alpha=alpha[i]))
+   }
+   return(dataV)
+}
+
 misc3dPlan <- function(A,Ax,Ay){
    v1 <- matrix(c(A,Ax),ncol=3,byrow=TRUE)
    v2 <- matrix(c(Ax,Ay),ncol=3,byrow=TRUE)
    v3 <- matrix(c(Ay,Ax+Ay-A),ncol=3,byrow=TRUE)
    return(data.frame(v1=v1,v2=v2,v3=v3))
 }
-
 
 misc3dPave <- function(A,Ax,Ay,Az,color="black",alpha=1){
     Axy <- Ax+Ay-A
@@ -362,6 +385,9 @@ misc3dLines <- function(x,y,z,color="black",alpha=0.8,lwd=0.05){
     }
     return(dataV)
 }
+
+
+
 
 
 .LongData3d.Partition.plot3dPdf <- function(x,y,varY=1,varZ=2){

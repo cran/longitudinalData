@@ -14,8 +14,10 @@
 
 \usage{
 parLongData(type, col, pch, pchPeriod, cex, xlab, ylab)
-parTRAJ(type = "l", col = "black", pch = "1", pchPeriod = 0, cex = 1, xlab = "Time", ylab = "")
-parMEAN(type = "b", col = "clusters", pch = "letters", pchPeriod = 1, cex = 1.2, xlab = "Time", ylab = "")
+parTRAJ(type = "l", col = "black", pch = "1",
+   pchPeriod = 0, cex = 1, xlab = "Time", ylab = "")
+parMEAN(type = "b", col = "clusters", pch = "letters",
+   pchPeriod = 1, cex = 1.2, xlab = "Time", ylab = "")
 }
 
 \arguments{
@@ -77,7 +79,9 @@ time=c(1,2,3,4,8,12,16,20)
 id2=1:120
 f <- function(id,t)((id-1)\%\%3-1) * t
 g <- function(id,t)(id\%\%2+1)*t
-ld2 <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g))+rnorm(120*8*2,0,3),dim=c(120,8,2)))
+ld2 <- longData3d(
+   array(cbind(outer(id2,time,f),outer(id2,time,g))+rnorm(120*8*2,0,3),
+   dim=c(120,8,2)))
 
 ### Example with default value
 plotTraj(ld2)

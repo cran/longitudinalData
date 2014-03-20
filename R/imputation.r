@@ -3,7 +3,7 @@ cat("\n###################################################################
 ############################ Imputation ###########################
 ###################################################################\n")
 
-.imputationMatrix <- function(traj,method="copyMean",lowerBound="min",upperBound="max"){
+.imputationMatrix <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
 
     ## Imputation according to the method
     trajImp <- switch(EXPR=method,
@@ -68,7 +68,7 @@ setMethod(f="imputation",
 
 
 
-.imputationArray <- function(traj,method="copyMean",lowerBound="min",upperBound="max"){
+.imputationArray <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
     for(i in 1:dim(traj)[3]){
         traj[,,i] <- imputation(traj[,,i],method=method,lowerBound=lowerBound,upperBound=upperBound)
     }
@@ -81,7 +81,7 @@ setMethod(f="imputation",
 )
 
 
-.imputationLongData <- function(traj,method="copyMean",lowerBound="min",upperBound="max"){
+.imputationLongData <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
     traj@traj <- imputation(traj["traj"],method=method,lowerBound=lowerBound,upperBound=upperBound)
     return(traj)
 }
@@ -91,7 +91,7 @@ setMethod(f="imputation",
     definition=.imputationLongData
 )
 
-.imputationLongData3d <- function(traj,method="copyMean",lowerBound="min",upperBound="max"){
+.imputationLongData3d <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
     traj@traj <- imputation(traj["traj"],method=method,lowerBound=lowerBound,upperBound=upperBound)
     return(traj)
 }

@@ -40,13 +40,43 @@ catShort <- function(x){
 #NAtrunc <- function(x) x[1:max(which(!is.na(x)))]
 
 
-reshapeWide <- function(data,varFixed,varLong,varTime,varDrop){
-    if(missing(varFixed)){varFixed <- names(data)[!names(data)%in%c(varLong,varTime,varDrop)]}else{}
-    if(missing(varLong)){ varLong  <- names(data)[!names(data)%in%c(varFixed,varTime,varDrop)]}else{}
-    if(missing(varTime)){ varTime  <- names(data)[!names(data)%in%c(varFixed,varLong,varDrop)]}else{}
-    if(missing(varDrop)){ varDrop  <- names(data)[!names(data)%in%c(varFixed,varLong,varTime)]}else{}
-    return(reshape(data,idvar=varFixed,v.names = varLong,timevar = varTime,drop=varDrop,direction = "wide"))
+reshapeWide <- longToWide <- function(trajLong){
+    if(ncol(trajLong)!=3){stop("[reduceNbTimesLong] The data.frame 'trajLong' has to be (no choice) in the following format:
+    - first column should be the individual indentifiant;
+    - the second should be the times at which the measurement are made;
+    - the third one should be the measurement.")}else{}
+
+    namesCol <- names(trajLong)
+    trajLong <- trajLong[order(trajLong[,2]),]
+    return(reshape(trajLong,idvar=namesCol[1],timevar=namesCol[2],v.names=namesCol[3],direction="wide"))
 }
+
+
+reshapeLong <- wideToLong <- function(trajWide,times=1:(ncol(trajWide)-1)){
+    result <- reshape(trajWide,idvar=1,varying=list(2:ncol(trajWide)),times=times,direction="long")
+    return(result[!is.na(result[,3]),])
+}
+
+
+## reshapeWide <- longToWide <- function(trajLong,idCol,timesCol,varyingCol){
+##     toDrop <- names(trajLong)[!names(trajLong)%in%c(idCol,varyingCol,timesCol)]
+##     trajLong <- trajLong[order(trajLong[,timesCol]),]
+##     result <- reshape(trajLong,idvar=idCol,v.names=varyingCol,timevar=timesCol,drop=toDrop,direction="wide")
+##     return(result)
+## }
+
+## reshapeLong <- wideToLong <- function(trajWide,idCol,varyingCol,times){
+##     if(is.numeric(varyingCol)){varyingCol <- list(varyingCol)}
+##     if(missing(times)){times <- 1:length(varyingCol[[1]])}
+##     toDrop <- names(trajWide)[-unlist(varyingCol)]
+##     toDrop <- toDrop[!(toDrop%in%idCol)]
+##     return(reshape(trajWide,idvar=idCol,varying=varyingCol,times=times,drop=toDrop,direction="long"))
+## }
+
+
+
+
+
 
 
 
