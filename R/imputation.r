@@ -18,9 +18,11 @@ cat("\n###################################################################
                   "spline"=imput.spline(traj),
                   "linearInterpol"=,"linearInterpol.locf"=imput.linearInterpol.locf(traj),
                   "linearInterpol.global"=imput.linearInterpol.global(traj),
+                  "linearInterpol.center"=imput.linearInterpol.center(traj),
                   "linearInterpol.local"=imput.linearInterpol.local(traj),
                   "linearInterpol.bisector"=imput.linearInterpol.bisector(traj),
                   "copyMean"=,"copyMean.locf"=imput.copyMean.locf(traj),
+                  "copyMean.center"=imput.copyMean.center(traj), ### Pas testé !
                   "copyMean.global"=imput.copyMean.global(traj),
                   "copyMean.local"=imput.copyMean.local(traj),
                   "copyMean.bisector"=imput.copyMean.bisector(traj),

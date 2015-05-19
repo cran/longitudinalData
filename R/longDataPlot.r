@@ -439,12 +439,15 @@ setMethod("plot3dPdf",signature=c("LongData3d","Partition"),.LongData3d.Partitio
 
 
 saveTrianglesAsASY <- function(scene, filename = "scene.asy") {
-    scene <- misc3d:::colorScene(scene)
-    triangles <- misc3d:::canonicalizeAndMergeScene(scene, "color",
-                                                    "color2", "alpha",
-                                                    "col.mesh", "fill",
-                                                    "smooth")
-    ve <- misc3d:::t2ve(triangles)
+#    scene <- misc3d:::colorScene(scene)
+#    triangles <- misc3d:::canonicalizeAndMergeScene(scene, "color",
+#                                                    "color2", "alpha",
+#                                                    "col.mesh", "fill",
+#                                                    "smooth")
+#    ve <- misc3d:::t2ve(triangles)
+    scene <- colorScene(scene)
+    triangles <- canonicalizeAndMergeScene(scene, "color", "color2", "alpha", "col.mesh", "fill", "smooth")
+    ve <- t2ve(triangles)
     f <- file(filename, open = "w")
     on.exit(close(f))
 

@@ -3,7 +3,9 @@
 \alias{LongData}
 \alias{LongData-class}
 \alias{[,LongData-method}
+\alias{[,LongData-ANY,ANY,ANY}
 \alias{[<-,LongData-method}
+\alias{[<-,LongData-ANY,ANY,ANY}
 \alias{show,LongData-method}
 
 

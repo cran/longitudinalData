@@ -1,8 +1,8 @@
-\name{reshapeLong}
-\alias{reshapeLong}
+\name{reshapeWideToLong}
+\alias{reshapeWideToLong}
 \alias{wideToLong}
 \title{
-  ~ Function: wideToLong (or reshapeLong) ~
+  ~ Function: wideToLong (or reshapeWideToLong) ~
 }
 \description{
   This function reshapes a data frame in 'wide' format (repeated
@@ -11,7 +11,7 @@
 }
 \usage{
 wideToLong(trajWide,times=1:(ncol(trajWide)-1))
-reshapeLong(trajWide,times=1:(ncol(trajWide)-1))
+reshapeWideToLong(trajWide,times=1:(ncol(trajWide)-1))
 }
 
 \arguments{
@@ -39,16 +39,13 @@ A data frame in 'long' format.
 \author{
 Christophe Genolini
 }
-\note{
-  \code{wideToLong} is just a 'friendly overlay' of the function \code{\link[=stats]{reshape}}.
-}
 
 
 \seealso{
   \code{\link{longToWide}}, \code{\link[=stats]{reshape}}.
 }
 \examples{
-df3 <- data.frame(id = rep(1:4), sex=c("H","F","H","F"),
+df3 <- data.frame(id = LETTERS[rep(1:4)], sex=c("H","F","H","F"),
     v1=rnorm(4),v2=rnorm(4),w1=rnorm(4),w2=rnorm(4))
 
 wideToLong(df3[,c(1,3,4)])

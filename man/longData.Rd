@@ -2,6 +2,8 @@
 \alias{longData}
 \alias{longData,ANY,ANY,ANY,ANY,ANY,ANY-method}
 \alias{longData,missing,missing,missing,missing,missing,missing-method}
+
+
 \title{ ~ Function: longData ~}
 \description{
 \code{longData} is a constructor for the class \code{\linkS4class{LongData}}.

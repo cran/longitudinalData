@@ -30,7 +30,7 @@ bisector <- function(xA,yA,xB,yB,xC,yC){
 #################
 ### linearInterpol
 
-imput.linearInterpol.centerTrajAux <- function(traj){
+imput.linearInterpol.middleTrajAux <- function(traj){
     while(any(is.na(traj))){
         NAinfM <- min(which(is.na(traj)))-1
         NAsupM <- min(which(!is.na( traj[-(1:NAinfM)] ))) + NAinfM
@@ -39,9 +39,9 @@ imput.linearInterpol.centerTrajAux <- function(traj){
     return(traj)
 }
 
-imput.linearInterpol.centerTraj <- function(traj){
+imput.linearInterpol.middleTraj <- function(traj){
     if(all(is.na(traj))){
-        warning("[Imputation:linearInterpol.centerTraj] There is only NA on this trajectory, impossible to impute\n")
+        warning("[Imputation:linearInterpol.middleTraj] There is only NA on this trajectory, impossible to impute\n")
         return(traj)
     }else{
         if(all(!is.na(traj))){return(traj)}else{}
@@ -49,12 +49,12 @@ imput.linearInterpol.centerTraj <- function(traj){
 
     infNotNA <-  min(which(!is.na(traj)))
     supNotNA <-  max(which(!is.na(traj)))
-    traj[infNotNA:supNotNA] <- imput.linearInterpol.centerTrajAux(traj[infNotNA:supNotNA])
+    traj[infNotNA:supNotNA] <- imput.linearInterpol.middleTrajAux(traj[infNotNA:supNotNA])
     return(traj)
 }
 
-#imput.linearInterpol.center <- function(longData){
-#    return(t(apply(longData,1,imput.linearInterpol.centerTraj)))
+#imput.linearInterpol.middle <- function(longData){
+#    return(t(apply(longData,1,imput.linearInterpol.middleTraj)))
 #}
 
 
@@ -67,7 +67,7 @@ imput.linearInterpol.locfTraj <- function(traj){
         warning("[Imputation:linearInterpol.locfTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
-    traj <- imput.linearInterpol.centerTraj(traj)
+    traj <- imput.linearInterpol.middleTraj(traj)
 
     return(imput.locf.traj(traj))
 }
@@ -75,6 +75,22 @@ imput.linearInterpol.locfTraj <- function(traj){
 
 imput.linearInterpol.locf <- function(longData){
     return(t(apply(longData,1,imput.linearInterpol.locfTraj)))
+}
+
+###############
+### linearInterpol.center
+
+imput.linearInterpol.centerTraj <- function(traj){
+    if(all(is.na(traj))){
+        warning("[Imputation:linearInterpol.centerTraj] There is only NA on this line, impossible to impute\n")
+        return(traj)
+    }else{}
+    return(imput.linearInterpol.middleTraj(traj))
+}
+
+
+imput.linearInterpol.center <- function(longData){
+    return(t(apply(longData,1,imput.linearInterpol.centerTraj)))
 }
 
 
@@ -92,7 +108,7 @@ imput.linearInterpol.globalTraj <- function(traj){
         return(imput.linearInterpol.locfTraj(traj))
     }else{}
 
-    traj <- imput.linearInterpol.centerTraj(traj)
+    traj <- imput.linearInterpol.middleTraj(traj)
 
     lengthTraj <- length(traj)
     firstNoNA <- min(which(!is.na(traj)))
@@ -125,7 +141,7 @@ imput.linearInterpol.localTraj <- function(traj){
         return(imput.linearInterpol.locfTraj(traj))
     }else{}
 
-    traj <- imput.linearInterpol.centerTraj(traj)
+    traj <- imput.linearInterpol.middleTraj(traj)
 
     firstNoNA <- min(which(!is.na(traj)))
     secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
@@ -171,7 +187,7 @@ imput.linearInterpol.bisectorTraj <- function(traj){
    secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
    penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
 
-   traj <- imput.linearInterpol.centerTraj(traj)
+   traj <- imput.linearInterpol.middleTraj(traj)
 
    # formule on http://forums.futura-sciences.com/mathematiques-superieur/39936-equation-dune-bissectrice.html#post2823519
    xA <- firstNoNA ;       yA <- traj[xA]

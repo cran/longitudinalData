@@ -3,7 +3,12 @@
 \alias{ListPartition}
 \alias{ListPartition-class}
 \alias{[,ListPartition-method}
+\alias{[,ListPartition-methods}
+\alias{[,ListPartition-ANY,ANY,ANY}
+\alias{[,ListPartition-ANY,ANY,ANY-method}
+\alias{[,ListPartition-ANY,ANY,ANY-methods}
 \alias{[<-,ListPartition-method}
+\alias{[<-,ListPartition-ANY,ANY,ANY}
 \alias{show,ListPartition-method}
 \alias{listPartition}
 \alias{listPartition-method}

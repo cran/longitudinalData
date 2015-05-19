@@ -3,7 +3,10 @@
 \alias{LongData3d}
 \alias{LongData3d-class}
 \alias{[,LongData3d-method}
+\alias{[,LongData3d-ANY,ANY,ANY}
+\alias{[,LongData3d-ANY,ANY,ANY-method}
 \alias{[<-,LongData3d-method}
+\alias{[<-,LongData3d-ANY,ANY,ANY-method}
 \alias{show,LongData3d-method}
 
 

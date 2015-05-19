@@ -37,10 +37,45 @@ catShort <- function(x){
     }
 }
 
+printMatrixShort <- function(mat,nColToPrint=10,nRowToPrint=5){
+   if(ncol(mat)!=0){
+        if(ncol(mat)>nColToPrint){
+            trajToShow <- as.data.frame(mat[,1:nColToPrint])
+            trajToShow$more <- "..."
+        }else{
+            trajToShow <- as.data.frame(mat)
+        }
+        if(nrow(mat)>nRowToPrint){
+            print(trajToShow[1:nRowToPrint,])
+            cat("... ...\n")
+        }else{
+            print(trajToShow)
+        }
+    }else{cat("   <no trajectories>\n")}
+}
+
+printOneTraj <- function(name,oneTraj){
+   value <- data.frame(t(oneTraj[,2]))
+   names(value) <- oneTraj[,1]
+   row.names(value) <- paste(name,":",sep="")
+   print(value)
+}
+
+printTrajLong <- function(trajLong,nRowToPrint=5){
+   id <- unique(trajLong[,1])
+   if(length(id)>nRowToPrint){id <- id[1:nRowToPrint]}else{}
+   printOneTraj(id[1],trajLong[trajLong[,1]==id[1],2:3])
+   for(i in id[-1]){
+      cat("-------------------------------------------\n")
+      printOneTraj(i,trajLong[trajLong[,1]==i,2:3])
+   }
+}
+
+
 #NAtrunc <- function(x) x[1:max(which(!is.na(x)))]
 
 
-reshapeWide <- longToWide <- function(trajLong){
+reshapeLongToWide <- longToWide <- function(trajLong){
     if(ncol(trajLong)!=3){stop("[reduceNbTimesLong] The data.frame 'trajLong' has to be (no choice) in the following format:
     - first column should be the individual indentifiant;
     - the second should be the times at which the measurement are made;
@@ -52,9 +87,12 @@ reshapeWide <- longToWide <- function(trajLong){
 }
 
 
-reshapeLong <- wideToLong <- function(trajWide,times=1:(ncol(trajWide)-1)){
-    result <- reshape(trajWide,idvar=1,varying=list(2:ncol(trajWide)),times=times,direction="long")
-    return(result[!is.na(result[,3]),])
+reshapeWideToLong <- wideToLong <- function(trajWide,times=1:(ncol(trajWide)-1)){
+    id <- trajWide[,1]
+    nbId <- nrow(trajWide)
+    nbTimes <- ncol(trajWide)-1
+    trajLong <- data.frame(id=rep(id,each=nbTimes),times=rep(times,nbId),values=as.numeric(t(as.matrix(trajWide[,-1]))))
+    return(trajLong[!is.na(trajLong[,3]),])
 }
 
 

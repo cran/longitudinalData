@@ -1,5 +1,5 @@
-\name{reshapeWide}
-\alias{reshapeWide}
+\name{reshapeLongToWide}
+\alias{reshapeLongToWide}
 \alias{longToWide}
 \title{
   ~ Function: longToWide (or reshapeWide) ~
@@ -11,7 +11,7 @@
 }
 \usage{
 longToWide(trajLong)
-reshapeWide(trajLong)
+reshapeLongToWide(trajLong)
 }
 
 \arguments{
@@ -19,7 +19,7 @@ reshapeWide(trajLong)
     trajectories in long format. The data.frame has to be
     (no choice!) in the following format: the first column should be the individual
     indentifiant. The second should be the times at which the measurement
-    are made. The third one should be the measurement.}
+    are made and should be numeric. The third one should be the measurement.}
 }
 
 \details{
@@ -52,8 +52,8 @@ summary(Indometh)
 longToWide(Indometh)
 
 
-df2 <- data.frame(id = rep(1:4, rep(2,4)),
-                 visit = I(rep(c("Before","After"), 4)),
+df2 <- data.frame(id = rep(LETTERS[1:4], rep(2,4)),
+                 visit = I(rep(c("3","6"), 4)),
                  x = rnorm(4), y = runif(4),
                  sex=rep(c("H","F","H"),time=c(4,2,2)))[1:7,]
 longToWide(df2[,1:3])

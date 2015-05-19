@@ -7,7 +7,7 @@
 ###############
 ### copyMean
 
-imput.copyMean.centerTrajAux <- function(traj,model){
+imput.copyMean.middleTrajAux <- function(traj,model){
     while(any(is.na(traj))){
         NAinfM <- min(which(is.na(traj)))-1
         NAsupM <- min(which(!is.na( traj[-(1:NAinfM)] ))) + NAinfM
@@ -18,9 +18,9 @@ imput.copyMean.centerTrajAux <- function(traj,model){
     return(traj)
 }
 
-imput.copyMean.centerTraj <- function(traj,model){
+imput.copyMean.middleTraj <- function(traj,model){
     if(all(is.na(traj))){
-        warning("[Imputation:copyMean.centerTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:copyMean.middleTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{
         if(sum(!is.na(traj))==1){
@@ -33,15 +33,15 @@ imput.copyMean.centerTraj <- function(traj,model){
 
     infNotNA <-  min(which(!is.na(traj)))
     supNotNA <-  max(which(!is.na(traj)))
-    traj[infNotNA:supNotNA] <- imput.copyMean.centerTrajAux(traj[infNotNA:supNotNA],model[infNotNA:supNotNA])
+    traj[infNotNA:supNotNA] <- imput.copyMean.middleTrajAux(traj[infNotNA:supNotNA],model[infNotNA:supNotNA])
     return(traj)
 }
 
-### ATTENTION : copyMean.center N'EST PAS équivalent a copyMean.locf,
+### ATTENTION : copyMean.middle N'EST PAS équivalent a copyMean.locf,
 ###   car il a besoin d'un model et il n'y a pas les mécanismes de controle.
 ###   Peut-être peut-on supprimer cette fonction ?
-# imput.copyMean.center <- function(longData,model){
-#     return(t(apply(longData,1,imput.copyMean.centerTraj,model)))
+# imput.copyMean.middle <- function(longData,model){
+#     return(t(apply(longData,1,imput.copyMean.middleTraj,model)))
 # }
 
 
@@ -54,6 +54,30 @@ imput.copyMean.centerTraj <- function(traj,model){
 
 
 ###############
+### copyMeanCenter
+
+
+imput.copyMean.center <- function(longData){
+
+    ## Préparation de la trajectoire moyenne.
+    ## En particulier, imputation si manquantes
+    model <- apply(longData,2,mean,na.rm=TRUE)
+
+    if(all(is.na(model))){
+        warning("[Imputation:copyMean.center] There is only NA in the model, impossible to impute\n")
+        return(longData)
+    }else{
+        if(any(is.na(model))){
+            warning("[Imputation:copyMean.center] There is NA in the model. linearInterpol.locf is used to complete the model\n")
+            model <- imput.linearInterpol.locf(t(model))
+        }else{}
+    }
+
+    ## Imputation
+    return(t(apply(longData,1,imput.copyMean.middleTraj,model)))
+}
+
+###############
 ### copyMeanLOCF
 
 imput.copyMean.locfTraj <- function(traj,model){
@@ -61,7 +85,7 @@ imput.copyMean.locfTraj <- function(traj,model){
         warning("[Imputation:copyMean.locfTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
-    traj <- imput.copyMean.centerTraj(traj,model)
+    traj <- imput.copyMean.middleTraj(traj,model)
 
     firstNoNA <- min(which(!is.na(traj)))
     traj[1:firstNoNA]<-model[1:firstNoNA] + traj[firstNoNA]-model[firstNoNA]
@@ -111,7 +135,7 @@ imput.copyMean.globalTraj <- function(traj,model){
             if(all(!is.na(traj))){return(traj)}else{}
         }
     }
-    traj <- imput.copyMean.centerTraj(traj,model)
+    traj <- imput.copyMean.middleTraj(traj,model)
 
     firstNoNA <- min(which(!is.na(traj)))
     lastNoNA <- max(which(!is.na(traj)))
@@ -166,15 +190,15 @@ imput.copyMean.localTraj <- function(traj,model){
         }
     }
 
-    ## We can either imput the center then Compute these value,
-    ## or compute the values then impute the center this does not change the results.
+    ## We can either imput the middle then Compute these value,
+    ## or compute the values then impute the middle this does not change the results.
 
     firstNoNA <- min(which(!is.na(traj)))
     secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
     lastNoNA <- max(which(!is.na(traj)))
     penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
     trajLength <- length(traj)
-    traj <- imput.copyMean.centerTraj(traj,model)
+    traj <- imput.copyMean.middleTraj(traj,model)
 
     ## Begin
     aTraj <- (traj[firstNoNA]-traj[secondNoNA])/(firstNoNA-secondNoNA)
@@ -237,14 +261,14 @@ imput.copyMean.bisectorTraj <- function(traj,model){
         }
     }
 
-    ## Compute these BEFORE imput.copyMean.center
+    ## Compute these BEFORE imput.copyMean.middle
     firstNoNA <- min(which(!is.na(traj)))
     lastNoNA <- max(which(!is.na(traj)))
     secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
     penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
     trajLength <- length(traj)
 
-    traj <- imput.copyMean.centerTraj(traj,model)
+    traj <- imput.copyMean.middleTraj(traj,model)
 
     xA <- firstNoNA       ; yA <- traj[xA] ; zA <- model[xA]
     xB <- lastNoNA        ; yB <- traj[xB] ; zB <- model[xB]

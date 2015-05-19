@@ -12,8 +12,8 @@
   \tabular{ll}{
     Package: \tab longitudinalData\cr
     Type: \tab Package\cr
-    Version: \tab 2.2\cr
-    Date: \tab 2013-12-01\cr
+    Version: \tab 2.3\cr
+    Date: \tab 2015-05-05\cr
     License: \tab GPL (>= 2)\cr
     LazyData: \tab yes\cr
     Depends: \tab methods,clv,rgl,misc3d\cr

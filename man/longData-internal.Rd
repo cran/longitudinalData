@@ -1,5 +1,8 @@
 \name{longData-internal}
 \alias{catShort}
+\alias{printMatrixShort}
+\alias{printOneTraj}
+\alias{printTrajLong}
 %\alias{cleanProg}
 \alias{METHODS}
 
@@ -43,6 +46,13 @@
 %\alias{trajImput.LOCF.end}
 
 %\alias{trajImput.LOCF.middle}
+
+\alias{canonicalizeAndMergeScene}
+\alias{colorScene}
+\alias{t2ve}
+\alias{is.Triangles3D}
+\alias{colorTriangles}
+
 
 
 \title{~ longData: internal objects and methods ~}
