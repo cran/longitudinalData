@@ -30,7 +30,7 @@ bisector <- function(xA,yA,xB,yB,xC,yC){
 #################
 ### linearInterpol
 
-imput.linearInterpol.middleTrajAux <- function(traj){
+imput_linearInterpol_middleTrajAux <- function(traj){
     while(any(is.na(traj))){
         NAinfM <- min(which(is.na(traj)))-1
         NAsupM <- min(which(!is.na( traj[-(1:NAinfM)] ))) + NAinfM
@@ -39,9 +39,9 @@ imput.linearInterpol.middleTrajAux <- function(traj){
     return(traj)
 }
 
-imput.linearInterpol.middleTraj <- function(traj){
+imput_linearInterpol_middleTraj <- function(traj){
     if(all(is.na(traj))){
-        warning("[Imputation:linearInterpol.middleTraj] There is only NA on this trajectory, impossible to impute\n")
+        warning("[Imputation:linearInterpol_middleTraj] There is only NA on this trajectory, impossible to impute\n")
         return(traj)
     }else{
         if(all(!is.na(traj))){return(traj)}else{}
@@ -49,12 +49,12 @@ imput.linearInterpol.middleTraj <- function(traj){
 
     infNotNA <-  min(which(!is.na(traj)))
     supNotNA <-  max(which(!is.na(traj)))
-    traj[infNotNA:supNotNA] <- imput.linearInterpol.middleTrajAux(traj[infNotNA:supNotNA])
+    traj[infNotNA:supNotNA] <- imput_linearInterpol_middleTrajAux(traj[infNotNA:supNotNA])
     return(traj)
 }
 
-#imput.linearInterpol.middle <- function(longData){
-#    return(t(apply(longData,1,imput.linearInterpol.middleTraj)))
+#imput_linearInterpol.middle <- function(longData){
+#    return(t(apply(longData,1,imput_linearInterpol.middleTraj)))
 #}
 
 
@@ -62,35 +62,35 @@ imput.linearInterpol.middleTraj <- function(traj){
 ###############
 ### linearInterpolLOCF
 
-imput.linearInterpol.locfTraj <- function(traj){
+imput_linearInterpol_locfTraj <- function(traj){
     if(all(is.na(traj))){
-        warning("[Imputation:linearInterpol.locfTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:linearInterpol_locfTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
-    traj <- imput.linearInterpol.middleTraj(traj)
+    traj <- imput_linearInterpol_middleTraj(traj)
 
-    return(imput.locf.traj(traj))
+    return(imput_locf_traj(traj))
 }
 
 
-imput.linearInterpol.locf <- function(longData){
-    return(t(apply(longData,1,imput.linearInterpol.locfTraj)))
+imput_linearInterpol_locf <- function(longData){
+    return(t(apply(longData,1,imput_linearInterpol_locfTraj)))
 }
 
 ###############
 ### linearInterpol.center
 
-imput.linearInterpol.centerTraj <- function(traj){
+imput_linearInterpol_centerTraj <- function(traj){
     if(all(is.na(traj))){
-        warning("[Imputation:linearInterpol.centerTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:linearInterpol_centerTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
-    return(imput.linearInterpol.middleTraj(traj))
+    return(imput_linearInterpol_middleTraj(traj))
 }
 
 
-imput.linearInterpol.center <- function(longData){
-    return(t(apply(longData,1,imput.linearInterpol.centerTraj)))
+imput_linearInterpol_center <- function(longData){
+    return(t(apply(longData,1,imput_linearInterpol_centerTraj)))
 }
 
 
@@ -98,17 +98,17 @@ imput.linearInterpol.center <- function(longData){
 ###############
 ### linearInterpolGlobal
 
-imput.linearInterpol.globalTraj <- function(traj){
+imput_linearInterpol_globalTraj <- function(traj){
     if(all(is.na(traj))){
-        warning("[Imputation:linearInterpol.global] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:linearInterpol_global] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
     if(sum(!is.na(traj))==1){
-        warning("[Imputation:linearInterpol.global] There is only one non-NA on this line, linearInterpol.locf is used instead of linearInterpol.global\n")
-        return(imput.linearInterpol.locfTraj(traj))
+        warning("[Imputation:linearInterpol_global] There is only one non-NA on this line, linearInterpol_locf is used instead of linearInterpol_global\n")
+        return(imput_linearInterpol_locfTraj(traj))
     }else{}
 
-    traj <- imput.linearInterpol.middleTraj(traj)
+    traj <- imput_linearInterpol_middleTraj(traj)
 
     lengthTraj <- length(traj)
     firstNoNA <- min(which(!is.na(traj)))
@@ -122,8 +122,8 @@ imput.linearInterpol.globalTraj <- function(traj){
 }
 
 
-imput.linearInterpol.global <- function(longData){
-    return(t(apply(longData,1,imput.linearInterpol.globalTraj)))
+imput_linearInterpol_global <- function(longData){
+    return(t(apply(longData,1,imput_linearInterpol_globalTraj)))
 }
 
 
@@ -131,17 +131,17 @@ imput.linearInterpol.global <- function(longData){
 ###############
 ### linearInterpolLocal
 
-imput.linearInterpol.localTraj <- function(traj){
+imput_linearInterpol_localTraj <- function(traj){
     if(all(is.na(traj))){
-        warning("[Imputation:linearInterpol.local] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:linearInterpol_local] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
     if(sum(!is.na(traj))==1){
-        warning("[Imputation:linearInterpol.local] There is only one non-NA on this line, linearInterpol.locf is used instead of linearInterpol.local\n")
-        return(imput.linearInterpol.locfTraj(traj))
+        warning("[Imputation:linearInterpol_local] There is only one non-NA on this line, linearInterpol_locf is used instead of linearInterpol_local\n")
+        return(imput_linearInterpol_locfTraj(traj))
     }else{}
 
-    traj <- imput.linearInterpol.middleTraj(traj)
+    traj <- imput_linearInterpol_middleTraj(traj)
 
     firstNoNA <- min(which(!is.na(traj)))
     secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
@@ -162,8 +162,8 @@ imput.linearInterpol.localTraj <- function(traj){
     return(traj)
 }
 
-imput.linearInterpol.local <- function(longData){
-    return(t(apply(longData,1,imput.linearInterpol.localTraj)))
+imput_linearInterpol_local <- function(longData){
+    return(t(apply(longData,1,imput_linearInterpol_localTraj)))
 }
 
 
@@ -171,14 +171,14 @@ imput.linearInterpol.local <- function(longData){
 ###############
 ### linearInterpolBisector
 
-imput.linearInterpol.bisectorTraj <- function(traj){
+imput_linearInterpol_bisectorTraj <- function(traj){
     if(all(is.na(traj))){
-        warning("[Imputation:linearInterpol.bisector] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:linearInterpol_bisector] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
     if(sum(!is.na(traj))==1){
-        warning("[Imputation:linearInterpol.bisector] There is only one non-NA on this line, linearInterpol.locf is used instead of linearInterpol.bisector\n")
-        return(imput.linearInterpol.locfTraj(traj))
+        warning("[Imputation:linearInterpol_bisector] There is only one non-NA on this line, linearInterpol_locf is used instead of linearInterpol_bisector\n")
+        return(imput_linearInterpol_locfTraj(traj))
     }else{}
 
    lengthTraj <- length(traj)
@@ -187,7 +187,7 @@ imput.linearInterpol.bisectorTraj <- function(traj){
    secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
    penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
 
-   traj <- imput.linearInterpol.middleTraj(traj)
+   traj <- imput_linearInterpol_middleTraj(traj)
 
    # formule on http://forums.futura-sciences.com/mathematiques-superieur/39936-equation-dune-bissectrice.html#post2823519
    xA <- firstNoNA ;       yA <- traj[xA]
@@ -207,8 +207,8 @@ imput.linearInterpol.bisectorTraj <- function(traj){
 }
 
 
-imput.linearInterpol.bisector <- function(longData){
-    return(t(apply(longData,1,imput.linearInterpol.bisectorTraj)))
+imput_linearInterpol_bisector <- function(longData){
+    return(t(apply(longData,1,imput_linearInterpol_bisectorTraj)))
 }
 
 

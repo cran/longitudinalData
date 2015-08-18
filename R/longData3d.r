@@ -6,7 +6,7 @@ cat("\n####################################################################
 ### Pas de trajectoire totalement vide => maxNA<length(time)
 
 cat("### Definition ###\n")
-.LongData3d.validity <- function(object){
+LongData3d_validity <- function(object){
 #    cat("**** validity LongData ****\n")
     if(length(object@idAll)==0&length(object@time)==0&length(object@varNames)==0&length(object@traj)==0){
     }else{
@@ -72,7 +72,7 @@ setClass(
         maxNA=numeric(),
         reverse=matrix(NA,2)
     ),
-    validity=.LongData3d.validity
+    validity=LongData3d_validity
 )
 
 
@@ -81,36 +81,13 @@ cat("\n###################################################################
 ########################### Constructeur ##########################
 ###################################################################\n")
 
-setMethod("longData3d",signature=c("missing","missing","missing","missing","missing","missing"),
-    function(traj,idAll,time,timeInData,varNames,maxNA){new("LongData3d")}
-)
-
-
-## buildObject <- function(traj,idAll,time,varNames,maxNA,reverse){
-##     keepId <- apply(t(apply(traj,c(1,3),function(x){sum(is.na(x))}))<=maxNA,2,all)
-
-##     ## Si on permet l'excusion globale, la formule est :
-##     ## keepId <- apply(traj,1,function(x)(sum(is.na(x))<=maxNA))
-##     traj <- traj[keepId,,,drop=FALSE]
-##     idFewNA <- idAll
-##     cat("VarNames=",idFewNA,"dimTraj",dim(traj),"\n")
-##     dimnames(traj) <- list(idFewNA,paste("t",time,sep=""),varNames)
-##     return(new("LongData",
-##         idAll=as.character(idAll),
-##         idFewNA=as.character(idFewNA),
-##         time=time,
-##         varNames=varNames,
-##         traj=traj,
-##         dimTraj=dim(traj),
-##         maxNA=maxNA,
-##         reverse=reverse)
-##     )
-## }
-
-
-
 ### Data.frame ou array en 3D
-.longData3d.constructor <- function(traj,idAll,time,timeInData,varNames,maxNA){
+longData3d <- function(traj,idAll,time,timeInData,varNames,maxNA){
+
+    if(missing(traj)){
+        return(new("LongData3d"))
+    }else{}
+
     ## First part : set all the parameters
     if(is.data.frame(traj)){
         if(missing(idAll)){
@@ -170,41 +147,13 @@ setMethod("longData3d",signature=c("missing","missing","missing","missing","miss
 }
 
 
-
-setMethod("longData3d",signature=c("ANY","ANY","ANY","ANY","ANY"),.longData3d.constructor)
-
-#setGeneric("as.longData",function(data,...){standardGeneric("as.longData")})
-
-#as.longData <- function(data,idAll,time,timeInData,varNames,maxNA=length(time)-2){UseMethod("as.longData")}
-
-#setMethod("as.longData","data.frame",
-#    function(data,idAll,time,timeInData,varNames,maxNA=length(time)-2){
-#        if(missing(idAll)){idAll <- data[,1]}else{}
-#        if(missing(varNames)){varNames <- names(timeInData)}else{}
-#        if(missing(time)){time <- 1:length(timeInData[[1]])}else{}
-#        matr <- as.matrix(data[,na.omit(unlist(timeInData))])
-#        traj <- array(matr[,rank(unlist(timeInData),na.last="keep")],c(length(idAll),length(time),length(varNames)))
-#        return(longData(traj=traj,idAll=idAll,time=time,varNames=varNames,maxNA=maxNA))
-#    }
-#)
-
-#setMethod("as.longData","array",
-#    function(data,idAll,time,varNames,maxNA=length(time)-2){
-#        if(missing(idAll)){idAll <- 1:dim(data)[1]}else{}
-#        if(missing(varNames)){varNames <- paste("V",1:dim(data)[3],sep="")}else{}
-#        if(missing(time)){time <- 1:dim(data)[2]}else{}
-#        return(longData(traj=data,idAll=idAll,time=time,varNames=varNames,maxNA=maxNA))
-#    }
-#)
-
-
 cat("\n###################################################################
 ########################## Class LongData #########################
 ############################ Accesseurs ###########################
 ###################################################################\n")
 
 cat("### Getteur ###\n")
-.longData3d.get <- function(x,i,j,drop){
+LongData3d_get <- function(x,i,j,drop){
     switch(EXPR=i,
            "idAll"={return(x@idAll)},
            "idFewNA"={return(x@idFewNA)},
@@ -220,7 +169,7 @@ cat("### Getteur ###\n")
            stop("[LongData3d:get]:",i," is not a 'LongData' slot")
     )
 }
-setMethod("[","LongData3d",.longData3d.get)
+setMethod("[","LongData3d",LongData3d_get)
 
 
 ### A priori, on n'a jamais besoin de modifier un LongData après sa création.
@@ -268,7 +217,7 @@ cat("\n###################################################################
 ###################################################################\n")
 
 cat("### Method: 'show' pour LongData3d ###\n")
-showLongData3d <- function(object){
+LongData3d_show <- function(object){
     cat("\n~ idAll       = [",length(object@idAll),"] ",sep="");catShort(object@idAll)
     cat("\n~ idFewNA     = [",object['nbIdFewNA'],"] ",sep="");catShort(object@idFewNA)
     cat("\n~ varNames    = [",object['nbVar'],"] ",sep="");catShort(object@varNames)
@@ -301,13 +250,13 @@ showLongData3d <- function(object){
 setMethod("show","LongData3d",
     definition=function(object){
         cat("\n   ~~~ Class: LongData3d ~~~")
-        showLongData3d(object)
+        LongData3d_show(object)
     }
 )
 
 
 cat("### Method: 'print' pour LongData3d ###\n")
-.longData3d.print <- function(x){
+LongData3d_print <- function(x){
     object <- x
     cat("\n   ~~~ Class: LongData3d ~~~")
     cat("\n~ Class :",class(object))
@@ -322,9 +271,10 @@ cat("### Method: 'print' pour LongData3d ###\n")
     cat("\n~ reverse SD =\n");print(object['reverse'][2,])
     return(invisible(object))
 }
-setMethod("print","LongData3d",.longData3d.print)
+setMethod("print","LongData3d",LongData3d_print)
 
 
+setMethod("is.na", "LongData3d", function(x) FALSE) 
 
 
 
@@ -335,7 +285,7 @@ cat("\n###################################################################
 ############################## Various ############################
 ###################################################################\n")
 
-.longData3d.scale <- function(x,center=TRUE,scale=TRUE){
+LongData3d_scale <- function(x,center=TRUE,scale=TRUE){
     nameObject<-deparse(substitute(x))
     traj <- x@traj
     if(identical(center,TRUE)){center <- apply(traj,3,meanNA)}else{}
@@ -353,7 +303,7 @@ cat("\n###################################################################
 
 setMethod(f="scale",
     signature=c(x="LongData3d"),
-    definition=.longData3d.scale
+    definition=LongData3d_scale
 )
 
 
@@ -376,7 +326,7 @@ setMethod(f="scale",
 #)
 
 
-.longData3d.restoreRealData <- function(object){
+LongData3d_restoreRealData <- function(object){
     nameObject<-deparse(substitute(object))
     traj <- object@traj
 
@@ -391,7 +341,7 @@ setMethod(f="scale",
 }
 setMethod(f="restoreRealData",
     signature=c(object="LongData3d"),
-    definition=.longData3d.restoreRealData
+    definition=LongData3d_restoreRealData
 )
 
 
@@ -440,7 +390,7 @@ varNumAndName <- function(variable,allVarNames){
     if(class(variable)=="character"){
         varName <- variable
         varNum <- c(1:length(allVarNames))[allVarNames %in% varName]
-        if(length(varNum)==0){stop("[LongData3d:plod3d]: 'variable' is not a correct variable name
+        if(length(varNum)==0){stop("[LongData3d:plot3d]: 'variable' is not a correct variable name
   [LongData3d:plod3d]: variable=",varName," is not in allVarNames=",allVarNames)}else{}
     }else{
         varNum <- variable

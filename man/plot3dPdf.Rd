@@ -79,7 +79,7 @@
   data(artificialJointLongData)
   myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
-  plotTraj3d(myLd,part)
+  plotTrajMeans3d(myLd,part)
 
   ### Creation of the scene
   scene <- plot3dPdf(myLd,part)

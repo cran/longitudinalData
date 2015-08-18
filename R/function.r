@@ -29,11 +29,11 @@ is.tna <- function(x){
 
 
 ### Printing long line shortening them
-catShort <- function(x){
-    if(length(x)<=10){
+catShort <- function(x,nToCat=10){
+    if(length(x)<=nToCat){
         cat(x)
     }else{
-        cat(x[1:10],"...")
+        cat(x[1:nToCat],"...")
     }
 }
 
@@ -54,11 +54,23 @@ printMatrixShort <- function(mat,nColToPrint=10,nRowToPrint=5){
     }else{cat("   <no trajectories>\n")}
 }
 
+
+printShort <- function(x)  {
+    if (length(x) <= 10) {
+        print(x)
+    }else {
+        x <- cbind(x[1:10],"...") 
+        names(x)[11] <- ""
+        print(x)
+    }
+}
+ 
+
 printOneTraj <- function(name,oneTraj){
    value <- data.frame(t(oneTraj[,2]))
    names(value) <- oneTraj[,1]
    row.names(value) <- paste(name,":",sep="")
-   print(value)
+   printShort(value)
 }
 
 printTrajLong <- function(trajLong,nRowToPrint=5){

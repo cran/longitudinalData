@@ -5,7 +5,7 @@
   ~ Function: saveTrianglesAsASY ~
 }
 \description{
-  Export a \code{Triangle} object to an '.azy' file.
+  Export a \code{Triangle} object to an '.asy' file.
 }
 \usage{
 saveTrianglesAsASY(scene, filename = "scene.asy")
@@ -43,18 +43,18 @@ saveTrianglesAsASY(scene, filename = "scene.asy")
   data(artificialJointLongData)
   myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
   part <- partition(rep(1:3,each=50))
-  plotTraj3d(myLd,part)
+  plotTrajMeans3d(myLd,part)
 
   ### Creation of the scene
   scene <- plot3dPdf(myLd,part)
   drawScene.rgl(scene)
 
-  ### Export in '.azy' file
+  ### Export in '.asy' file
   saveTrianglesAsASY(scene)
 
   ### Creation of a '.prc' file
   # Open a console, then run:
-  # 'asy -inlineimage -tex pdflatex scene.azy'
+  # 'asy -inlineimage -tex pdflatex scene.asy'
 
   ### Creation of the LaTeX main document
   makeLatexFile()

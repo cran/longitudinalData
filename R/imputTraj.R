@@ -7,7 +7,7 @@ cat("###################################################################
 #################
 ### locf
 ###  - pour monotones et intermitentes
-imput.locf.traj <- function(traj){
+imput_locf_traj <- function(traj){
     if(all(is.na(traj))){
         warning("[Imputation:locf] There is only NA on this trajectory, impossible to impute\n")
         return(traj)
@@ -19,8 +19,8 @@ imput.locf.traj <- function(traj){
     return(traj[c(valNonMissing[1],valNonMissing)][cumsum(nonMissing)+1])
 }
 
-imput.locf <- function(longData){
-    return(t(apply(longData,1,imput.locf.traj)))
+imput_locf <- function(longData){
+    return(t(apply(longData,1,imput_locf_traj)))
 }
 
 
@@ -46,8 +46,8 @@ imput.locf <- function(longData){
 ###  - pour monotones et intermitentes
 
 
-imput.nocb <- function(longData){
-    return(imput.locf(longData[,ncol(longData):1,drop=FALSE])[,ncol(longData):1,drop=FALSE])
+imput_nocb <- function(longData){
+    return(imput_locf(longData[,ncol(longData):1,drop=FALSE])[,ncol(longData):1,drop=FALSE])
 }
 
 
@@ -55,7 +55,7 @@ imput.nocb <- function(longData){
 ### traj mean
 ###  - pour monotones et intermitentes
 
-imput.trajMean.traj <- function(traj){
+imput_trajMean_traj <- function(traj){
     if(all(is.na(traj))){
         warning("[Imputation:trajMean] There is only NA on this trajectory, impossible to impute\n")
         return(traj)
@@ -66,8 +66,8 @@ imput.trajMean.traj <- function(traj){
     return(traj)
 }
 
-imput.trajMean <- function(longData){
-    return(t(apply(longData,1,imput.trajMean.traj)))
+imput_trajMean <- function(longData){
+    return(t(apply(longData,1,imput_trajMean_traj)))
 }
 
 
@@ -75,7 +75,7 @@ imput.trajMean <- function(longData){
 ### traj median
 ###  - pour monotones et intermitentes
 
-imput.trajMedian.traj <- function(traj){
+imput_trajMedian_traj <- function(traj){
     if(all(is.na(traj))){
         warning("[Imputation:trajMedian] There is only NA on this trajectory, impossible to impute\n")
         return(traj)
@@ -86,8 +86,8 @@ imput.trajMedian.traj <- function(traj){
     return(traj)
 }
 
-imput.trajMedian <- function(longData){
-    return(t(apply(longData,1,imput.trajMedian.traj)))
+imput_trajMedian <- function(longData){
+    return(t(apply(longData,1,imput_trajMedian_traj)))
 }
 
 
@@ -96,7 +96,7 @@ imput.trajMedian <- function(longData){
 ### traj hot deck
 ###  - pour monotones et intermitentes
 
-imput.trajHotDeck.traj <- function(traj){
+imput_trajHotDeck_traj <- function(traj){
     if(all(is.na(traj))){
         warning("[Imputation:trajHotDeck] There is only NA on this trajectory, impossible to impute\n")
         return(traj)
@@ -110,8 +110,8 @@ imput.trajHotDeck.traj <- function(traj){
     return(traj)
 }
 
-imput.trajHotDeck <- function(longData){
-    return(t(apply(longData,1,imput.trajHotDeck.traj)))
+imput_trajHotDeck <- function(longData){
+    return(t(apply(longData,1,imput_trajHotDeck_traj)))
 }
 
 
@@ -119,7 +119,7 @@ imput.trajHotDeck <- function(longData){
 ###############
 ### spline
 
-imput.spline.traj <- function(traj){
+imput_spline_traj <- function(traj){
     if(all(is.na(traj))){
         warning("[Imputation:spline] There is only NA on this trajectory, impossible to impute\n")
         return(traj)
@@ -131,8 +131,8 @@ imput.spline.traj <- function(traj){
     return(traj)
 }
 
-imput.spline <- function(longData){
-    return(t(apply(longData,1,imput.spline.traj)))
+imput_spline <- function(longData){
+    return(t(apply(longData,1,imput_spline_traj)))
 }
 
 

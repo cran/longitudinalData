@@ -1,5 +1,6 @@
 \name{longData-internal}
 \alias{catShort}
+\alias{printShort}
 \alias{printMatrixShort}
 \alias{printOneTraj}
 \alias{printTrajLong}

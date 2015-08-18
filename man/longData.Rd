@@ -85,7 +85,7 @@ Christophe Genolini\cr
 mat <- matrix(c(1,NA,3,2,3,6,1,8,10),3,3,dimnames=list(c(101,102,104),c("T2","T4","T8")))
 longData(mat)
 (ld1 <- longData(traj=mat,idAll=as.character(c(101,102,104)),time=c(2,4,8),varNames="V"))
-plotTraj(ld1)
+plotTrajMeans(ld1)
 
 ### Big data
 mat <- matrix(runif(1051*325),1051,325)

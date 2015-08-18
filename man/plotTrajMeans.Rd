@@ -1,16 +1,16 @@
-\name{plotTraj,LongData}
+\name{plotTrajMeans,LongData}
 \Rdversion{1.1}
-\alias{plotTraj}
-\alias{plotTraj,LongData}
-\alias{plotTraj,LongData-method}
-\alias{plotTraj,LongData,missing-method}
-\alias{plotTraj,LongData,Partition-method}
-\alias{plotTraj,LongData3d}
-\alias{plotTraj,LongData3d-method}
-\alias{plotTraj,LongData3d,missing-method}
-\alias{plotTraj,LongData3d,Partition-method}
+\alias{plotTrajMeans}
+\alias{plotTrajMeans,LongData}
+\alias{plotTrajMeans,LongData-method}
+\alias{plotTrajMeans,LongData,missing-method}
+\alias{plotTrajMeans,LongData,Partition-method}
+%\alias{plotTrajMeans,LongData3d}
+%\alias{plotTrajMeans,LongData3d-method}
+%\alias{plotTrajMeans,LongData3d,missing-method}
+%\alias{plotTrajMeans,LongData3d,Partition-method}
 
-\title{ ~ Function: plotTraj for LongData or LongData3d~ }
+\title{ ~ Function: plotTrajMeans for LongData ~ }
 \description{
   Plot the \code{\linkS4class{LongData}} or \code{\linkS4class{LongData3d}} optionnaly relatively
   to a \code{\linkS4class{Partition}}. For joint trajectories, one
@@ -18,10 +18,7 @@
 }
 
 \usage{
-\S4method{plotTraj}{LongData,Partition}(x,y,parTraj=parTRAJ(),
-   parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...)
-\S4method{plotTraj}{LongData3d,Partition}(x,y,parTraj=parTRAJ(),
-   parMean=parMEAN(),parWin=windowsCut(x['nbVar'],addLegend=TRUE),nbSample=1000,...)
+plotTrajMeans(x, y, parTraj=parTRAJ(), parMean=parMEAN(),...)
 }
 
 \arguments{
@@ -38,11 +35,9 @@
     used to plot the mean trajectories of each clusters
     (only when \code{y} is non missing). See \code{\linkS4class{ParLongData}}
     and examples for details.}
-  \item{parWin}{\code{[ParWindows]}: Set the graphical display of
-    the windows. See \code{\linkS4class{ParWindows}} for details.}
-  \item{nbSample}{\code{[numeric]}: Graphical display of huge sample can
-    be time consumming. This parameters fixe the maximum number of
-    trajectories (randomly chosen) that will be drawn.}
+%  \item{nbSample}{\code{[numeric]}: Graphical display of huge sample can
+%    be time consumming. This parameters fixe the maximum number of
+%    trajectories (randomly chosen) that will be drawn.}
   \item{...}{Arguments to be passed to methods, such as graphical parameters.}
 }
 
@@ -59,7 +54,7 @@
   class \code{\linkS4class{ParLongData}}.
 }
 
-\seealso{\code{\linkS4class{LongData}}, \code{\linkS4class{LongData3d}}, \code{\link{plotTraj3d}}.}
+\seealso{\code{\linkS4class{LongData}}, \code{\linkS4class{LongData3d}}, \code{\link{plotTrajMeans3d}}.}
 
 
 \section{Author}{
@@ -82,40 +77,37 @@ Christophe Genolini\cr
 \examples{
 ##################
 ### Construction of the data
-data(artificialJointLongData)
-ld <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
+data(artificialLongData)
+ld <- longData(artificialJointLongData)
 part <- partition(rep(1:3,each=50))
 
 ### Basic plotting
-plotTraj(ld)
-plotTraj(ld,part)
-
-### Change the windows orientation
-plotTraj(ld,parWin=windowsCut(c(1,2),addLegend=FALSE))
+plotTrajMeans(ld)
+plotTrajMeans(ld,part,xlab="Time")
 
 
 ##################
 ### Changing graphical parameters 'par'
 
 ### No letters on the mean trajectories
-plotTraj(ld,part,parMean=parMEAN(type="l"))
+plotTrajMeans(ld,part,parMean=parMEAN(type="l"))
 
 ### Only one letter on the mean trajectories
-plotTraj(ld,part,parMean=parMEAN(pchPeriod=Inf))
+plotTrajMeans(ld,part,parMean=parMEAN(pchPeriod=Inf))
 
 ### Color individual according to its clusters (col="clusters")
-plotTraj(ld,part,parTraj=parTRAJ(col="clusters"))
+plotTrajMeans(ld,part,parTraj=parTRAJ(col="clusters"))
 
 ### Mean without individual
-plotTraj(ld,part,parTraj=parTRAJ(type="n"))
+plotTrajMeans(ld,part,parTraj=parTRAJ(type="n"))
 
 
 ### No mean trajectories (type="n")
 ### Color individual according to its clusters (col="clusters")
-plotTraj(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"))
+plotTrajMeans(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"))
 
 ### Only few trajectories
-plotTraj(ld,part,nbSample=10,parTraj=parTRAJ(col='clusters'),parMean=parMEAN(type="n"))
+plotTrajMeans(ld,part,nbSample=10,parTraj=parTRAJ(col='clusters'),parMean=parMEAN(type="n"))
 
 
 ##################
@@ -124,8 +116,8 @@ plotTraj(ld,part,nbSample=10,parTraj=parTRAJ(col='clusters'),parMean=parMEAN(typ
 data(artificialLongData)
 ld2 <- longData(artificialLongData)
 part2 <- partition(rep(1:4,each=50))
-plotTraj(ld2)
-plotTraj(ld2,part2)
+plotTrajMeans(ld2)
+plotTrajMeans(ld2,part2)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

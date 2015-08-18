@@ -24,9 +24,9 @@ expandParLongData(xParLongData, y)
 \details{
   \code{\linkS4class{ParLongData}} object can hold values that are easy
   to specify (like \code{col="clusters"} or \code{pch="symbol"}) but that can not
-  be directly used by graphical functions \link{plotTraj} and
-  \link{plotTraj3d}. This function modify theses values to
-  make them fit with \code{plotTraj} and \code{plotTraj3d} expectations.
+  be directly used by graphical functions \link{plotTrajMeans} and
+  \link{plotTrajMeans3d}. This function modify theses values to
+  make them fit with \code{plotTrajMeans} and \code{plotTrajMeans3d} expectations.
 
   The field \code{col} and \code{pch} are the ones concern by this
   function.

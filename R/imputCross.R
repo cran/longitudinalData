@@ -7,7 +7,7 @@ cat("###################################################################
 ### global mean
 ###  - pour monotones et intermitentes
 
-imput.mean.col <- function(col,force=FALSE){
+imput_mean_col <- function(col,force=FALSE){
     if(all(is.na(col))){
         if(is.numeric(force)){
             warning("[Imputation:crossMean] There is only NA on this column, FORCED imputation\n")
@@ -23,9 +23,9 @@ imput.mean.col <- function(col,force=FALSE){
     return(col)
 }
 
-imput.crossMean <- function(longData,force=FALSE){
+imput_crossMean <- function(longData,force=FALSE){
     if(identical(force,TRUE)){force <- mean(longData,na.rm=TRUE)}else{}
-    return(apply(longData,2,imput.mean.col,force))
+    return(apply(longData,2,imput_mean_col,force))
 }
 
 
@@ -33,7 +33,7 @@ imput.crossMean <- function(longData,force=FALSE){
 ### global median
 ###  - pour monotones et intermitentes
 
-imput.median.col <- function(col,force=FALSE){
+imput_median_col <- function(col,force=FALSE){
    if(all(is.na(col))){
         if(is.numeric(force)){
             warning("[Imputation:crossMedian] There is only NA on this column, FORCED imputation\n")
@@ -49,9 +49,9 @@ imput.median.col <- function(col,force=FALSE){
     return(col)
 }
 
-imput.crossMedian <- function(longData,force=FALSE){
+imput_crossMedian <- function(longData,force=FALSE){
     if(identical(force,TRUE)){force <- median(longData,na.rm=TRUE)}else{}
-    return(apply(longData,2,imput.median.col,force))
+    return(apply(longData,2,imput_median_col,force))
 }
 
 
@@ -59,7 +59,7 @@ imput.crossMedian <- function(longData,force=FALSE){
 ### hot deck
 ###  - pour monotones et intermitentes
 
-imput.hotDeck.col <- function(col,force=FALSE){
+imput_hotDeck_col <- function(col,force=FALSE){
     if(all(is.na(col))){
         if(is.numeric(force)){
             warning("[Imputation:crossHotDeck] There is only NA on this column, FORCED imputation\n")
@@ -78,9 +78,9 @@ imput.hotDeck.col <- function(col,force=FALSE){
     return(col)
 }
 
-imput.crossHotDeck <- function(longData,force=FALSE){
+imput_crossHotDeck <- function(longData,force=FALSE){
     if(identical(force,TRUE)){force <- na.omit(as.numeric(longData))}else{}
-    return(apply(longData,2,imput.hotDeck.col,force))
+    return(apply(longData,2,imput_hotDeck_col,force))
 }
 
 

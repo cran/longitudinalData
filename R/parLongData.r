@@ -5,7 +5,7 @@ cat("\n####################################################################
 
 ### Pas de trajectoire totalement vide => maxNA<length(time)
 
-.ParLongData.validity <- function(object){
+ParLongData_validity <- function(object){
 #    cat("**** validity ParLongData <empty> ****\n")
     return(TRUE)
 }
@@ -30,7 +30,7 @@ setClass(
         xlab=character(),
         ylab=character()
     ),
-    validity=.ParLongData.validity
+    validity=ParLongData_validity
 )
 
 cat("\n###################################################################
@@ -53,7 +53,7 @@ parMEAN <- function(type="b",col="clusters",pch="letters",pchPeriod=1,cex=1.2,xl
 
 
 cat("### Method : 'show' for ParLongData ###\n") # Si on ajoute un titre a traj, on pourra afficher 'associate traj ='
-.ParLongData.show <- function(object){
+ParLongData_show <- function(object){
     cat("   ~~~ Class: ParLongData ~~~ ")
     cat("\n ~ type       : ",object@type)
     cat("\n ~ col        : [",length(object@col),"] ",sep="");catShort(object@col)
@@ -64,7 +64,7 @@ cat("### Method : 'show' for ParLongData ###\n") # Si on ajoute un titre a traj,
     cat("\n ~ ylab       : ",object@ylab,"\n")
     return(invisible(object))
 }
-setMethod(f="show",signature="ParLongData",definition=.ParLongData.show)
+setMethod(f="show",signature="ParLongData",definition=ParLongData_show)
 
 
 
@@ -107,15 +107,12 @@ setMethod("[<-","ParLongData",
 ###  - Si les champs 'col' et 'pch' sont de taille 1, ils sont remplacés par des vecteurs.
 ###  - Si col="clusters", crée un vecteur couleur
 ###  - Si pch="letters" ou "symbol", un vecteur de lettres ou de symboles est créé?
-.parLongData.Partition.expand <- function(xParLongData,y){
+ParLongData_Partition_expand <- function(xParLongData,y){
     col <- xParLongData['col']
     if(identical(col,"clusters")){
         col <- rainbow(y['nbClusters'])[y['clustersAsInteger']]
-    }else{
-        if(length(col)==1){
-            col <- rep(col,length(y['clusters']))
-        }else{}
-    }
+    }else{}
+    col <- rep_len(col,length(y['clusters']))
     xParLongData['col'] <- col
 
     if(length(xParLongData['pch'])==1){
@@ -124,15 +121,15 @@ setMethod("[<-","ParLongData",
                                       "symbols"=as.character(1:y['nbClusters'])[y['clustersAsInteger']],
                                       xParLongData['pch'])
     }else{}
-return(xParLongData)
+    return(xParLongData)
 }
-setMethod("expandParLongData",signature=c(xParLongData="ParLongData",y="Partition"),def=.parLongData.Partition.expand)
+setMethod("expandParLongData",signature=c(xParLongData="ParLongData",y="Partition"),def=ParLongData_Partition_expand)
 
 
 ### Prépare un ParLongData en fonction d'un nombre de clusters :
 ###  - Si col="clusters", crée un vecteur avec une couleur pour chaque cluster
 ###  - Si pch="letters" ou "symbols", crée un vecteur avec un pch pour chaque cluster
-.parLongData.nbClusters.expand <- function(xParLongData,y){
+ParLongData_nbClusters_expand <- function(xParLongData,y){
     col <- xParLongData['col']
     if(identical(col,"clusters")){
         col <- rainbow(y)
@@ -152,7 +149,7 @@ setMethod("expandParLongData",signature=c(xParLongData="ParLongData",y="Partitio
 
     return(xParLongData)
 }
-setMethod("expandParLongData",signature=c(xParLongData="ParLongData",y="numeric"),def=.parLongData.nbClusters.expand)
+setMethod("expandParLongData",signature=c(xParLongData="ParLongData",y="numeric"),def=ParLongData_nbClusters_expand)
 
 
 cat("\n--------------------------------------------------------------------

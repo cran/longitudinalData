@@ -6,7 +6,9 @@
 \alias{[,LongData-ANY,ANY,ANY}
 \alias{[<-,LongData-method}
 \alias{[<-,LongData-ANY,ANY,ANY}
+\alias{LongData_show}
 \alias{show,LongData-method}
+\alias{is.na,LongData-method}
 
 
 \title{~ Class: LongData ~}
@@ -113,8 +115,8 @@
    %   variable-trajectory.}
     \item{\code{\link{longDataFrom3d}}}{Extract a variable trajectory
       form a dataset of joint trajectories.}
-    \item{\code{plotTraj}}{plot all the variable of the \code{LongData}, optionnaly according to a \code{\linkS4class{Partition}}.}
-    \item{\code{plotTraj3d}}{plot tow variable of the \code{LongData} in 3 dimensions, optionnaly according to a \code{\linkS4class{Partition}}.}
+    \item{\code{plotTrajMeans}}{plot all the variables of the \code{LongData}, optionnaly according to a \code{\linkS4class{Partition}}.}
+    \item{\code{plotTrajMeans3d}}{plot two variables of the \code{LongData} in 3 dimensions, optionnaly according to a \code{\linkS4class{Partition}}.}
     \item{\code{plot3dPdf}}{create 'Triangle objects' representing in
       3D the cluster's center according to a
       \code{\linkS4class{Partition}}. 'Triangle object' can latter be
@@ -146,8 +148,8 @@
 \seealso{
   Overview: \code{\link{longitudinalData-package}} \cr
   Methods: \code{\link{longData}},  \code{\link{longData3d}}, \code{\link{imputation}}, \code{\link{qualityCriterion}}\cr
-  Plot: \code{\link[=plotTraj,LongData]{plotTraj}},
-  \code{\link[=plotTraj3d,LongData3d]{plotTraj3d}},  \code{\link{plot3dPdf}}
+  Plot: \code{\link{plotTrajMeans}},
+  \code{\link{plotTrajMeans3d}},  \code{\link{plot3dPdf}}
 }
 
 
@@ -165,22 +167,7 @@ ld["traj"]
 (ld)
 
 ### Plot
-plotTraj(ld)
-
-
-#################
-### building join trajectories (longData3d)
-dn <- data.frame(id=1:3,v1=c(11,14,16),t1=c(1,5,7),v2=c(12,10,13),t2=c(2,5,0),t3=c(3,6,8))
-(ld <- longData3d(dn,timeInData=list(Vir=c(2,4,NA),Tes=c(3,5,6))))
-
-### Scaling
-scale(ld)
-(ld)
-
-### Plotting
-plotTraj(ld)
-plotTraj3d(ld)
-restoreRealData(ld)
+plotTrajMeans(ld,parMean=parMEAN(type="n"))
 }
 \keyword{classes}
 \keyword{classif}  % Classification	['class' package]

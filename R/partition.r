@@ -4,7 +4,7 @@ cat("\n###################################################################
 ###################################################################\n")
 
 
-.qualityCriterion.matrix <- function(traj,clusters,imputationMethod="copyMean"){
+matrix_qualityCriterion <- function(traj,clusters,imputationMethod="copyMean"){
     ## Si traj est un array, on colle les dimensions suivantes à la suite de la premiere
 
     if(nrow(traj)!=length(clusters)){
@@ -136,17 +136,17 @@ cat("\n###################################################################
 }
 
 
-setMethod("qualityCriterion",signature=c(traj="matrix",clusters="ANY",imputationMethod="ANY"),.qualityCriterion.matrix)
+setMethod("qualityCriterion",signature=c(traj="matrix",clusters="ANY",imputationMethod="ANY"),matrix_qualityCriterion)
 
 
-.qualityCriterion.array <- function(traj,clusters,imputationMethod="copyMean"){
+array_qualityCriterion <- function(traj,clusters,imputationMethod="copyMean"){
     traj <- matrix(traj,nrow(traj))
     return(qualityCriterion(traj=traj,clusters=clusters,imputationMethod=imputationMethod))
 }
 
 setMethod("qualityCriterion",
           signature=c(traj="array",clusters="ANY",imputationMethod="ANY"),
-          .qualityCriterion.array
+          array_qualityCriterion
 )
 
 
@@ -158,7 +158,7 @@ cat("####################################################################
 
 cat("### Definition ###\n")
 
-.partition.validity <- function(object){
+Partition_validity <- function(object){
 #    cat("**** validity Partition ****\n")
     if(!(length(object@nbClusters)==0&length(object@clusters)==0)){#not empty object
         if(any(c(length(object@nbClusters)==0,length(object@clusters)==0))){
@@ -195,7 +195,7 @@ setClass(
       postProbaEachCluster=numeric(),
       details=character()
    ),
-   validity=.partition.validity
+   validity=Partition_validity
 )
 
 cat("\n####################################################################
@@ -206,7 +206,7 @@ cat("\n####################################################################
 
 setMethod("partition",signature=c("missing","missing","missing"),function(){new("Partition")})
 
-.partition.constructor <- function(clusters,traj,details=character()){
+Partition_constructor <- function(clusters,traj,details=character()){
     ## Si clusters est numeric, il est transformé en LETTERS
     if(is.numeric(clusters)){
         if(max(clusters,na.rm=TRUE)>MAX_CLUSTERS){
@@ -247,9 +247,9 @@ setMethod("partition",signature=c("missing","missing","missing"),function(){new(
                criterionValues=qualCriters[[1]],details=details,postProba=qualCriters[[2]],postProbaEachCluster=qualCriters[[3]]))
 }
 
-setMethod("partition",signature=c(clusters="ANY",traj="missing",details="ANY"),.partition.constructor)
+setMethod("partition",signature=c(clusters="ANY",traj="missing",details="ANY"),Partition_constructor)
 
-setMethod("partition",signature=c(clusters="ANY",traj="matrix",details="ANY"),.partition.constructor)
+setMethod("partition",signature=c(clusters="ANY",traj="matrix",details="ANY"),Partition_constructor)
 setMethod("partition",signature=c(clusters="ANY",traj="LongData",details="ANY"),
           function(clusters,traj,details){
               traj <- traj["traj"]
@@ -257,12 +257,12 @@ setMethod("partition",signature=c(clusters="ANY",traj="LongData",details="ANY"),
           }
 )
 
-.partition.constructor3d <- function(clusters,traj,details=character()){
+Partition_constructor3d <- function(clusters,traj,details=character()){
     traj <- matrix(traj,nrow(traj))
     return(partition(clusters=clusters,traj=traj,details=details))
 }
 
-setMethod("partition",signature=c(clusters="ANY",traj="array",details="ANY"),.partition.constructor3d)
+setMethod("partition",signature=c(clusters="ANY",traj="array",details="ANY"),Partition_constructor3d)
 setMethod("partition",signature=c(clusters="ANY",traj="LongData3d",details="ANY"),
           function(clusters,traj,details){
               traj <- traj["traj"]
@@ -272,7 +272,7 @@ setMethod("partition",signature=c(clusters="ANY",traj="LongData3d",details="ANY"
 
 
 cat("### Method : 'show' for partition ###\n") # Si on ajouter un titre a traj, on pourra afficher 'associate traj ='
-.partition.show <- function(object){
+Partition_show <- function(object){
     cat("   ~~~ Class : Partition ~~~ ")
     cat("\n ~ nbClusters           = ",object@nbClusters)
     cat("\n ~ percentEachCluster   = ",formatC(object@percentEachCluster,digits=2))
@@ -317,7 +317,7 @@ cat("### Method : 'show' for partition ###\n") # Si on ajouter un titre a traj, 
 
     return(invisible(object))
 }
-setMethod(f="show",signature="Partition",definition=.partition.show)
+setMethod(f="show",signature="Partition",definition=Partition_show)
 
 
 cat("\n####################################################################
@@ -372,6 +372,8 @@ setReplaceMethod("[","Partition",
     }
 )
 
+setMethod("is.na", "Partition", function(x) FALSE) 
+
 
 cat("\n####################################################################
 ########################## Class Partition #########################
@@ -401,7 +403,7 @@ cat("\n####################################################################
 
 
 
-.qualityCriterion.longData <- function(traj,clusters,imputationMethod="copyMean"){
+LongData_qualityCriterion <- function(traj,clusters,imputationMethod="copyMean"){
     clust <- clusters["clustersAsInteger"]
     ##    resizePartition(traj,clusters)
     if(length(clust)!=traj["nbIdFewNA"]){
@@ -415,11 +417,11 @@ cat("\n####################################################################
 
 setMethod("qualityCriterion",
           signature=c(traj="LongData",clusters="Partition"),
-          .qualityCriterion.longData
+          LongData_qualityCriterion
 )
 
 
-.qualityCriterion.longData3d <- function(traj,clusters,imputationMethod="copyMean"){
+LongData3d_qualityCriterion <- function(traj,clusters,imputationMethod="copyMean"){
     clust <- clusters["clustersAsInteger"]
     ##    resizePartition(traj,clusters)
     if(length(clust)!=traj["nbIdFewNA"]){
@@ -433,11 +435,14 @@ setMethod("qualityCriterion",
 
 setMethod("qualityCriterion",
           signature=c(traj="LongData3d",clusters="Partition"),
-          .qualityCriterion.longData3d
+          LongData3d_qualityCriterion
 )
 
 
-.initializePartition <- function(nbClusters,lengthPart,method="kmeans++",data){
+initializePartition <- function(nbClusters,lengthPart,method="kmeans++",data){
+    if(!missing(data) && !is.matrix(data)){
+       data <- matrix(data,dim(data)[1])
+    }else{}
     switch(method,
         "randomK"={
             part <- rep(NA,lengthPart)
@@ -534,14 +539,13 @@ setMethod("qualityCriterion",
     return(clusters=part)
 }
 
-setMethod("initializePartition",signature=c("numeric","numeric","character","ANY"),.initializePartition)
+#setMethod("initializePartition",signature=c("numeric","numeric","character","ANY"),initializePartition)
 
-.initializePartitionArray <- function(nbClusters,lengthPart,method="kmeans++",data){
-    data <- matrix(data,dim(data)[1])
-    return(.initializePartition(nbClusters=nbClusters,lengthPart=lengthPart,method=method,data=data))
-}
+#initializePartitionArray <- function(nbClusters,lengthPart,method="kmeans++",data){
+#    return(initializePartition(nbClusters=nbClusters,lengthPart=lengthPart,method=method,data=data))
+#}
 
-setMethod("initializePartition",signature=c("numeric","numeric","character","array"),.initializePartitionArray)
+#setMethod("initializePartition",signature=c("numeric","numeric","character","array"),initializePartitionArray)
 
 
 

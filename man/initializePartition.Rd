@@ -87,26 +87,26 @@ par(ask=TRUE)
 ### Constrution of some longitudinal data
 data(artificialLongData)
 dn <- longData(artificialLongData)
-plotTraj(dn)
+plotTrajMeans(dn)
 
 ###################
 ### partition using randamAll
 pa1a <- initializePartition(3,lengthPart=200,method="randomAll")
-plotTraj(dn,partition(pa1a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTrajMeans(dn,partition(pa1a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 pa1b <- initializePartition(3,lengthPart=200,method="randomAll")
-plotTraj(dn,partition(pa1b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTrajMeans(dn,partition(pa1b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 
 ###################
 ### partition using randamK
 pa2a <- initializePartition(3,lengthPart=200,method="randomK")
-plotTraj(dn,partition(pa2a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTrajMeans(dn,partition(pa2a),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 pa2b <- initializePartition(3,lengthPart=200,method="randomK")
-plotTraj(dn,partition(pa2b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTrajMeans(dn,partition(pa2b),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 
 ###################
 ### partition using maxDist
 pa3 <- initializePartition(3,lengthPart=200,method="maxDist",data=dn["traj"])
-plotTraj(dn,partition(pa3),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
+plotTrajMeans(dn,partition(pa3),parMean=parMEAN(type="n"),parTraj=parTRAJ(col="clusters"))
 ### maxDist is deterministic, so no need for a second example
 
 

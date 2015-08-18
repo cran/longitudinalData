@@ -7,7 +7,7 @@
 ###############
 ### copyMean
 
-imput.copyMean.middleTrajAux <- function(traj,model){
+imput_copyMean_middleTrajAux <- function(traj,model){
     while(any(is.na(traj))){
         NAinfM <- min(which(is.na(traj)))-1
         NAsupM <- min(which(!is.na( traj[-(1:NAinfM)] ))) + NAinfM
@@ -18,9 +18,9 @@ imput.copyMean.middleTrajAux <- function(traj,model){
     return(traj)
 }
 
-imput.copyMean.middleTraj <- function(traj,model){
+imput_copyMean_middleTraj <- function(traj,model){
     if(all(is.na(traj))){
-        warning("[Imputation:copyMean.middleTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:copyMean_middleTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{
         if(sum(!is.na(traj))==1){
@@ -33,15 +33,15 @@ imput.copyMean.middleTraj <- function(traj,model){
 
     infNotNA <-  min(which(!is.na(traj)))
     supNotNA <-  max(which(!is.na(traj)))
-    traj[infNotNA:supNotNA] <- imput.copyMean.middleTrajAux(traj[infNotNA:supNotNA],model[infNotNA:supNotNA])
+    traj[infNotNA:supNotNA] <- imput_copyMean_middleTrajAux(traj[infNotNA:supNotNA],model[infNotNA:supNotNA])
     return(traj)
 }
 
 ### ATTENTION : copyMean.middle N'EST PAS équivalent a copyMean.locf,
 ###   car il a besoin d'un model et il n'y a pas les mécanismes de controle.
 ###   Peut-être peut-on supprimer cette fonction ?
-# imput.copyMean.middle <- function(longData,model){
-#     return(t(apply(longData,1,imput.copyMean.middleTraj,model)))
+# imput_copyMean.middle <- function(longData,model){
+#     return(t(apply(longData,1,imput_copyMean.middleTraj,model)))
 # }
 
 
@@ -57,35 +57,35 @@ imput.copyMean.middleTraj <- function(traj,model){
 ### copyMeanCenter
 
 
-imput.copyMean.center <- function(longData){
+imput_copyMean_center <- function(longData){
 
     ## Préparation de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
     if(all(is.na(model))){
-        warning("[Imputation:copyMean.center] There is only NA in the model, impossible to impute\n")
+        warning("[Imputation:copyMean_center] There is only NA in the model, impossible to impute\n")
         return(longData)
     }else{
         if(any(is.na(model))){
-            warning("[Imputation:copyMean.center] There is NA in the model. linearInterpol.locf is used to complete the model\n")
-            model <- imput.linearInterpol.locf(t(model))
+            warning("[Imputation:copyMean_center] There is NA in the model. linearInterpol_locf is used to complete the model\n")
+            model <- imput_linearInterpol_locf(t(model))
         }else{}
     }
 
     ## Imputation
-    return(t(apply(longData,1,imput.copyMean.middleTraj,model)))
+    return(t(apply(longData,1,imput_copyMean_middleTraj,model)))
 }
 
 ###############
 ### copyMeanLOCF
 
-imput.copyMean.locfTraj <- function(traj,model){
+imput_copyMean_locfTraj <- function(traj,model){
     if(all(is.na(traj))){
-        warning("[Imputation:copyMean.locfTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:copyMean_locfTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{}
-    traj <- imput.copyMean.middleTraj(traj,model)
+    traj <- imput_copyMean_middleTraj(traj,model)
 
     firstNoNA <- min(which(!is.na(traj)))
     traj[1:firstNoNA]<-model[1:firstNoNA] + traj[firstNoNA]-model[firstNoNA]
@@ -98,24 +98,24 @@ imput.copyMean.locfTraj <- function(traj,model){
 }
 
 
-imput.copyMean.locf <- function(longData){
+imput_copyMean_locf <- function(longData){
 
     ## Préparation de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
     if(all(is.na(model))){
-        warning("[Imputation:copyMean.locf] There is only NA in the model, impossible to impute\n")
+        warning("[Imputation:copyMean_locf] There is only NA in the model, impossible to impute\n")
         return(longData)
     }else{
         if(any(is.na(model))){
-            warning("[Imputation:copyMean.locf] There is NA in the model. linearInterpol.locf is used to complete the model\n")
-            model <- imput.linearInterpol.locf(t(model))
+            warning("[Imputation:copyMean_locf] There is NA in the model. linearInterpol_locf is used to complete the model\n")
+            model <- imput_linearInterpol_locf(t(model))
         }else{}
     }
 
     ## Imputation
-    return(t(apply(longData,1,imput.copyMean.locfTraj,model)))
+    return(t(apply(longData,1,imput_copyMean_locfTraj,model)))
 }
 
 
@@ -123,19 +123,19 @@ imput.copyMean.locf <- function(longData){
 ### copyMeanGlobal
 
 
-imput.copyMean.globalTraj <- function(traj,model){
+imput_copyMean_globalTraj <- function(traj,model){
     if(all(is.na(traj))){
-        warning("[Imputation:copyMean.globalTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:copyMean_globalTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{
         if(sum(!is.na(traj))==1){
-            warning("[Imputation:copyMean.globalTraj] There is only one non-NA on this line, copyMean.locf is used instead of copyMean.global\n")
-            return(imput.copyMean.locfTraj(traj,model))
+            warning("[Imputation:copyMean_globalTraj] There is only one non-NA on this line, copyMean_locf is used instead of copyMean_global\n")
+            return(imput_copyMean_locfTraj(traj,model))
         }else{
             if(all(!is.na(traj))){return(traj)}else{}
         }
     }
-    traj <- imput.copyMean.middleTraj(traj,model)
+    traj <- imput_copyMean_middleTraj(traj,model)
 
     firstNoNA <- min(which(!is.na(traj)))
     lastNoNA <- max(which(!is.na(traj)))
@@ -152,24 +152,24 @@ imput.copyMean.globalTraj <- function(traj,model){
 }
 
 
-imput.copyMean.global <- function(longData){
+imput_copyMean_global <- function(longData){
 
     ## Préparation de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
     if(all(is.na(model))){
-        warning("[Imputation:copyMean.global] There is only NA in the model, impossible to impute\n")
+        warning("[Imputation:copyMean_global] There is only NA in the model, impossible to impute\n")
         return(longData)
     }else{
         if(any(is.na(model))){
-            warning("[Imputation:copyMean.global] There is NA in the model. linearInterpol.global is used to complete the model\n")
-            model <- imput.linearInterpol.global(t(model))
+            warning("[Imputation:copyMean_global] There is NA in the model. linearInterpol_global is used to complete the model\n")
+            model <- imput_linearInterpol_global(t(model))
         }else{}
     }
 
     ## Imputation
-    return(t(apply(longData,1,imput.copyMean.globalTraj,model)))
+    return(t(apply(longData,1,imput_copyMean_globalTraj,model)))
 }
 
 
@@ -177,14 +177,14 @@ imput.copyMean.global <- function(longData){
 ###############
 ### copyMeanLocal
 
-imput.copyMean.localTraj <- function(traj,model){
+imput_copyMean_localTraj <- function(traj,model){
     if(all(is.na(traj))){
-        warning("[Imputation:copyMean.localTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:copyMean_localTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{
         if(sum(!is.na(traj))==1){
-            warning("[Imputation:copyMean.localTraj] There is only one non-NA on this line, copyMean.locf is used instead of copyMean.global\n")
-            return(imput.copyMean.locfTraj(traj,model))
+            warning("[Imputation:copyMean_localTraj] There is only one non-NA on this line, copyMean_locf is used instead of copyMean_global\n")
+            return(imput_copyMean_locfTraj(traj,model))
         }else{
             if(all(!is.na(traj))){return(traj)}else{}
         }
@@ -198,7 +198,7 @@ imput.copyMean.localTraj <- function(traj,model){
     lastNoNA <- max(which(!is.na(traj)))
     penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
     trajLength <- length(traj)
-    traj <- imput.copyMean.middleTraj(traj,model)
+    traj <- imput_copyMean_middleTraj(traj,model)
 
     ## Begin
     aTraj <- (traj[firstNoNA]-traj[secondNoNA])/(firstNoNA-secondNoNA)
@@ -222,24 +222,24 @@ imput.copyMean.localTraj <- function(traj,model){
 }
 
 
-imput.copyMean.local <- function(longData){
+imput_copyMean_local <- function(longData){
 
     ## Préparation de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
     if(all(is.na(model))){
-        warning("[Imputation:copyMean.local] There is only NA in the model, impossible to impute\n")
+        warning("[Imputation:copyMean_local] There is only NA in the model, impossible to impute\n")
         return(longData)
     }else{
         if(any(is.na(model))){
-            warning("[Imputation:copyMean.local] There is NA in the model. linearInterpol.local is used to complete the model\n")
-            model <- imput.linearInterpol.local(t(model))
+            warning("[Imputation:copyMean_local] There is NA in the model. linearInterpol_local is used to complete the model\n")
+            model <- imput_linearInterpol_local(t(model))
         }else{}
     }
 
     ## Imputation
-    return(t(apply(longData,1,imput.copyMean.localTraj,model)))
+    return(t(apply(longData,1,imput_copyMean_localTraj,model)))
 }
 
 
@@ -248,27 +248,27 @@ imput.copyMean.local <- function(longData){
 ###############
 ### copyMeanBisector
 
-imput.copyMean.bisectorTraj <- function(traj,model){
+imput_copyMean_bisectorTraj <- function(traj,model){
     if(all(is.na(traj))){
-        warning("[Imputation:copyMean.bisectorTraj] There is only NA on this line, impossible to impute\n")
+        warning("[Imputation:copyMean_bisectorTraj] There is only NA on this line, impossible to impute\n")
         return(traj)
     }else{
         if(sum(!is.na(traj))==1){
-            warning("[Imputation:copyMean.bisectorTraj] There is only one non-NA on this line, copyMean.locf is used instead of copyMean.bisector\n")
-            return(imput.copyMean.locfTraj(traj,model))
+            warning("[Imputation:copyMean_bisectorTraj] There is only one non-NA on this line, copyMean_locf is used instead of copyMean_bisector\n")
+            return(imput_copyMean_locfTraj(traj,model))
         }else{
             if(all(!is.na(traj))){return(traj)}else{}
         }
     }
 
-    ## Compute these BEFORE imput.copyMean.middle
+    ## Compute these BEFORE imput_copyMean_middle
     firstNoNA <- min(which(!is.na(traj)))
     lastNoNA <- max(which(!is.na(traj)))
     secondNoNA <- min(which(!is.na(traj[-firstNoNA])))+1
     penultimateNoNA <- max(which(!is.na(traj[-lastNoNA])))
     trajLength <- length(traj)
 
-    traj <- imput.copyMean.middleTraj(traj,model)
+    traj <- imput_copyMean_middleTraj(traj,model)
 
     xA <- firstNoNA       ; yA <- traj[xA] ; zA <- model[xA]
     xB <- lastNoNA        ; yB <- traj[xB] ; zB <- model[xB]
@@ -291,23 +291,23 @@ imput.copyMean.bisectorTraj <- function(traj,model){
 }
 
 
-imput.copyMean.bisector <- function(longData){
+imput_copyMean_bisector <- function(longData){
 
     ## Préparation de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
     if(all(is.na(model))){
-        warning("[Imputation:copyMean.bisector] There is only NA in the model, impossible to impute the model\n")
+        warning("[Imputation:copyMean_bisector] There is only NA in the model, impossible to impute the model\n")
         return(longData)
     }else{
         if(any(is.na(model))){
-            warning("[Imputation:copyMean.bisector] There is NA in the model. linearInterpol.bisector is used to complete\n")
-            model <- imput.linearInterpol.bisector(t(model))
+            warning("[Imputation:copyMean_bisector] There is NA in the model. linearInterpol_bisector is used to complete\n")
+            model <- imput_linearInterpol_bisector(t(model))
         }else{}
     }
 
     ## Imputation
-    return(t(apply(longData,1,imput.copyMean.bisectorTraj,model)))
+    return(t(apply(longData,1,imput_copyMean_bisectorTraj,model)))
 }
 

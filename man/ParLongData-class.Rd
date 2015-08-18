@@ -25,7 +25,7 @@
 	  interpretation.}
     \item{\code{pchPeriod}}{\code{[numeric]}: Fix the number of point that should be plot. Usefull to
       plot points on trajectories with a lot of mesurement (see examples
-      in \code{\link{plotTraj}} for \code{LongData} for details).}
+      in \code{\link{plotTrajMeans}} for \code{LongData} for details).}
     \item{\code{cex}}{\code{[numeric]}: A numerical value giving the
       amount by which plotting text and symbols should be magnified relative
       to the default.}

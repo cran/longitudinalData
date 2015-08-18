@@ -4,6 +4,7 @@
 \alias{[,Partition-method}
 \alias{[<-,Partition-method}
 \alias{show,Partition-method}
+\alias{is.na,Partition-method}
 
 \title{~ Class: Partition ~}
 \description{

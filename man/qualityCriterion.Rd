@@ -157,17 +157,17 @@ ld <- longData(artificialLongData)
 
 ### Correct partition
 part1 <- partition(rep(1:4,each=50))
-plotTraj(ld,part1)
+plotTrajMeans(ld,part1)
 (cr1 <- qualityCriterion(ld,part1))
 
 ### Random partition
 part2 <- partition(floor(runif(200,1,5)))
-plotTraj(ld,part2)
+plotTrajMeans(ld,part2)
 (cr2 <- qualityCriterion(ld,part2))
 
 ### Partition with 3 clusters instead of 4
 part3 <- partition(rep(c(1,2,3,3),each=50))
-plotTraj(ld,part3)
+plotTrajMeans(ld,part3)
 (cr3 <- qualityCriterion(ld,part3))
 
 

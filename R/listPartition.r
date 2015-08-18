@@ -5,7 +5,7 @@ cat("####################################################################
 
 cat("### Definition ###\n")
 
-.ListPartition.validity <- function(object){
+ListPartition_validity <- function(object){
 #    cat("**************** ListPartition ****************")
     return(TRUE)
 }
@@ -99,7 +99,7 @@ cat("\n####################################################################
 
 # Si on veut rendre [<- utilisable pour partition, il faut modifier ICI
 cat("### Setteur ###\n")
-.listPartition.set <- function(x,i,j,value){
+ListPartition_set <- function(x,i,j,value){
     switch(EXPR=i,
            "initializationMethod"={x@initializationMethod <- value},
            "criterionActif"={
@@ -144,11 +144,11 @@ cat("### Setteur ###\n")
     return(x)
 }
 
-setReplaceMethod("[","ListPartition",.listPartition.set)
+setReplaceMethod("[","ListPartition",ListPartition_set)
 
 
 cat("### Getteur ###\n")
-.listPartition.get <- function(x,i,j,drop){
+ListPartition_get <- function(x,i,j,drop){
 ##    if(is.numeric(i) & (i<1|i>26)){
   ##      stop("[ListPartition:getteur]: i should be in [1:26]")
     ##}else{}
@@ -216,7 +216,7 @@ cat("### Getteur ###\n")
     )
 }
 
-setMethod("[","ListPartition",.listPartition.get)
+setMethod("[","ListPartition",ListPartition_get)
 
 
 cat("####################################################################
@@ -227,7 +227,7 @@ cat("####################################################################
 
 
 cat("### Method : 'show' for yPartition ###\n") # Si on ajouter un titre a traj, on pourra afficher 'associate traj ='
-showListPartition <- function(object){
+ListPartition_show <- function(object){
     cat("\n ~ criterionActif          = ",object@criterionActif)
     cat("\n ~ initializationMethod    = ",object@initializationMethod)
     cat("\n ~ sorted                  = ",object@sorted)
@@ -244,10 +244,11 @@ showListPartition <- function(object){
     }
     return(invisible(object))
 }
+
 setMethod(f="show",signature="ListPartition",
     definition=function(object){
         cat("   ~~~ Class: ListPartition ~~~ ")
-        showListPartition(object)
+        ListPartition_show(object)
     }
 )
 
@@ -258,7 +259,7 @@ cat("\n####################################################################
 ############################### Autres #############################
 ####################################################################\n")
 
-.ListPartition.ordered <- function(x,...){
+ListPartition_ordered <- function(x,...){
     nameObject<-deparse(substitute(x))
     criterName <- x['criterionActif']
     matPermut <- list()
@@ -279,7 +280,7 @@ cat("\n####################################################################
     return(t(sapply(matPermut , function(x) c(x,rep(NA,lengthList-length(x))))))
 #    return(matPermut)
 }
-setMethod("ordered",signature="ListPartition",definition=.ListPartition.ordered)
+setMethod("ordered",signature="ListPartition",definition=ListPartition_ordered)
 
 
 
@@ -306,7 +307,7 @@ regroup <- function(object){
 
 
 
-.ListPartition.plotCriterion <- function(x, criterion=x['criterionActif'],nbCriterion = 100){
+ListPartition_plotCriterion <- function(x, criterion=x['criterionActif'],nbCriterion = 100){
     ##    minMax <- criterionMinOrMax(calinski=1,test=-1,test2=1)
     if(length(criterion)!=1){stop("[ListPartition:plot] To plot several criterion, use 'plotAllCriterion'")}else{}
     allCrit <- x["criterionValues",criterion]
@@ -324,10 +325,10 @@ regroup <- function(object){
     return(invisible())
 }
 
-setMethod("plotCriterion",signature=c(x="ListPartition"),.ListPartition.plotCriterion)
+setMethod("plotCriterion",signature=c(x="ListPartition"),ListPartition_plotCriterion)
 
 
-.ListPartition.plotAllCriterion <- function(x, criterion=CRITERION_NAMES[1:5], standardized = TRUE){
+ListPartition_plotAllCriterion <- function(x, criterion=CRITERION_NAMES[1:5], standardized = TRUE){
     ##    minMax <- criterionMinOrMax(calinski=1,test=-1,test2=1)
     lengthCrit <- length(criterion)
 
@@ -366,7 +367,7 @@ setMethod("plotCriterion",signature=c(x="ListPartition"),.ListPartition.plotCrit
     return(invisible())
 }
 
-setMethod("plotAllCriterion",signature=c(x="ListPartition"),.ListPartition.plotAllCriterion)
+setMethod("plotAllCriterion",signature=c(x="ListPartition"),ListPartition_plotAllCriterion)
 
 
 

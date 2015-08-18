@@ -12,8 +12,8 @@
   \tabular{ll}{
     Package: \tab longitudinalData\cr
     Type: \tab Package\cr
-    Version: \tab 2.3\cr
-    Date: \tab 2015-05-05\cr
+    Version: \tab 2.4\cr
+    Date: \tab 2015-08-06\cr
     License: \tab GPL (>= 2)\cr
     LazyData: \tab yes\cr
     Depends: \tab methods,clv,rgl,misc3d\cr
@@ -26,7 +26,7 @@
   \code{longitudinalData} provide some tools to deal with the clustering of longitudinal data, mainly:
 
   \enumerate{
-    \item \link{plotTraj}
+    \item \link{plotTrajMeans}
 
     \item \link{imputation}
 
@@ -53,7 +53,7 @@ Christophe Genolini\cr
 \seealso{
   Classes: \code{\linkS4class{LongData}}, \code{\linkS4class{Partition}} \cr
   Methods: \code{\link{longData}}, \code{\link{partition}}, \code{\link{ordered}}\cr
-  Plot: \code{\link{plotTraj}}, \code{\link{plotTraj3d}}\cr
+  Plot: \code{\link{plotTrajMeans}}, \code{\link{plotTrajMeans3d}}\cr
   Imputation: \code{\link{imputation}}\cr
   Criterion: \code{\link{qualityCriterion}}\cr
 }
@@ -64,7 +64,7 @@ data(artificialJointLongData)
 myData <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23,var3=24:34))
 
 part <- partition(rep(1:3,each=50))
-plotTraj3d(myData,part)
+plotTrajMeans3d(myData,part)
 
 ### Quality criterion
 qualityCriterion(myData,part)

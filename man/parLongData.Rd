@@ -32,7 +32,7 @@ parMEAN(type = "b", col = "clusters", pch = "letters",
     specifying a symbol or special values 'letters' or 'symbol' (see details).}
   \item{pchPeriod}{\code{[numeric]}: Fix the number of point that should be plot. Usefull to
     plot points on trajectories with a lot of mesurement (see examples
-    in \code{\link{plotTraj}} for \code{LongData} for details).}
+    in \code{\link{plotTrajMeans}} for \code{LongData} for details).}
   \item{cex}{\code{[numeric]}: Set the
     amount by which plotting text and symbols should be magnified relative
     to the default.}
@@ -84,14 +84,11 @@ ld2 <- longData3d(
    dim=c(120,8,2)))
 
 ### Example with default value
-plotTraj(ld2)
-plotTraj(ld2,parTraj=parTRAJ())
-
-### Example with default values for mean trajectories
-plotTraj(ld2,parTraj=parMEAN())
+plotTrajMeans3d(ld2)
+plotTrajMeans3d(ld2,parTraj=parTRAJ())
 
 ### Example with default value except for the color
-plotTraj(ld2,parTraj=parTRAJ(col="blue"))
+plotTrajMeans3d(ld2,parTraj=parTRAJ(col="blue"))
 }
 \keyword{methods}
 

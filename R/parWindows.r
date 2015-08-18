@@ -5,7 +5,7 @@ cat("\n####################################################################
 
 ### Pas de trajectoire totalement vide => maxNA<length(time)
 
-.ParWindows.validity <- function(object){
+ParWindows_validity <- function(object){
 #    cat("**** validity ParWindows <empty> ****\n")
     return(TRUE)
 }
@@ -26,7 +26,7 @@ setClass(
         closeScreen=logical(),
         screenMatrix=matrix(,0,0)
     ),
-    validity=.ParWindows.validity
+    validity=ParWindows_validity
 )
 
 cat("\n###################################################################
@@ -60,7 +60,7 @@ windowsCut <- function(x,addLegend=TRUE,closeScreen=TRUE){
 }
 
 cat("### Method : 'show' for ParWindows ###\n") # Si on ajouter un titre a traj, on pourra afficher 'associate traj ='
-.parWindows.show <- function(object){
+ParWindows_show <- function(object){
     cat("   ~~~ Class: ParWindows ~~~ ")
     cat("\n ~ nbRow       :",object@nbRow)
     cat("\n ~ nbCol       :",object@nbCol)
@@ -70,7 +70,7 @@ cat("### Method : 'show' for ParWindows ###\n") # Si on ajouter un titre a traj,
     print(object@screenMatrix)
     return(invisible(object))
 }
-setMethod(f="show",signature="ParWindows",definition=.parWindows.show)
+setMethod(f="show",signature="ParWindows",definition=ParWindows_show)
 
 cat("### Getteur ###\n")
 setMethod("[","ParWindows",

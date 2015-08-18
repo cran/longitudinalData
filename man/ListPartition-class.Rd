@@ -9,6 +9,7 @@
 \alias{[,ListPartition-ANY,ANY,ANY-methods}
 \alias{[<-,ListPartition-method}
 \alias{[<-,ListPartition-ANY,ANY,ANY}
+\alias{ListPartition_show}
 \alias{show,ListPartition-method}
 \alias{listPartition}
 \alias{listPartition-method}

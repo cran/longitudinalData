@@ -6,7 +6,7 @@ cat("\n####################################################################
 ### Pas de trajectoire totalement vide => maxNA<length(time)
 
 cat("### Definition ###\n")
-.LongData.validity <- function(object){
+LongData_validity <- function(object){
 #    cat("**** validity LongData ****\n")
     if(length(object@idAll)==0&length(object@time)==0&length(object@varNames)==0&length(object@traj)==0){
     }else{
@@ -67,7 +67,7 @@ setClass(
         maxNA=numeric(),
         reverse=matrix(NA,2)
     ),
-    validity=.LongData.validity
+    validity=LongData_validity
 )
 
 
@@ -75,10 +75,6 @@ cat("\n###################################################################
 ########################## Class LongData #########################
 ########################### Constructeur ##########################
 ###################################################################\n")
-
-setMethod("longData",signature=c("missing","missing","missing","missing","missing","missing"),
-    function(traj,idAll,time,timeInData,varNames,maxNA){new("LongData")}
-)
 
 
 ## buildObject <- function(traj,idAll,time,varNames,maxNA,reverse){
@@ -105,8 +101,10 @@ setMethod("longData",signature=c("missing","missing","missing","missing","missin
 
 
 ### Data.frame ou array en 2D
-.longData.constructor <- function(traj,idAll,time,timeInData,varNames,maxNA){
-
+longData <- function(traj,idAll,time,timeInData,varNames,maxNA){
+    if(missing(traj)){
+       return(new("LongData"))
+    }else{}
     ## First part : set all the parameters
 
     if(is.data.frame(traj)){
@@ -164,7 +162,7 @@ setMethod("longData",signature=c("missing","missing","missing","missing","missin
     )
 }
 
-setMethod("longData",signature=c("ANY","ANY","ANY","ANY","ANY"),.longData.constructor)
+
 
 
 cat("\n###################################################################
@@ -173,7 +171,7 @@ cat("\n###################################################################
 ###################################################################\n")
 
 cat("### Getteur ###\n")
-.longData.get <- function(x,i,j,drop){
+LongData_get <- function(x,i,j,drop){
     switch(EXPR=i,
            "idAll"={return(x@idAll)},
            "idFewNA"={return(x@idFewNA)},
@@ -189,7 +187,7 @@ cat("### Getteur ###\n")
            stop("[LongData:get]:",i," is not a 'LongData' slot")
     )
 }
-setMethod("[","LongData",.longData.get)
+setMethod("[","LongData",LongData_get)
 
 
 ### A priori, on n'a jamais besoin de modifier un LongData après sa création.
@@ -237,7 +235,7 @@ cat("\n###################################################################
 ###################################################################\n")
 
 cat("### Method: 'show' pour LongData ###\n")
-showLongData <- function(object){
+LongData_show <- function(object){
     cat("\n~ idAll       = [",length(object@idAll),"] ",sep="");catShort(object@idAll)
     cat("\n~ idFewNA     = [",object['nbIdFewNA'],"] ",sep="");catShort(object@idFewNA)
     cat("\n~ varNames    = [",object['nbVar'],"] ",sep="");catShort(object@varNames)
@@ -267,13 +265,13 @@ showLongData <- function(object){
 setMethod("show","LongData",
     definition=function(object){
         cat("\n   ~~~ Class: LongData ~~~")
-        showLongData(object)
+        LongData_show(object)
     }
 )
 
 
 cat("### Method: 'print' pour LongData ###\n")
-.longData.print <- function(x){
+LongData_print <- function(x){
     object <- x
     cat("\n   ~~~ Class: LongData ~~~")
     cat("\n~ Class :",class(object))
@@ -288,11 +286,10 @@ cat("### Method: 'print' pour LongData ###\n")
     cat("\n~ reverse SD =\n");print(object['reverse'][2,])
     return(invisible(object))
 }
-setMethod("print","LongData",.longData.print)
+setMethod("print","LongData",LongData_print)
 
 
-
-
+setMethod("is.na", "LongData", function(x) FALSE) 
 
 
 
@@ -301,7 +298,7 @@ cat("\n###################################################################
 ############################## Various ############################
 ###################################################################\n")
 
-.longData.scale <- function(x,center=TRUE,scale=TRUE){
+LongData_scale <- function(x,center=TRUE,scale=TRUE){
     nameObject<-deparse(substitute(x))
     traj <- x@traj
     if(identical(center,TRUE)){center <- meanNA(traj)}else{}
@@ -317,7 +314,7 @@ cat("\n###################################################################
 
 setMethod(f="scale",
     signature=c(x="LongData"),
-    definition=.longData.scale
+    definition=LongData_scale
 )
 
 
@@ -340,7 +337,7 @@ setMethod(f="scale",
 #)
 
 
-.longData.restoreRealData <- function(object){
+LongData_restoreRealData <- function(object){
     nameObject<-deparse(substitute(object))
     traj <- object@traj
 
@@ -353,7 +350,7 @@ setMethod(f="scale",
 }
 setMethod(f="restoreRealData",
     signature=c(object="LongData"),
-    definition=.longData.restoreRealData
+    definition=LongData_restoreRealData
 )
 
 

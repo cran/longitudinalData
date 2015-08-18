@@ -1,23 +1,21 @@
-\name{plotTraj3d,LongData}
+\name{plotTrajMeans3d,LongData}
 \Rdversion{1.1}
-\alias{plotTraj3d}
-\alias{plotTraj3d,LongData3d}
-\alias{plotTraj3d,LongData3d-method}
-\alias{plotTraj3d,LongData3d,Partition-method}
-\alias{plotTraj3d,LongData3d,missing-method}
+\alias{plotTrajMeans3d}
+\alias{plotTrajMeans3d,LongData3d}
+\alias{plotTrajMeans3d,LongData3d-method}
+\alias{plotTrajMeans3d,LongData3d,Partition-method}
+\alias{plotTrajMeans3d,LongData3d,missing-method}
 %\alias{plot3d,LongData3d,Partition-method}
 
-\title{ ~ Function: plotTraj3d for LongData3d ~ }
+\title{ ~ Function: plotTrajMeans3d for LongData3d ~ }
 \description{
   Plot two variables of a \code{\linkS4class{LongData3d}} object in 3D, optionnaly
   relatively to a \code{\linkS4class{Partition}}.
 }
 
 \usage{
-\S4method{plotTraj3d}{LongData3d,missing}(x,y,varY=1,varZ=2,
-   parTraj=parTRAJ(),parMean=parMEAN(),nbSample=1000,...)
-\S4method{plotTraj3d}{LongData3d,Partition}(x,y,varY=1,varZ=2,
-   parTraj=parTRAJ(type="n"),parMean=parMEAN(),nbSample=1000,...)
+plotTrajMeans3d(x,y,varY=1,varZ=2,
+   parTraj=parTRAJ(),parMean=parMEAN(type="n"),...)
 }
 
 \arguments{
@@ -36,9 +34,9 @@
     used to plot the mean trajectories of each clusters \code{LongData3d}
     (only when \code{y} is non missing). See \code{\linkS4class{ParLongData}}
     and examples for details.}
-  \item{nbSample}{\code{[numeric]}: Graphical display of huge sample can
-    be time consumming. This parameters fixe the maximum numbre of
-    trajectories (randomly chosen) that will be drawn.}
+%  \item{nbSample}{\code{[numeric]}: Graphical display of huge sample can
+%    be time consumming. This parameters fixe the maximum numbre of
+%    trajectories (randomly chosen) that will be drawn.}
   \item{...}{Arguments to be passed to methods, such as graphical parameters.}
 }
 
@@ -74,6 +72,7 @@ Christophe Genolini\cr
 ##################
 ### Construction of the data
 
+\donttest{
 time=c(1,2,3,4,8,12,16,20)
 id2=1:120
 f <- function(id,t)((id-1)\%\%3-1) * t
@@ -84,24 +83,25 @@ ld <- longData3d(array(cbind(outer(id2,time,f),outer(id2,time,g),outer(id2,time,
 part <- partition(rep(1:6,20))
 
 ### Basic plotting
-plotTraj3d(ld)
-plotTraj3d(ld,part)
+plotTrajMeans3d(ld)
+plotTrajMeans3d(ld,part)
 
 ### Variable 1 and 3, then 2 and 3
-plotTraj3d(ld,part)
-plotTraj3d(ld,part,varY=3,varZ=2)
-plotTraj3d(ld,part,varY=1,varZ=3)
+plotTrajMeans3d(ld,part)
+plotTrajMeans3d(ld,part,varY=3,varZ=2)
+plotTrajMeans3d(ld,part,varY=1,varZ=3)
 
 ##################
 ### Changing graphical parameters 'par'
 
 ### Color individual according to its clusters (col="clusters")
-plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"))
-plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"),varY=1,varZ=3)
+plotTrajMeans3d(ld,part,parTraj=parTRAJ(col="clusters"))
+plotTrajMeans3d(ld,part,parTraj=parTRAJ(col="clusters"),varY=1,varZ=3)
 
 ### No mean trajectories (type="n"), only few trajectories
 ### Color individual according to its clusters (col="clusters")
-plotTraj3d(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"),nbSample=10)
+plotTrajMeans3d(ld,part,parTraj=parTRAJ(col="clusters"),parMean=parMEAN(type="n"),nbSample=10)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

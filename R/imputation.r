@@ -3,31 +3,31 @@ cat("\n###################################################################
 ############################ Imputation ###########################
 ###################################################################\n")
 
-.imputationMatrix <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
+matrix_imputation <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
 
     ## Imputation according to the method
     trajImp <- switch(EXPR=method,
-                  "crossMean"={imput.crossMean(traj)},
-                  "crossMedian"={imput.crossMedian(traj)},
-                  "crossHotDeck"={imput.crossHotDeck(traj)},
-                  "locf"={lowerBound <- upperBound <- NA ; imput.locf(traj)},
-                  "nocb"={lowerBound <- upperBound <- NA ; imput.nocb(traj)},
-                  "trajMean"={lowerBound <- upperBound <- NA ; imput.trajMean(traj)},
-                  "trajMedian"={lowerBound <- upperBound <- NA ; imput.trajMedian(traj)},
-                  "trajHotDeck"={lowerBound <- upperBound <- NA ; imput.trajHotDeck(traj)},
-                  "spline"=imput.spline(traj),
-                  "linearInterpol"=,"linearInterpol.locf"=imput.linearInterpol.locf(traj),
-                  "linearInterpol.global"=imput.linearInterpol.global(traj),
-                  "linearInterpol.center"=imput.linearInterpol.center(traj),
-                  "linearInterpol.local"=imput.linearInterpol.local(traj),
-                  "linearInterpol.bisector"=imput.linearInterpol.bisector(traj),
-                  "copyMean"=,"copyMean.locf"=imput.copyMean.locf(traj),
-                  "copyMean.center"=imput.copyMean.center(traj), ### Pas testé !
-                  "copyMean.global"=imput.copyMean.global(traj),
-                  "copyMean.local"=imput.copyMean.local(traj),
-                  "copyMean.bisector"=imput.copyMean.bisector(traj),
-#                  "regressionInt"=imput.regressionInt(traj),
-#                  "regressionExt"=imput.regressionExt(traj,predictor),
+                  "crossMean"={imput_crossMean(traj)},
+                  "crossMedian"={imput_crossMedian(traj)},
+                  "crossHotDeck"={imput_crossHotDeck(traj)},
+                  "locf"={lowerBound <- upperBound <- NA ; imput_locf(traj)},
+                  "nocb"={lowerBound <- upperBound <- NA ; imput_nocb(traj)},
+                  "trajMean"={lowerBound <- upperBound <- NA ; imput_trajMean(traj)},
+                  "trajMedian"={lowerBound <- upperBound <- NA ; imput_trajMedian(traj)},
+                  "trajHotDeck"={lowerBound <- upperBound <- NA ; imput_trajHotDeck(traj)},
+                  "spline"=imput_spline(traj),
+                  "linearInterpol"=,"linearInterpol.locf"=imput_linearInterpol_locf(traj),
+                  "linearInterpol.global"=imput_linearInterpol_global(traj),
+                  "linearInterpol.center"=imput_linearInterpol_center(traj),
+                  "linearInterpol.local"=imput_linearInterpol_local(traj),
+                  "linearInterpol.bisector"=imput_linearInterpol_bisector(traj),
+                  "copyMean"=,"copyMean.locf"=imput_copyMean_locf(traj),
+                  "copyMean.center"=imput_copyMean_center(traj), ### Pas testé !
+                  "copyMean.global"=imput_copyMean_global(traj),
+                  "copyMean.local"=imput_copyMean_local(traj),
+                  "copyMean.bisector"=imput_copyMean_bisector(traj),
+#                  "regressionInt"=imput_regressionInt(traj),
+#                  "regressionExt"=imput_regressionExt(traj,predictor),
                   stop("[imputation] Method ",method," does not exists")
     )
 
@@ -65,12 +65,12 @@ cat("\n###################################################################
 
 setMethod(f="imputation",
     signature=c("matrix","ANY","ANY","ANY"),
-    definition=.imputationMatrix
+    definition=matrix_imputation
 )
 
 
 
-.imputationArray <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
+imputation_array <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
     for(i in 1:dim(traj)[3]){
         traj[,,i] <- imputation(traj[,,i],method=method,lowerBound=lowerBound,upperBound=upperBound)
     }
@@ -79,28 +79,28 @@ setMethod(f="imputation",
 
 setMethod(f="imputation",
     signature=c("array","ANY","ANY","ANY"),
-    definition=.imputationArray
+    definition=imputation_array
 )
 
 
-.imputationLongData <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
+LongData_imputation <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
     traj@traj <- imputation(traj["traj"],method=method,lowerBound=lowerBound,upperBound=upperBound)
     return(traj)
 }
 
 setMethod(f="imputation",
     signature=c("LongData","ANY","ANY","ANY"),
-    definition=.imputationLongData
+    definition=LongData_imputation
 )
 
-.imputationLongData3d <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
+LongData3d_imputation <- function(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax"){
     traj@traj <- imputation(traj["traj"],method=method,lowerBound=lowerBound,upperBound=upperBound)
     return(traj)
 }
 
 setMethod(f="imputation",
     signature=c("LongData3d","ANY","ANY","ANY"),
-    definition=.imputationLongData3d
+    definition=LongData3d_imputation
 )
 
 ## ### Autre methode: interpolation quadratique
