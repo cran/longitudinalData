@@ -1,4 +1,4 @@
-5c1913d4d56c13c24c4df6c063d5e53e *DESCRIPTION
+bc5ed372376081fa990e8d500440aaa6 *DESCRIPTION
 fc17bdb927909f9123a682eb4e3bb83c *NAMESPACE
 2e5620ee9a1dd8d858cf03eafcff35c5 *R/constants.r
 1b4ba070f828a0eeb7af2d05ca5bd0a1 *R/distanceFrechet.R
@@ -9,9 +9,9 @@ f07360a98e0f47b3b5406d47b8661b1a *R/imputCopyMean.R
 95375303280a488078b5a1a8e358a550 *R/imputLinearInterpol.R
 63e1eac056f6d3e91cd80630e2731be2 *R/imputTraj.R
 eeec310b62f2b0185e77a84bb342f1af *R/imputation.r
-16b8006be5ecadc4b701c66fe31016d2 *R/listPartition.r
+7ab8ee3706f03c4cacb2904ebccd33ac *R/listPartition.r
 56dbe116048932dc873345e6fc100378 *R/longData.r
-42e6073da98f4baed35d6a4aab5411bb *R/longData3d.r
+16b3d9241d1417b755d8349a94e0938c *R/longData3d.r
 4e25ec97ed38fd4adfb3db514a0fa243 *R/myMisc3d.r
 40055f7a12b7974a844ceeda4f8da005 *R/newPlot.r
 8cd944ec8425a7a078c76c11dedfc0b5 *R/parLongData.r
@@ -37,7 +37,7 @@ f20cbea629aec8dad391d450bd2af303 *man/longData-internal.Rd
 53723010ff7bd94ceb8a53be94b12b9f *man/longData3d.Rd
 d4fbbccb96228149b0bbe1df9b09b27c *man/longDataFrom3d.Rd
 a9ed9e87dfe16f3cff064610a4ba71fd *man/longDataTo3d.Rd
-7283c7df23abde3ece7a7138ad1f51b0 *man/longitudinalData-package.Rd
+3a91049753f366e09cd1db91d23da5c2 *man/longitudinalData-package.Rd
 2367a3e917ee69bdaa2a642d3f9f03b5 *man/makeLatexFile.Rd
 b702ed7f62df78899ec4f62e494a1b67 *man/ordered.Rd
 f06aa7049a8f2157bbdebdfa1c832999 *man/parLongData.Rd

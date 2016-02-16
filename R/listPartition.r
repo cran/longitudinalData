@@ -307,7 +307,7 @@ regroup <- function(object){
 
 
 
-ListPartition_plotCriterion <- function(x, criterion=x['criterionActif'],nbCriterion = 100){
+ListPartition_plotCriterion <- function(x, criterion=x['criterionActif'],nbCriterion = 1000){
     ##    minMax <- criterionMinOrMax(calinski=1,test=-1,test2=1)
     if(length(criterion)!=1){stop("[ListPartition:plot] To plot several criterion, use 'plotAllCriterion'")}else{}
     allCrit <- x["criterionValues",criterion]

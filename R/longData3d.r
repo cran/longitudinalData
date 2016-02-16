@@ -274,7 +274,7 @@ LongData3d_print <- function(x){
 setMethod("print","LongData3d",LongData3d_print)
 
 
-setMethod("is.na", "LongData3d", function(x) FALSE) 
+setMethod("is.na", "LongData3d", function(x) FALSE)
 
 
 
@@ -390,7 +390,7 @@ varNumAndName <- function(variable,allVarNames){
     if(class(variable)=="character"){
         varName <- variable
         varNum <- c(1:length(allVarNames))[allVarNames %in% varName]
-        if(length(varNum)==0){stop("[LongData3d:plot3d]: 'variable' is not a correct variable name
+        if(length(varNum)==0){stop("[LongData3d:varNumAndName]: 'variable' is not a correct variable name
   [LongData3d:plod3d]: variable=",varName," is not in allVarNames=",allVarNames)}else{}
     }else{
         varNum <- variable

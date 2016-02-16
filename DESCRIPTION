@@ -1,8 +1,8 @@
 Package: longitudinalData
 Type: Package
 Title: Longitudinal Data
-Version: 2.4
-Date: 2015-08-06
+Version: 2.4.1
+Date: 2016-02-02
 Authors@R: c(person("Christophe","Genolini",role=c("cre","aut"),email="christophe.genolini@u-paris10.fr"),person("Bruno","Falissard",role="ctb"),person("Dai","Fang",role="ctb"),person("Luke","Tierney",role="ctb"))
 Description: Tools for longitudinal data and joint longitudinal data (used by packages kml and kml3d).
 License: GPL (>= 2)
@@ -15,11 +15,11 @@ Collate: global.r function.r constants.r myMisc3d.r longData.r
         listPartition.r parLongData.r parWindows.r newPlot.r
 Encoding: latin1
 NeedsCompilation: no
-Packaged: 2015-08-17 14:49:13 UTC; Christophe
+Packaged: 2016-02-11 15:12:02 UTC; Christophe
 Author: Christophe Genolini [cre, aut],
   Bruno Falissard [ctb],
   Dai Fang [ctb],
   Luke Tierney [ctb]
 Maintainer: Christophe Genolini <christophe.genolini@u-paris10.fr>
 Repository: CRAN
-Date/Publication: 2015-08-18 15:46:39
+Date/Publication: 2016-02-16 15:40:46
