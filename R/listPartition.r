@@ -113,7 +113,7 @@ ListPartition_set <- function(x,i,j,value){
                }
            },
            "add"={
-               if(class(value)!="Partition"){
+               if(!inherits(value, "Partition")){
                    stop("[ListPartition:setteur]: a ListPartition object shall contain only Partition object.")
                }else{}
                eval(parse(text=paste('x@c',value['nbClusters'],' <- c(x@c',value['nbClusters'],',list(value))',sep="")))

@@ -387,7 +387,7 @@ setMethod(f="restoreRealData",
 ### variable contient soit un nom de variable, soit le numero d'une variable.
 ### La fonction retourne le nom ET le numéro de la variable
 varNumAndName <- function(variable,allVarNames){
-    if(class(variable)=="character"){
+    if(inherits(variable,"character")){
         varName <- variable
         varNum <- c(1:length(allVarNames))[allVarNames %in% varName]
         if(length(varNum)==0){stop("[LongData3d:varNumAndName]: 'variable' is not a correct variable name

@@ -29,7 +29,7 @@ saveTrianglesAsASY(scene, filename = "scene.asy")
 }
 
 
-\references{\url{http://www.stat.uiowa.edu/~luke/R/misc3d/misc3d-pdf/}}
+\references{\url{https://homepage.divms.uiowa.edu/~luke/R/misc3d/misc3d-pdf/misc3d-pdf.pdf}}
 
 \section{Author(s)}{
   Luke Tierney \cr
@@ -39,6 +39,10 @@ saveTrianglesAsASY(scene, filename = "scene.asy")
 }
 
 \examples{
+  ### Move to tempdir
+  wd <- getwd()
+  setwd(tempdir()); getwd()
+  
   ### Generating the data
   data(artificialJointLongData)
   myLd <- longData3d(artificialJointLongData,timeInData=list(var1=2:12,var2=13:23))
@@ -62,5 +66,8 @@ saveTrianglesAsASY(scene, filename = "scene.asy")
   ### Creation of the '.pdf'
   # Open a console window, then run
   # pdfLatex main.tex
+  
+  ### Go back to current dir
+  setwd(wd)
 }
 

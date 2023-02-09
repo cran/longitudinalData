@@ -173,7 +173,7 @@ adjustGraph3d <- function(varName1,varName2){
     title3d(,,"Time",varName1,varName2)
     box3d()
     aspect3d(c(2,1,1))
-    rgl.viewpoint(0,-90,zoom=1.2)
+    view3d(0,-90,zoom=1.2)
 }
 
 
