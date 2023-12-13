@@ -46,16 +46,16 @@ imputation(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax")
   the middle). Here is a brief description of each methods.
 
 
-  \itemize{
+  \describe{
     \item{'linearInterpol.locf' (linear interpolation, locf)}{
-      \itemize{
+      \describe{
 	\item{Intermitant:}{ values imediatly surounding the missing are join by a line.}
 	\item{Monotone:}{ imputed by 'locf' or 'nocb'.}
       }
     }
 
     \item{'linearInterpol.global' (linear interpolation, global slope)}{
-      \itemize{
+      \describe{
 	\item{Intermitant:}{ values imediatly surounding the missing are join by a line.}
 	\item{Monotone:}{ the line joining the first and last non-missing value
 	  is considered (this line is the everage progression of the actual
@@ -65,7 +65,7 @@ imputation(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax")
     }
 
     \item{'linearInterpol.local' (linear interpolation, global slope)}{
-      \itemize{
+      \describe{
 	\item{Intermitant:}{ values imediatly surounding the missing are join by a line.}
 	\item{Monotone at start:}{ the line joining the first and second non-missing value
 	  is considered. Missing-value at start are chose on this line.}
@@ -75,7 +75,7 @@ imputation(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax")
     }
 
     \item{'linearInterpol.bisector' (linear interpolation, bisector)}{
-      \itemize{
+      \describe{
 	\item{Intermitant:}{ values imediatly surounding the missing are join by a line.}
 	\item{Monotone:}{ linearInterpol.global is not
 	  sensitive to local variation, linearInterpol.local might be too much sensitive to
@@ -106,7 +106,7 @@ imputation(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax")
     }
     \item{locf (Last Occurence Carried Forward)}{
       THIS METHOD HAS BEEN PROUVEN TO NOT BE EFFICIANT SEVERAL TIME BY VARIOUS AUTHOR, we strongly recommand to not use it !
-      \itemize{
+      \describe{
 	\item{Intermitant and monotone at end:}{ the previous non-missing value is
 	  dipplicated forward.}
 	\item{Monotone at start:}{ the first non-missing value is
@@ -115,7 +115,7 @@ imputation(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax")
     }
     \item{nocb (Next Occurence Carried Backward)}{
       THIS METHOD HAS BEEN PROUVEN TO NOT BE EFFICIANT SEVERAL TIME BY VARIOUS AUTHOR, we strongly recommand to not use it !
-      \itemize{
+      \describe{
 	\item{Intermitant and monotone at start:}{ the next non-missing value is
 	  dipplicated backward.}
 	\item{Monotone at end:}{ the last non-missing value is dupplicated forward (locf).}
@@ -139,8 +139,8 @@ imputation(traj,method="copyMean",lowerBound="globalMin",upperBound="globalMax")
 
 \section{Author}{
 Christophe Genolini\cr
-1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSME, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+1. UMR U1027, INSERM, UniversitÃ© Paul Sabatier / Toulouse III / France\cr
+2. CeRSME, EA 2931, UFR STAPS, UniversitÃ© de Paris Ouest-Nanterre-La DÃ©fense / Nanterre / France
 }
 
 \references{
@@ -153,7 +153,7 @@ Christophe Genolini\cr
   Computer Methods and Programs in Biomedicine, 104, pp e112-121,
   2011\cr
 
-  [3] Christophe Genolini, René Écochard and Hélène Jacqmin-Gadda\cr
+  [3] Christophe Genolini, RenÃ© Ã‰cochard and HÃ©lÃ¨ne Jacqmin-Gadda\cr
   "Copy Mean: A New Method to Impute Intermittent Missing Values in Longitudinal Studies"\cr
   Open Journal of Statistics, vol 3(26),2013\cr
 }

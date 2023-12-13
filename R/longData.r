@@ -140,7 +140,7 @@ longData <- function(traj,idAll,time,timeInData,varNames,maxNA){
 
     ## X1 <- apply(traj,c(1,3),function(x){sum(is.na(x))}) compte le nombre de NA par indiv et par variable
     ## X2 <- t(X1)<=maxNA pour chaque ligne (ie chaque variable), indique TRUE si le nombre de NA est plus petit que le maxNA correspondant
-    ## apply(X2,2,all) vérifie que la condition est bonne pour toutes les variables.
+    ## apply(X2,2,all) vÃ©rifie que la condition est bonne pour toutes les variables.
 
     keepId <- apply(t(apply(traj,1,function(x){sum(is.na(x))}))<=maxNA,2,all)
 
@@ -190,9 +190,9 @@ LongData_get <- function(x,i,j,drop){
 setMethod("[","LongData",LongData_get)
 
 
-### A priori, on n'a jamais besoin de modifier un LongData après sa création.
-### ATTENTION : le set de ClusterLongData hérite directement de ListClustering
-###    puisque set n'est pas défini pour LongData. Si on ajoute un set pour LongData,
+### A priori, on n'a jamais besoin de modifier un LongData aprÃ¨s sa crÃ©ation.
+### ATTENTION : le set de ClusterLongData hÃ©rite directement de ListClustering
+###    puisque set n'est pas dÃ©fini pour LongData. Si on ajoute un set pour LongData,
 ###    il faut corriger le set de ClusterLongData
 
 ## cat("### Setteur ###\n")

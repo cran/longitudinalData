@@ -5,11 +5,11 @@ cat("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
 
   #####################################################
- ############## Fonctions prÈliminaires ##############
+ ############## Fonctions pr√©liminaires ##############
 #####################################################
 
-### PossibilitÈ de passer a parTraj une liste de parTRAJ ? Puis de passer une liste a un ÈlÈment
-### qui serait dupliquÈe ?
+### Possibilit√© de passer a parTraj une liste de parTRAJ ? Puis de passer une liste a un √©l√©ment
+### qui serait dupliqu√©e ?
 
 cat("### Method: 'plot' pour LongData et Partition, divers ###\n")
 
@@ -29,11 +29,11 @@ calculTrajMean3d <- function(traj,clust,centerMethod=function(x){mean(x,na.rm=TR
     return(trajMean)
 }
 
-### Exclut de la matrice des trajectoires moyennes les valeurs des points qui ne doivent pas Ítre imprimÈ.
+### Exclut de la matrice des trajectoires moyennes les valeurs des points qui ne doivent pas √™tre imprim√©.
 ### trajMeanPoint est la matrice des trajectoires moyenne.
-### pchPeriod prÈcise la pÈriode d'apparition d'un point sur une courbe.
-###   - si pchPeriod=0, tous les points sont plotÈs
-###   - si pchPeriod>1, les points sont plotÈs tous les 'nbClusters*pchPeriod', avec un dÈcalage initial
+### pchPeriod pr√©cise la p√©riode d'apparition d'un point sur une courbe.
+###   - si pchPeriod=0, tous les points sont plot√©s
+###   - si pchPeriod>1, les points sont plot√©s tous les 'nbClusters*pchPeriod', avec un d√©calage initial
 
 ## calculTrajMeanPoint <- function(trajMeanPoint,nbClusters,nbTime,pchPeriod){
 ##     period <- nbClusters*pchPeriod
@@ -109,7 +109,7 @@ plotTrajMeans <- function(x,y=NA,parTraj=parTRAJ(),parMean=parMEAN(),...){
        nbClusters <- y['nbClusters']
        part <- factor(y['clusters'],levels=LETTERS[1:nbClusters])
 
-       ## PrÈpare les ParLongData en fonction de la partition :
+       ## Pr√©pare les ParLongData en fonction de la partition :
        parTraj <- expandParLongData(parTraj,y)
        parMean <- expandParLongData(parMean,nbClusters)
 
@@ -126,24 +126,24 @@ plotTrajMeans <- function(x,y=NA,parTraj=parTRAJ(),parMean=parMEAN(),...){
     }
 
 
-    ## Si nbSample est grand, l'instruction suivante a tout de meme pour effet de mÈlanger l'ordre des trajectoires
-    ## ATTENTION : il ne faut pas mÈlanger sinon les gens ne comprennent pas !
+    ## Si nbSample est grand, l'instruction suivante a tout de meme pour effet de m√©langer l'ordre des trajectoires
+    ## ATTENTION : il ne faut pas m√©langer sinon les gens ne comprennent pas !
 #    nbSample <- min(nbSample,x['nbIdFewNA'])
 #    toKeep <- sample(1:x['nbIdFewNA'],nbSample)
 
-    ## ############################# TracÈ ############################# ##
+    ## ############################# Trac√© ############################# ##
 
     matplot(x['time'],t(x["traj"]),type=parTraj['type'],col=parTraj['col'],lty=1,
             pch=parTraj['pch'],cex=parTraj['cex'],...)
 
     if(!is.na(y)){
-       ## TracÈ des moyennes avec ou sans symbols
+       ## Trac√© des moyennes avec ou sans symbols
        if(parMean['type'] %in% c("l","b","c","o","h","s","S")){
            matlines(x['time'],t(trajMean),col=1,lwd=8,lty=1,type="l")
            matlines(x['time'],t(trajMean),col=parMean['col'],lwd=4,lty=1,type="l")
        }else{}
 
-       ## TracÈ des points
+       ## Trac√© des points
        if(parMean['type'] %in% c("b","c")){
            par(bg="white")
            matlines(x['time'],t(trajMeanPoint),col=0,type="p",pch=19,cex=parMean['cex']*2.5)
@@ -167,7 +167,7 @@ cat("###################################################################
 
 
 ### Affichage les axes et redimentionne des graphes 3D
-### varNames1 et varNames2 sont les noms des variables qui sont reprÈsentÈes
+### varNames1 et varNames2 sont les noms des variables qui sont repr√©sent√©es
 adjustGraph3d <- function(varName1,varName2){
     axes3d(c('x','y','z'))
     title3d(,,"Time",varName1,varName2)
@@ -185,7 +185,7 @@ plotTrajMeans3d <- function(x,y=NA,varY=1,varZ=2,parTraj=parTRAJ(),parMean=parME
        nbClusters <- y['nbClusters']
        part <- factor(y['clusters'],levels=LETTERS[1:nbClusters])
 
-       ## PrÈpare les ParLongData en fonction de la partition :
+       ## Pr√©pare les ParLongData en fonction de la partition :
        parTraj <- expandParLongData(parTraj,y)
        parMean <- expandParLongData(parMean,nbClusters)
 
@@ -205,14 +205,14 @@ plotTrajMeans3d <- function(x,y=NA,varY=1,varZ=2,parTraj=parTRAJ(),parMean=parME
 #?    nbVar <- x['nbVar']
 #?    nbTime <- x['nbTime']
 
-    ## Si nbSample est grand, l'instruction suivante a tout de meme pour effet de mÈlanger l'ordre des trajectoires
+    ## Si nbSample est grand, l'instruction suivante a tout de meme pour effet de m√©langer l'ordre des trajectoires
 #    nbSample <- min(nbSample,x['nbIdFewNA'])
  #   toKeep <- sample(1:x['nbIdFewNA'],nbSample)
 
     varY <- varNumAndName(varY,x['varNames'])
     varZ <- varNumAndName(varZ,x['varNames'])
 
-    ## ############################# TracÈ ############################# ##
+    ## ############################# Trac√© ############################# ##
     open3d()
 
     traj3d <- array(c(rep(x['time'],each=x['nbIdFewNA']),x['traj'][,,c(varY$num,varZ$num),drop=FALSE]), dim = c(x['nbIdFewNA'],x['nbTime'],3))
@@ -309,7 +309,7 @@ LongData3d_Partition_plot3dPdf <- function(x,y,varY=1,varZ=2){
     time <- x['time']
     nbClusters <- y['nbClusters']
 
-    ## VÈrification que la partition est de la bonne taille.
+    ## V√©rification que la partition est de la bonne taille.
 #    y <- resizePartition(x,y)
     part <- factor(y['clusters'],levels=LETTERS[1:nbClusters])
 
@@ -325,7 +325,7 @@ LongData3d_Partition_plot3dPdf <- function(x,y,varY=1,varZ=2){
     yy <- (trajMean[,,varY$num]-min(trajMean[,,varY$num]))/(max(trajMean[,,varY$num])-min(trajMean[,,varY$num]))*0.5
     zz <- (trajMean[,,varZ$num]-min(trajMean[,,varZ$num]))/(max(trajMean[,,varZ$num])-min(trajMean[,,varZ$num]))*0.5
 
-    ## ############################# TracÈ ############################# ##
+    ## ############################# Trac√© ############################# ##
 
     ## Cadre
     triangles <- rbind(
@@ -342,7 +342,7 @@ LongData3d_Partition_plot3dPdf <- function(x,y,varY=1,varZ=2){
         misc3dLine(A=c(0,-0.03,0.53),B=c(0,0.03,0.53),lwd=0.005)
     )
 
-    ## TracÈ des moyennes
+    ## Trac√© des moyennes
     colorMean <- rainbow(dim(trajMean)[1])
     for(i in 1:dim(trajMean)[1]){triangles <- rbind(triangles,misc3dLines(xx,yy[i,],zz[i,],color=colorMean[i],alpha=0.8,lwd=0.01))}
     return(makeTriangles(v1=as.matrix(triangles[,1:3]),v2=as.matrix(triangles[,4:6]),v3=as.matrix(triangles[,7:9]),

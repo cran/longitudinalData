@@ -5,7 +5,7 @@ cat("\n###################################################################
 
 
 matrix_qualityCriterion <- function(traj,clusters,imputationMethod="copyMean"){
-    ## Si traj est un array, on colle les dimensions suivantes à la suite de la premiere
+    ## Si traj est un array, on colle les dimensions suivantes Ã  la suite de la premiere
 
     if(nrow(traj)!=length(clusters)){
         stop("[qualityCriterion] the cluster and the number of trajectory should be the same.")
@@ -48,10 +48,10 @@ matrix_qualityCriterion <- function(traj,clusters,imputationMethod="copyMean"){
     #######################
     ### Ray & Turi
     ###
-    ### Intra = moyenne des distances au carré entre un point et son centre
-    ### Inter = plus petite distance au carré entre les centres.
+    ### Intra = moyenne des distances au carrÃ© entre un point et son centre
+    ### Inter = plus petite distance au carrÃ© entre les centres.
     ### R(k)=Intra/Inter
-    ### Un "grand" R dénote une mauvaise partition (grand Intra et/ou petit Inter)
+    ### Un "grand" R dÃ©note une mauvaise partition (grand Intra et/ou petit Inter)
     ###
 
     rayInter <- min(dist(cls.attr[[2]]))^2
@@ -78,23 +78,23 @@ matrix_qualityCriterion <- function(traj,clusters,imputationMethod="copyMean"){
     ##################
     ### Davies Bouldin
     ###
-    ### Pour chaque cluster j, on définit MoyDistInt(j) une mesure des moyennes des distances internes de j (ou un diametre)
-    ### Pour deux clusters j et j', DistExt(j,j') est une distance entre les clusters (exemple distance entre les centres de gravité)
+    ### Pour chaque cluster j, on dÃ©finit MoyDistInt(j) une mesure des moyennes des distances internes de j (ou un diametre)
+    ### Pour deux clusters j et j', DistExt(j,j') est une distance entre les clusters (exemple distance entre les centres de gravitÃ©)
     ### La 'proximite' entre j et j' vaut Proxi(j,j')=MoyDistInt(j)+MoyDistInt(j'))/DistExt(j,j')
-    ### Si j et j' sont compacts et bien séparé, alors Proxi(j,j') sera petite.
+    ### Si j et j' sont compacts et bien sÃ©parÃ©, alors Proxi(j,j') sera petite.
     ###
-    ### Ensuite, pour un cluster j, max(Proxi(j,j') donne sa pire proximité
-    ### Au final, Davies and Bouldin est la moyenne des moins bonnes proximités de tous les clusters
-    ### Un "grand" D denote une mauvaise partition (des proximités élevées)
+    ### Ensuite, pour un cluster j, max(Proxi(j,j') donne sa pire proximitÃ©
+    ### Au final, Davies and Bouldin est la moyenne des moins bonnes proximitÃ©s de tous les clusters
+    ### Un "grand" D denote une mauvaise partition (des proximitÃ©s Ã©levÃ©es)
     ###
 
     clsScat <- cls.scatt.data(trajImp,as.integer(clusters))
     davies <- as.numeric(clv.Davies.Bouldin(clsScat,"average","average"))
 
     ########################
-    ### post probabilité, BIC, AIC
+    ### post probabilitÃ©, BIC, AIC
     ###
-    ### On suppose la normalité des données. Cela permet de calculer la vraisemblance, puis tous les indices.
+    ### On suppose la normalitÃ© des donnÃ©es. Cela permet de calculer la vraisemblance, puis tous les indices.
     ###
 
     preProba <- as.numeric(table(clusters))
@@ -172,9 +172,9 @@ Partition_validity <- function(object){
 }
 
 
-### A priori, une partition peut contenir des clusters vides et n'est pas ordonnée.
-### En pratique, kml et kml3d ne produisent que des ordonnées sans clusters vides.
-### Le constructeur ne construit que des ordonnées sans vide, mais le vérificateur laisse tout de même la possibilité de créer 'manuellement' autre chose.
+### A priori, une partition peut contenir des clusters vides et n'est pas ordonnÃ©e.
+### En pratique, kml et kml3d ne produisent que des ordonnÃ©es sans clusters vides.
+### Le constructeur ne construit que des ordonnÃ©es sans vide, mais le vÃ©rificateur laisse tout de mÃªme la possibilitÃ© de crÃ©er 'manuellement' autre chose.
 setClass(
    Class="Partition",
    representation=representation(
@@ -207,7 +207,7 @@ cat("\n####################################################################
 setMethod("partition",signature=c("missing","missing","missing"),function(){new("Partition")})
 
 Partition_constructor <- function(clusters,traj,details=character()){
-    ## Si clusters est numeric, il est transformé en LETTERS
+    ## Si clusters est numeric, il est transformÃ© en LETTERS
     if(is.numeric(clusters)){
         if(max(clusters,na.rm=TRUE)>MAX_CLUSTERS){
             stop("[Partition:partition] the clusters should between 1 and ",MAX_CLUSTERS)
@@ -215,13 +215,13 @@ Partition_constructor <- function(clusters,traj,details=character()){
         clusters <- LETTERS[clusters]
     }else{}
 
-    ## Vérification que clusters n'est QUE des LETTERS
+    ## VÃ©rification que clusters n'est QUE des LETTERS
     if(!all((clusters %in% LETTERS)|is.na(clusters))){
         stop("[Partition:partition] clusters should be either numeric or a vector of LETTERS")
     }else{}
 
-    ## Ré ordonnancement + suppression des clusters vides
-    tableClust <- table(clusters) ### Attention, cette table devient fausse apres le ré-ordonnancement des clusters
+    ## RÃ© ordonnancement + suppression des clusters vides
+    tableClust <- table(clusters) ### Attention, cette table devient fausse apres le rÃ©-ordonnancement des clusters
     nbClusters <- length(tableClust)
     nbIndiv <- length(clusters)
 
@@ -234,7 +234,7 @@ Partition_constructor <- function(clusters,traj,details=character()){
     percentEachCluster <- as.numeric(table(clusters))
     percentEachCluster <- percentEachCluster/sum(percentEachCluster)
 
-    ## Si un longData est fourni : calcul des post proba et des critères
+    ## Si un longData est fourni : calcul des post proba et des critÃ¨res
     if(!missing(traj)){
         qualCriters <- qualityCriterion(traj,as.numeric(clusters))
     }else{
@@ -380,7 +380,7 @@ cat("\n####################################################################
 ############################### Autre ##############################
 ####################################################################\n")
 
-## Comme le constructeur ordonne lui-même, cette fonction est sans doute obsolete
+## Comme le constructeur ordonne lui-mÃªme, cette fonction est sans doute obsolete
 
 ## .partition.ordered <- function(x){
 ##     clust <- x@clusters
@@ -451,7 +451,7 @@ initializePartition <- function(nbClusters,lengthPart,method="kmeans++",data){
         },
         "randomAll"={
             part <- floor(runif(lengthPart,1,nbClusters+1))       # Chaque individu recoit une affectation
-            seeds <- sample(lengthPart,nbClusters)                # Puis on choisit k individus pour éviter les clusters vides.
+            seeds <- sample(lengthPart,nbClusters)                # Puis on choisit k individus pour Ã©viter les clusters vides.
             part[seeds] <- 1:nbClusters
         },
         "maxDist"={
@@ -483,7 +483,7 @@ initializePartition <- function(nbClusters,lengthPart,method="kmeans++",data){
             }
             part[seeds] <- 1:nbClusters
         },
-        ## kmeans++ en déterministe
+        ## kmeans++ en dÃ©terministe
         "kmeans+"={
             part <- rep(NA,lengthPart)
             seeds <- floor(runif(1,1,lengthPart+1))

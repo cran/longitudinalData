@@ -48,13 +48,13 @@ distFrechet(Px,Py,Qx, Qy, timeScale=0.1, FrechetSumOrMax = "max")
 
 \section{Author}{
 Christophe Genolini\cr
-1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+1. UMR U1027, INSERM, UniversitÃ© Paul Sabatier / Toulouse III / France\cr
+2. CeRSM, EA 2931, UFR STAPS, UniversitÃ© de Paris Ouest-Nanterre-La DÃ©fense / Nanterre / France
 }
 
 \references{
   [1] Thomas Eiter & Heikki Mannila: \cr
-  "Computing Discrete Fr´echet Distance"\cr
+  "Computing Discrete FrÂ´echet Distance"\cr
 
   [2] C. Genolini and B. Falissard\cr
   "KmL: k-means for longitudinal data"\cr

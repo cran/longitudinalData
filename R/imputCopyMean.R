@@ -1,6 +1,6 @@
 
 ###############
-### la fonction bissector est définit dans imputLinearInterpol.R
+### la fonction bissector est dÃ©finit dans imputLinearInterpol.R
 
 
 
@@ -37,18 +37,18 @@ imput_copyMean_middleTraj <- function(traj,model){
     return(traj)
 }
 
-### ATTENTION : copyMean.middle N'EST PAS équivalent a copyMean.locf,
-###   car il a besoin d'un model et il n'y a pas les mécanismes de controle.
-###   Peut-être peut-on supprimer cette fonction ?
+### ATTENTION : copyMean.middle N'EST PAS Ã©quivalent a copyMean.locf,
+###   car il a besoin d'un model et il n'y a pas les mÃ©canismes de controle.
+###   Peut-Ãªtre peut-on supprimer cette fonction ?
 # imput_copyMean.middle <- function(longData,model){
 #     return(t(apply(longData,1,imput_copyMean.middleTraj,model)))
 # }
 
 
 ## On note MT trajectoire moyenne et IT la trajectoire de l'individu.
-## Soit miss les manquantes. Soit MTmiss la trajectoire moyenne à laquelle on
-## ajoute les manquantes. Soit MTlocf, la trajectoire MTmiss imputé selon la
-## méthode linearInterpol.LOCF. Alors les variations sont : varMean = MTlocf-MT.
+## Soit miss les manquantes. Soit MTmiss la trajectoire moyenne Ã  laquelle on
+## ajoute les manquantes. Soit MTlocf, la trajectoire MTmiss imputÃ© selon la
+## mÃ©thode linearInterpol.LOCF. Alors les variations sont : varMean = MTlocf-MT.
 ## La trajectoire final est donc IT+linearInterpol + varMean
 
 
@@ -59,7 +59,7 @@ imput_copyMean_middleTraj <- function(traj,model){
 
 imput_copyMean_center <- function(longData){
 
-    ## Préparation de la trajectoire moyenne.
+    ## PrÃ©paration de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
@@ -100,7 +100,7 @@ imput_copyMean_locfTraj <- function(traj,model){
 
 imput_copyMean_locf <- function(longData){
 
-    ## Préparation de la trajectoire moyenne.
+    ## PrÃ©paration de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
@@ -154,7 +154,7 @@ imput_copyMean_globalTraj <- function(traj,model){
 
 imput_copyMean_global <- function(longData){
 
-    ## Préparation de la trajectoire moyenne.
+    ## PrÃ©paration de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
@@ -224,7 +224,7 @@ imput_copyMean_localTraj <- function(traj,model){
 
 imput_copyMean_local <- function(longData){
 
-    ## Préparation de la trajectoire moyenne.
+    ## PrÃ©paration de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 
@@ -293,7 +293,7 @@ imput_copyMean_bisectorTraj <- function(traj,model){
 
 imput_copyMean_bisector <- function(longData){
 
-    ## Préparation de la trajectoire moyenne.
+    ## PrÃ©paration de la trajectoire moyenne.
     ## En particulier, imputation si manquantes
     model <- apply(longData,2,mean,na.rm=TRUE)
 

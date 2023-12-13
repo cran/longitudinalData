@@ -103,10 +103,10 @@ setMethod("[<-","ParLongData",
     }
 )
 
-### Prépare un ParLongData en fonction d'une partition :
-###  - Si les champs 'col' et 'pch' sont de taille 1, ils sont remplacés par des vecteurs.
-###  - Si col="clusters", crée un vecteur couleur
-###  - Si pch="letters" ou "symbol", un vecteur de lettres ou de symboles est créé?
+### PrÃ©pare un ParLongData en fonction d'une partition :
+###  - Si les champs 'col' et 'pch' sont de taille 1, ils sont remplacÃ©s par des vecteurs.
+###  - Si col="clusters", crÃ©e un vecteur couleur
+###  - Si pch="letters" ou "symbol", un vecteur de lettres ou de symboles est crÃ©Ã©?
 ParLongData_Partition_expand <- function(xParLongData,y){
     col <- xParLongData['col']
     if(identical(col,"clusters")){
@@ -126,9 +126,9 @@ ParLongData_Partition_expand <- function(xParLongData,y){
 setMethod("expandParLongData",signature=c(xParLongData="ParLongData",y="Partition"),def=ParLongData_Partition_expand)
 
 
-### Prépare un ParLongData en fonction d'un nombre de clusters :
-###  - Si col="clusters", crée un vecteur avec une couleur pour chaque cluster
-###  - Si pch="letters" ou "symbols", crée un vecteur avec un pch pour chaque cluster
+### PrÃ©pare un ParLongData en fonction d'un nombre de clusters :
+###  - Si col="clusters", crÃ©e un vecteur avec une couleur pour chaque cluster
+###  - Si pch="letters" ou "symbols", crÃ©e un vecteur avec un pch pour chaque cluster
 ParLongData_nbClusters_expand <- function(xParLongData,y){
     col <- xParLongData['col']
     if(identical(col,"clusters")){

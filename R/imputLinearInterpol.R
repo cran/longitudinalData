@@ -5,7 +5,7 @@ cat("###################################################################
 
 
 bisector <- function(xA,yA,xB,yB,xC,yC){
-   ## Les distances ne peuvent pas être nulles car xA!=XB et xA!=xC
+   ## Les distances ne peuvent pas Ãªtre nulles car xA!=XB et xA!=xC
    dAB <- sqrt((xA-xB)^2+(yA-yB)^2)
    dAC <- sqrt((xA-xC)^2+(yA-yC)^2)
 

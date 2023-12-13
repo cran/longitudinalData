@@ -284,7 +284,7 @@ setMethod("ordered",signature="ListPartition",definition=ListPartition_ordered)
 
 
 
-### Attention, si on regroupe en se fixant que sur la partition, on perd les differences liées aux imputations
+### Attention, si on regroupe en se fixant que sur la partition, on perd les differences liÃ©es aux imputations
 regroup <- function(object){
     nameObject<-deparse(substitute(object))
     if(!object['sorted']){ordered(object)}else{}
@@ -334,7 +334,7 @@ ListPartition_plotAllCriterion <- function(x, criterion=CRITERION_NAMES[1:5], st
 
     if(!identical(x['sorted'],logical())){
 
-        ## On plot plusieurs critères, une ligne par critères, le nombre de groupe en abscisse
+        ## On plot plusieurs critÃ¨res, une ligne par critÃ¨res, le nombre de groupe en abscisse
         if(!x['sorted'] | !(x['criterionActif']%in%criterion)){
             warning("[ListCriterion:plot]: the Partition are unsorted")
             titleSort <- "Unsorted"

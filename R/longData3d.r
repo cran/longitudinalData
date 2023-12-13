@@ -172,9 +172,9 @@ LongData3d_get <- function(x,i,j,drop){
 setMethod("[","LongData3d",LongData3d_get)
 
 
-### A priori, on n'a jamais besoin de modifier un LongData après sa création.
-### ATTENTION : le set de ClusterLongData hérite directement de ListClustering
-###    puisque set n'est pas défini pour LongData. Si on ajoute un set pour LongData,
+### A priori, on n'a jamais besoin de modifier un LongData aprÃ¨s sa crÃ©ation.
+### ATTENTION : le set de ClusterLongData hÃ©rite directement de ListClustering
+###    puisque set n'est pas dÃ©fini pour LongData. Si on ajoute un set pour LongData,
 ###    il faut corriger le set de ClusterLongData
 
 ## cat("### Setteur ###\n")
@@ -385,7 +385,7 @@ setMethod(f="restoreRealData",
 
 ### allVarNames contient les nom des variables presentent dans un LongData.
 ### variable contient soit un nom de variable, soit le numero d'une variable.
-### La fonction retourne le nom ET le numéro de la variable
+### La fonction retourne le nom ET le numÃ©ro de la variable
 varNumAndName <- function(variable,allVarNames){
     if(inherits(variable,"character")){
         varName <- variable

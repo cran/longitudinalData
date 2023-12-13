@@ -55,7 +55,7 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
   also compute these criterion. But the user should alway keep in mind
   that these criterion are
   valid ONLY under the hypothesis of normality. If this
-  hypothèsis is not respected, algorithm like k-means will converge but the BIC and AIC
+  hypothÃ¨sis is not respected, algorithm like k-means will converge but the BIC and AIC
   will have no meaning.
 
   IMPORTANT NOTE: Some criterion should be maximized, some other should be
@@ -69,7 +69,7 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
   Notations: k=number of clusters; n=number of individual;
   B=Between variance ; W=Within variance
   The criterion are:
-  \itemize{
+  \describe{
     \item{Calinski.Harabatz}{\code{[numeric]}: Calinski and Harabatz
       criterion: \code{c(k)=Trace(B)/Trace(W)*(n-k)/(k-1)}.}
     \item{Calinski.Harabatz2}{\code{[numeric]}: Calinski and Harabatz
@@ -107,7 +107,7 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
   two version of all the non parametrics criterion, the first using \code{n},
   the second using \code{N}.
 
-  \itemize{
+  \describe{
     \item{BIC}{\code{[numeric]}: Bayesian Information Criterion: BIC=2*log(L)-h*log(n). See IMPORTANT NOTE above.}
     \item{BIC2}{\code{[numeric]}: Bayesian Information Criterion: BIC=2*log(L)-h*log(N). See IMPORTANT NOTE above.}
     \item{AIC}{\code{[numeric]}: Akaike Information Criterion, bis: AIC=2*log(L)-2*h. See IMPORTANT NOTE above.}
@@ -133,8 +133,8 @@ qualityCriterion(traj,clusters,imputationMethod="copyMean")
 
 \section{Author}{
   Christophe Genolini\cr
-  1. UMR U1027, INSERM, Université Paul Sabatier / Toulouse III / France\cr
-  2. CeRSM, EA 2931, UFR STAPS, Université de Paris Ouest-Nanterre-La Défense / Nanterre / France
+  1. UMR U1027, INSERM, UniversitÃ© Paul Sabatier / Toulouse III / France\cr
+  2. CeRSM, EA 2931, UFR STAPS, UniversitÃ© de Paris Ouest-Nanterre-La DÃ©fense / Nanterre / France
 }
 
 \references{

@@ -22,7 +22,7 @@ matrix_imputation <- function(traj,method="copyMean",lowerBound="globalMin",uppe
                   "linearInterpol.local"=imput_linearInterpol_local(traj),
                   "linearInterpol.bisector"=imput_linearInterpol_bisector(traj),
                   "copyMean"=,"copyMean.locf"=imput_copyMean_locf(traj),
-                  "copyMean.center"=imput_copyMean_center(traj), ### Pas testé !
+                  "copyMean.center"=imput_copyMean_center(traj), ### Pas testÃ© !
                   "copyMean.global"=imput_copyMean_global(traj),
                   "copyMean.local"=imput_copyMean_local(traj),
                   "copyMean.bisector"=imput_copyMean_bisector(traj),

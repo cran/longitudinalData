@@ -64,7 +64,7 @@
 }
 
 \section{English translation}{
-  Raphaël Ricaud\cr
+  RaphaÃ«l Ricaud\cr
   Laboratoire "Sport & Culture" / "Sports & Culture" Laboratory \cr
   University of Paris 10 / Nanterre
 }
